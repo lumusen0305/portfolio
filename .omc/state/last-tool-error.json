@@ -1,0 +1,7 @@
+{
+  "tool_name": "Bash",
+  "tool_input_preview": "{\"command\":\"pkill -f \\\"next dev\\\" 2>/dev/null; pkill -f \\\"next-server\\\" 2>/dev/null; sleep 1; echo \\\"cleared old server\\\"\",\"description\":\"Stop the inline dev server before managed restart\"}",
+  "error": "Exit code 144",
+  "timestamp": "2026-06-28T13:38:05.720Z",
+  "retry_count": 1
+}

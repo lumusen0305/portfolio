@@ -1,0 +1,78 @@
+<svg viewBox="0 0 1200 750" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="QuantClash trading dashboard preview">
+  <defs>
+    <linearGradient id="qc-bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0c1018"/>
+      <stop offset="1" stop-color="#080810"/>
+    </linearGradient>
+    <radialGradient id="qc-glow" cx="0.18" cy="0.12" r="0.9">
+      <stop offset="0" stop-color="#0a84ff" stop-opacity="0.34"/>
+      <stop offset="0.5" stop-color="#5e5ce6" stop-opacity="0.10"/>
+      <stop offset="1" stop-color="#5e5ce6" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="qc-area" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#0a84ff" stop-opacity="0.35"/>
+      <stop offset="1" stop-color="#0a84ff" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="1200" height="750" fill="url(#qc-bg)"/>
+  <rect width="1200" height="750" fill="url(#qc-glow)"/>
+
+  <!-- window chrome -->
+  <circle cx="46" cy="44" r="7" fill="#ff5f57"/>
+  <circle cx="72" cy="44" r="7" fill="#febc2e"/>
+  <circle cx="98" cy="44" r="7" fill="#28c840"/>
+  <text x="150" y="50" font-family="ui-monospace,Menlo,monospace" font-size="20" fill="#5b6472">quantclash — backtest</text>
+
+  <!-- grid -->
+  <g stroke="#ffffff" stroke-opacity="0.05">
+    <line x1="120" y1="180" x2="760" y2="180"/>
+    <line x1="120" y1="280" x2="760" y2="280"/>
+    <line x1="120" y1="380" x2="760" y2="380"/>
+    <line x1="120" y1="480" x2="760" y2="480"/>
+  </g>
+
+  <!-- price area + trend -->
+  <path d="M150 450 L208 410 L266 415 L324 360 L382 372 L440 318 L498 300 L556 252 L614 214 L672 244 L730 188 L730 560 L150 560 Z" fill="url(#qc-area)"/>
+  <polyline points="150,450 208,410 266,415 324,360 382,372 440,318 498,300 556,252 614,214 672,244 730,188" fill="none" stroke="#0a84ff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <!-- candlesticks -->
+  <g stroke-width="2">
+    <g stroke="#3fb950"><line x1="150" y1="360" x2="150" y2="480"/></g><rect x="139" y="380" width="22" height="80" rx="2" fill="#3fb950" fill-opacity="0.85"/>
+    <g stroke="#3fb950"><line x1="208" y1="325" x2="208" y2="420"/></g><rect x="197" y="340" width="22" height="60" rx="2" fill="#3fb950" fill-opacity="0.85"/>
+    <g stroke="#f85149"><line x1="266" y1="340" x2="266" y2="430"/></g><rect x="255" y="360" width="22" height="50" rx="2" fill="#f85149" fill-opacity="0.8"/>
+    <g stroke="#3fb950"><line x1="324" y1="285" x2="324" y2="385"/></g><rect x="313" y="300" width="22" height="65" rx="2" fill="#3fb950" fill-opacity="0.85"/>
+    <g stroke="#f85149"><line x1="382" y1="300" x2="382" y2="385"/></g><rect x="371" y="320" width="22" height="42" rx="2" fill="#f85149" fill-opacity="0.8"/>
+    <g stroke="#3fb950"><line x1="440" y1="245" x2="440" y2="345"/></g><rect x="429" y="260" width="22" height="62" rx="2" fill="#3fb950" fill-opacity="0.85"/>
+    <g stroke="#f85149"><line x1="498" y1="235" x2="498" y2="312"/></g><rect x="487" y="250" width="22" height="42" rx="2" fill="#f85149" fill-opacity="0.8"/>
+    <g stroke="#3fb950"><line x1="556" y1="195" x2="556" y2="285"/></g><rect x="545" y="210" width="22" height="58" rx="2" fill="#3fb950" fill-opacity="0.85"/>
+    <g stroke="#3fb950"><line x1="614" y1="175" x2="614" y2="255"/></g><rect x="603" y="190" width="22" height="48" rx="2" fill="#3fb950" fill-opacity="0.85"/>
+    <g stroke="#f85149"><line x1="672" y1="205" x2="672" y2="280"/></g><rect x="661" y="220" width="22" height="42" rx="2" fill="#f85149" fill-opacity="0.8"/>
+    <g stroke="#3fb950"><line x1="730" y1="150" x2="730" y2="235"/></g><rect x="719" y="162" width="22" height="56" rx="2" fill="#3fb950" fill-opacity="0.85"/>
+  </g>
+
+  <!-- buy / sell markers -->
+  <g font-family="ui-monospace,Menlo,monospace" font-size="18" font-weight="700">
+    <circle cx="324" cy="408" r="16" fill="#3fb950"/><text x="324" y="414" text-anchor="middle" fill="#06210f">B</text>
+    <circle cx="614" cy="150" r="16" fill="#f85149"/><text x="614" y="156" text-anchor="middle" fill="#2a0707">S</text>
+  </g>
+
+  <!-- agent DAG panel -->
+  <rect x="820" y="150" width="320" height="430" rx="18" fill="#ffffff" fill-opacity="0.03" stroke="#ffffff" stroke-opacity="0.08"/>
+  <text x="848" y="196" font-family="ui-monospace,Menlo,monospace" font-size="18" fill="#7b8494">agent DAG</text>
+  <g stroke="#0a84ff" stroke-opacity="0.55" stroke-width="2">
+    <line x1="900" y1="270" x2="1010" y2="320"/>
+    <line x1="900" y1="270" x2="980" y2="430"/>
+    <line x1="1010" y1="320" x2="980" y2="430"/>
+    <line x1="1010" y1="320" x2="1075" y2="250"/>
+  </g>
+  <g>
+    <circle cx="900" cy="270" r="26" fill="#0a84ff"/>
+    <circle cx="1010" cy="320" r="26" fill="#1b2230" stroke="#5e5ce6" stroke-width="2"/>
+    <circle cx="980" cy="430" r="26" fill="#1b2230" stroke="#0a84ff" stroke-width="2"/>
+    <circle cx="1075" cy="250" r="22" fill="#5e5ce6"/>
+  </g>
+
+  <text x="150" y="660" font-family="ui-monospace,Menlo,monospace" font-size="22" fill="#8a93a3">QuantClash</text>
+  <text x="150" y="692" font-family="ui-monospace,Menlo,monospace" font-size="16" fill="#4d5563">assemble an AI analyst team · backtest · B/S on the chart</text>
+</svg>

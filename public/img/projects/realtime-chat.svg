@@ -1,0 +1,66 @@
+<svg viewBox="0 0 1200 750" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Realtime chat backend preview">
+  <defs>
+    <linearGradient id="rc-bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0a0f16"/>
+      <stop offset="1" stop-color="#080810"/>
+    </linearGradient>
+    <radialGradient id="rc-glow" cx="0.85" cy="0.85" r="0.9">
+      <stop offset="0" stop-color="#64d2ff" stop-opacity="0.28"/>
+      <stop offset="0.5" stop-color="#5e5ce6" stop-opacity="0.10"/>
+      <stop offset="1" stop-color="#5e5ce6" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <rect width="1200" height="750" fill="url(#rc-bg)"/>
+  <rect width="1200" height="750" fill="url(#rc-glow)"/>
+
+  <circle cx="46" cy="44" r="7" fill="#ff5f57"/>
+  <circle cx="72" cy="44" r="7" fill="#febc2e"/>
+  <circle cx="98" cy="44" r="7" fill="#28c840"/>
+  <text x="150" y="50" font-family="ui-monospace,Menlo,monospace" font-size="20" fill="#4f5b66">room #general · ws</text>
+  <g transform="translate(640,38)"><circle cx="0" cy="6" r="7" fill="#30d158"/><text x="18" y="12" font-family="ui-monospace,Menlo,monospace" font-size="18" fill="#5a6573">3 online</text></g>
+
+  <!-- chat bubbles panel -->
+  <rect x="120" y="150" width="560" height="450" rx="20" fill="#ffffff" fill-opacity="0.03" stroke="#ffffff" stroke-opacity="0.08"/>
+  <!-- incoming -->
+  <circle cx="168" cy="220" r="20" fill="#5e5ce6"/>
+  <rect x="200" y="200" width="300" height="56" rx="14" fill="#1a2230"/>
+  <line x1="222" y1="222" x2="460" y2="222" stroke="#ffffff" stroke-opacity="0.25" stroke-width="6" stroke-linecap="round"/>
+  <line x1="222" y1="240" x2="392" y2="240" stroke="#ffffff" stroke-opacity="0.14" stroke-width="6" stroke-linecap="round"/>
+  <!-- outgoing -->
+  <rect x="300" y="288" width="300" height="56" rx="14" fill="#64d2ff" fill-opacity="0.9"/>
+  <line x1="322" y1="310" x2="560" y2="310" stroke="#06222e" stroke-opacity="0.55" stroke-width="6" stroke-linecap="round"/>
+  <line x1="322" y1="328" x2="500" y2="328" stroke="#06222e" stroke-opacity="0.4" stroke-width="6" stroke-linecap="round"/>
+  <!-- incoming 2 -->
+  <circle cx="168" cy="392" r="20" fill="#30d158"/>
+  <rect x="200" y="372" width="230" height="56" rx="14" fill="#1a2230"/>
+  <line x1="222" y1="394" x2="392" y2="394" stroke="#ffffff" stroke-opacity="0.25" stroke-width="6" stroke-linecap="round"/>
+  <line x1="222" y1="412" x2="330" y2="412" stroke="#ffffff" stroke-opacity="0.14" stroke-width="6" stroke-linecap="round"/>
+  <!-- typing -->
+  <rect x="200" y="456" width="96" height="46" rx="14" fill="#1a2230"/>
+  <g fill="#64d2ff"><circle cx="226" cy="479" r="6"/><circle cx="248" cy="479" r="6"/><circle cx="270" cy="479" r="6"/></g>
+  <!-- input bar -->
+  <rect x="152" y="536" width="496" height="44" rx="22" fill="#11161f" stroke="#ffffff" stroke-opacity="0.08"/>
+  <text x="176" y="563" font-family="ui-monospace,Menlo,monospace" font-size="16" fill="#4f5b66">message…</text>
+
+  <!-- connection graph panel -->
+  <rect x="720" y="150" width="360" height="450" rx="20" fill="#ffffff" fill-opacity="0.03" stroke="#ffffff" stroke-opacity="0.08"/>
+  <text x="748" y="196" font-family="ui-monospace,Menlo,monospace" font-size="17" fill="#5a6573">websocket hub</text>
+  <g stroke="#64d2ff" stroke-opacity="0.5" stroke-width="2">
+    <line x1="900" y1="375" x2="800" y2="270"/><line x1="900" y1="375" x2="1000" y2="260"/>
+    <line x1="900" y1="375" x2="790" y2="470"/><line x1="900" y1="375" x2="1010" y2="480"/>
+    <line x1="900" y1="375" x2="980" y2="375"/>
+  </g>
+  <g>
+    <circle cx="900" cy="375" r="30" fill="#64d2ff"/>
+    <circle cx="800" cy="270" r="18" fill="#1a2230" stroke="#64d2ff" stroke-width="2"/>
+    <circle cx="1000" cy="260" r="18" fill="#1a2230" stroke="#64d2ff" stroke-width="2"/>
+    <circle cx="790" cy="470" r="18" fill="#1a2230" stroke="#64d2ff" stroke-width="2"/>
+    <circle cx="1010" cy="480" r="18" fill="#1a2230" stroke="#64d2ff" stroke-width="2"/>
+    <circle cx="996" cy="375" r="14" fill="#5e5ce6"/>
+  </g>
+  <text x="864" y="382" font-family="ui-monospace,Menlo,monospace" font-size="15" fill="#06222e" font-weight="700">Gin</text>
+
+  <text x="120" y="660" font-family="ui-monospace,Menlo,monospace" font-size="22" fill="#8a93a3">Realtime Chat</text>
+  <text x="120" y="692" font-family="ui-monospace,Menlo,monospace" font-size="16" fill="#4d5563">Go · Gin · WebSocket · JWT · high-concurrency rooms</text>
+</svg>

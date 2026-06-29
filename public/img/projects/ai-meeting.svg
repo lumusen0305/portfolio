@@ -1,0 +1,69 @@
+<svg viewBox="0 0 1200 750" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="AI Meeting smart room preview">
+  <defs>
+    <linearGradient id="am-bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0a1310"/>
+      <stop offset="1" stop-color="#080810"/>
+    </linearGradient>
+    <radialGradient id="am-glow" cx="0.82" cy="0.15" r="0.9">
+      <stop offset="0" stop-color="#30d158" stop-opacity="0.30"/>
+      <stop offset="0.5" stop-color="#0a84ff" stop-opacity="0.10"/>
+      <stop offset="1" stop-color="#0a84ff" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <rect width="1200" height="750" fill="url(#am-bg)"/>
+  <rect width="1200" height="750" fill="url(#am-glow)"/>
+
+  <circle cx="46" cy="44" r="7" fill="#ff5f57"/>
+  <circle cx="72" cy="44" r="7" fill="#febc2e"/>
+  <circle cx="98" cy="44" r="7" fill="#28c840"/>
+  <text x="150" y="50" font-family="ui-monospace,Menlo,monospace" font-size="20" fill="#566256">ai-meeting — live</text>
+
+  <!-- face detection panel -->
+  <rect x="120" y="150" width="520" height="440" rx="20" fill="#ffffff" fill-opacity="0.03" stroke="#ffffff" stroke-opacity="0.08"/>
+  <!-- head silhouette -->
+  <g transform="translate(380,360)">
+    <circle cx="0" cy="-40" r="80" fill="#1d2a22"/>
+    <path d="M-130 150 C-130 40 -70 10 0 10 C70 10 130 40 130 150 Z" fill="#1d2a22"/>
+  </g>
+  <!-- detection brackets -->
+  <g stroke="#30d158" stroke-width="4" fill="none">
+    <path d="M250 210 h-40 v40"/>
+    <path d="M510 210 h40 v40"/>
+    <path d="M250 520 h-40 v-40"/>
+    <path d="M510 520 h40 v-40"/>
+  </g>
+  <rect x="248" y="208" width="264" height="314" rx="6" fill="none" stroke="#30d158" stroke-opacity="0.35" stroke-width="2"/>
+  <!-- scan line -->
+  <line x1="210" y1="330" x2="550" y2="330" stroke="#30d158" stroke-opacity="0.7" stroke-width="2"/>
+  <rect x="248" y="170" width="150" height="30" rx="6" fill="#30d158" fill-opacity="0.18"/>
+  <text x="262" y="191" font-family="ui-monospace,Menlo,monospace" font-size="15" fill="#5ee07f">face 98%</text>
+
+  <!-- right column: presence + voice + access -->
+  <g transform="translate(700,170)">
+    <!-- presence -->
+    <rect x="0" y="0" width="380" height="120" rx="16" fill="#ffffff" fill-opacity="0.03" stroke="#ffffff" stroke-opacity="0.08"/>
+    <circle cx="44" cy="60" r="18" fill="#30d158"/><circle cx="44" cy="60" r="30" fill="none" stroke="#30d158" stroke-opacity="0.4" stroke-width="2"/>
+    <text x="92" y="54" font-family="ui-monospace,Menlo,monospace" font-size="20" fill="#cdd6e0">presence</text>
+    <text x="92" y="82" font-family="ui-monospace,Menlo,monospace" font-size="15" fill="#6b7686">device · on</text>
+
+    <!-- voice waveform -->
+    <rect x="0" y="150" width="380" height="120" rx="16" fill="#ffffff" fill-opacity="0.03" stroke="#ffffff" stroke-opacity="0.08"/>
+    <text x="24" y="186" font-family="ui-monospace,Menlo,monospace" font-size="15" fill="#6b7686">voice · "dim the lights"</text>
+    <g fill="#0a84ff">
+      <rect x="26" y="222" width="6" height="26" rx="3"/><rect x="42" y="210" width="6" height="50" rx="3"/><rect x="58" y="200" width="6" height="70" rx="3"/><rect x="74" y="216" width="6" height="38" rx="3"/><rect x="90" y="206" width="6" height="58" rx="3"/><rect x="106" y="226" width="6" height="18" rx="3"/><rect x="122" y="212" width="6" height="46" rx="3"/><rect x="138" y="200" width="6" height="70" rx="3"/><rect x="154" y="218" width="6" height="34" rx="3"/><rect x="170" y="208" width="6" height="54" rx="3"/><rect x="186" y="224" width="6" height="22" rx="3"/><rect x="202" y="214" width="6" height="42" rx="3"/><rect x="218" y="204" width="6" height="62" rx="3"/><rect x="234" y="220" width="6" height="30" rx="3"/><rect x="250" y="210" width="6" height="50" rx="3"/><rect x="266" y="226" width="6" height="18" rx="3"/><rect x="282" y="214" width="6" height="42" rx="3"/><rect x="298" y="206" width="6" height="58" rx="3"/><rect x="314" y="222" width="6" height="26" rx="3"/><rect x="330" y="212" width="6" height="46" rx="3"/>
+    </g>
+
+    <!-- access -->
+    <rect x="0" y="300" width="380" height="120" rx="16" fill="#ffffff" fill-opacity="0.03" stroke="#ffffff" stroke-opacity="0.08"/>
+    <g transform="translate(28,330)" stroke="#30d158" stroke-width="3" fill="none">
+      <rect x="6" y="26" width="44" height="34" rx="6" fill="#30d158" fill-opacity="0.12"/>
+      <path d="M16 26 v-10 a12 12 0 0 1 24 0 v10"/>
+    </g>
+    <text x="92" y="354" font-family="ui-monospace,Menlo,monospace" font-size="20" fill="#cdd6e0">access</text>
+    <text x="92" y="382" font-family="ui-monospace,Menlo,monospace" font-size="15" fill="#6b7686">appointment verified</text>
+  </g>
+
+  <text x="120" y="660" font-family="ui-monospace,Menlo,monospace" font-size="22" fill="#8a93a3">AI Meeting</text>
+  <text x="120" y="692" font-family="ui-monospace,Menlo,monospace" font-size="16" fill="#4d5563">presence detection · voice control · face-recognition access</text>
+</svg>

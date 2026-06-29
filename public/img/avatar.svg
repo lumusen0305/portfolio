@@ -1,0 +1,25 @@
+<svg width="640" height="640" viewBox="0 0 640 640" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Portrait placeholder">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="640" y2="640" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#0a84ff"/>
+      <stop offset="0.55" stop-color="#5e5ce6"/>
+      <stop offset="1" stop-color="#0b0b0d"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="0.5" cy="0.38" r="0.65">
+      <stop stop-color="#ffffff" stop-opacity="0.32"/>
+      <stop offset="1" stop-color="#ffffff" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="silhouette" x1="320" y1="180" x2="320" y2="640" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#ffffff" stop-opacity="0.92"/>
+      <stop offset="1" stop-color="#ffffff" stop-opacity="0.7"/>
+    </linearGradient>
+  </defs>
+  <rect width="640" height="640" rx="48" fill="url(#bg)"/>
+  <rect width="640" height="640" rx="48" fill="url(#glow)"/>
+  <!-- faint waveform / oscilloscope trace nod to the EE background -->
+  <path d="M0 470 H120 L150 470 L168 420 L188 520 L208 470 H300 L320 470 L338 410 L358 530 L378 470 H640"
+        stroke="#ffffff" stroke-opacity="0.22" stroke-width="3" fill="none"/>
+  <!-- abstract head + shoulders silhouette -->
+  <circle cx="320" cy="262" r="92" fill="url(#silhouette)"/>
+  <path d="M150 640 C150 470 224 392 320 392 C416 392 490 470 490 640 Z" fill="url(#silhouette)"/>
+</svg>
