@@ -101,7 +101,7 @@ export const dict: Record<Lang, Dict> = {
   zh: {
     // ---- Nav ----------------------------------------------------------------
     nav: {
-      services: "服務",
+      services: "專長",
       work: "作品",
       about: "關於",
       contact: "聯絡",
@@ -113,21 +113,21 @@ export const dict: Record<Lang, Dict> = {
 
     // ---- Hero ---------------------------------------------------------------
     hero: {
-      eyebrow: "AI Agent 整合 · 全端開發",
+      eyebrow: "ASIC 實體設計 · AI×EDA",
       name: "吳建賢",
-      taglineLine1: "打造 AI 產品，",
-      taglineLine2: "從 Agent 到介面。",
-      bio: "接案全端工程師，專注於 LLM／Agent 整合與全端產品開發。把想法，做成真正能上線的產品。",
+      taglineLine1: "讓 AI 走進",
+      taglineLine2: "晶片設計流程。",
+      bio: "NVIDIA ASIC 實體設計工程師。白天收斂 GPU 時序，其餘時間打造讓 AI 參與晶片設計的工具鏈。",
       scrollCue: "向下捲動",
-      ctaPrimary: "一起打造",
+      ctaPrimary: "聯絡我",
       ctaSecondary: "看作品",
     },
 
     // ---- Services -----------------------------------------------------------
     services: {
-      sectionLabel: "服務項目",
-      heading: "我能幫你做什麼",
-      subheading: "從想法到上線，完整負責。",
+      sectionLabel: "專長領域",
+      heading: "我在做的事",
+      subheading: "從軟體到矽片，兩邊都寫。",
     },
 
     // ---- Work ---------------------------------------------------------------
@@ -152,13 +152,13 @@ export const dict: Record<Lang, Dict> = {
     // ---- About --------------------------------------------------------------
     about: {
       sectionLabel: "關於我",
-      heading: "專注 AI 與\n全端開發。",
+      heading: "從軟體\n到矽片。",
       paragraph1:
-        "我是吳建賢，一名接案的全端工程師，專注於 AI Agent 整合與全端開發。",
+        "我是吳建賢，NVIDIA 的 ASIC 實體設計工程師——做 GPU 時序收斂，也打造讓 AI 參與設計流程的內部工具。",
       paragraph2:
-        "我從頭到尾打造產品：把 LLM 與 Agent 工程化成穩定可靠的功能，再用 React／Vue 做出精緻好用的介面。我重視乾淨的架構與確實的測試——真正能上線。",
+        "研究底子在 GPU 平行運算與硬體安全（GrAPL '26 一作）；工作裡把 LLM agent 與 MCP 工具鏈接進 EDA 流程。我相信下一代晶片，是工程師和 AI 一起設計出來的。",
       paragraph3: "Dream big and dare to fail.",
-      availableBadge: "目前開放接案",
+      availableBadge: "NVIDIA · 新竹",
       awardsLabel: "獲獎與發表",
       awards: [
         "2026 — 論文〈CHROMA: GPU 圖著色〉獲 GrAPL '26 接受",
@@ -182,10 +182,10 @@ export const dict: Record<Lang, Dict> = {
 
     // ---- Contact ------------------------------------------------------------
     contact: {
-      sectionLabel: "開始合作",
-      heading: "開始\n一個專案。",
+      sectionLabel: "聯絡",
+      heading: "保持\n聯絡。",
       paragraph:
-        "正在接案中——有想做的產品、原型或 AI 整合，歡迎來信聊聊，我通常一天內回覆。",
+        "想聊晶片、AI×EDA、量化交易，或只是打個招呼——來信都歡迎。",
       emailLabel: "寄信給我",
       copy: "複製",
       copied: "已複製",
@@ -202,7 +202,7 @@ export const dict: Record<Lang, Dict> = {
   en: {
     // ---- Nav ----------------------------------------------------------------
     nav: {
-      services: "Services",
+      services: "Focus",
       work: "Work",
       about: "About",
       contact: "Contact",
@@ -214,21 +214,21 @@ export const dict: Record<Lang, Dict> = {
 
     // ---- Hero ---------------------------------------------------------------
     hero: {
-      eyebrow: "AI Agent Integration · Full-Stack Development",
+      eyebrow: "ASIC Physical Design · AI×EDA",
       name: "ChienHsien Wu",
-      taglineLine1: "I build AI products —",
-      taglineLine2: "from agent to interface.",
-      bio: "Freelance full-stack engineer focused on LLM/agent integration and end-to-end product development. I turn ideas into products that actually ship.",
+      taglineLine1: "Bringing AI into",
+      taglineLine2: "the chip-design flow.",
+      bio: "ASIC physical-design engineer at NVIDIA. I close GPU timing by day and build the tooling that lets AI take part in chip design.",
       scrollCue: "Scroll",
-      ctaPrimary: "Let's build something",
+      ctaPrimary: "Get in touch",
       ctaSecondary: "See my work",
     },
 
     // ---- Services -----------------------------------------------------------
     services: {
-      sectionLabel: "Services",
-      heading: "What I can build for you",
-      subheading: "End-to-end ownership — from idea to production.",
+      sectionLabel: "Focus",
+      heading: "What I work on",
+      subheading: "From software to silicon.",
     },
 
     // ---- Work ---------------------------------------------------------------
@@ -253,13 +253,13 @@ export const dict: Record<Lang, Dict> = {
     // ---- About --------------------------------------------------------------
     about: {
       sectionLabel: "About",
-      heading: "Focused on AI\n& full-stack.",
+      heading: "From software\nto silicon.",
       paragraph1:
-        "I'm ChienHsien Wu, a freelance full-stack engineer focused on AI-agent integration and full-stack development.",
+        "I'm ChienHsien Wu, an ASIC physical-design engineer at NVIDIA — closing GPU timing, and building the internal tools that let AI join the design flow.",
       paragraph2:
-        "I build products end to end: turning LLMs and agents into reliable features, then crafting polished interfaces in React/Vue. I value clean architecture and testing that ships.",
+        "My research roots are GPU parallel computing and hardware security (first author, GrAPL '26); at work I wire LLM agents and MCP toolchains into the EDA flow. I believe the next generation of chips gets designed by engineers and AI together.",
       paragraph3: "Dream big and dare to fail.",
-      availableBadge: "Available for freelance",
+      availableBadge: "NVIDIA · Hsinchu",
       awardsLabel: "Awards & Papers",
       awards: [
         "2026 — \"CHROMA: GPU Graph Coloring\" accepted at GrAPL '26",
@@ -283,10 +283,10 @@ export const dict: Record<Lang, Dict> = {
 
     // ---- Contact ------------------------------------------------------------
     contact: {
-      sectionLabel: "Work with me",
-      heading: "Start a\nproject.",
+      sectionLabel: "Contact",
+      heading: "Get in\ntouch.",
       paragraph:
-        "Available for freelance work. Got a product, prototype, or AI integration in mind? Drop me a line — I usually reply within a day.",
+        "Chips, AI-for-EDA, quant trading, or just to say hi — my inbox is open.",
       emailLabel: "Email me",
       copy: "Copy",
       copied: "Copied",
