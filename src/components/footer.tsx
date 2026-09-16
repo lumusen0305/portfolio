@@ -15,13 +15,14 @@ export function Footer() {
         </p>
         <a
           href="#top"
-          className="group inline-flex items-center gap-2 text-xs text-muted transition-colors hover:text-foreground"
+          aria-label={t.footer.backToTop}
+          className="group inline-flex items-center gap-2 text-xs text-muted transition-colors duration-200 hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-background rounded-sm"
         >
           {t.footer.backToTop}
           <ArrowDown
             width={14}
             height={14}
-            className="rotate-180 transition-transform group-hover:-translate-y-0.5"
+            className="rotate-180 transition-transform duration-300 [transition-timing-function:var(--ease-out-quint)] group-hover:-translate-y-1"
           />
         </a>
       </div>

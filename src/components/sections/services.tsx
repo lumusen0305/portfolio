@@ -70,7 +70,7 @@ function ServiceCard({ service, index }: { service: Service; index: number }) {
       whileInView={reduced ? undefined : { opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-8% 0px" }}
       transition={{ duration: 0.7, ease: EASE, delay: (index % 4) * 0.07 }}
-      className="group relative flex flex-col gap-4 rounded-2xl border border-hairline bg-surface p-5 transition-all duration-500 [transition-timing-function:var(--ease-out-quint)] hover:-translate-y-1 hover:border-accent/40 hover:shadow-lg sm:gap-5 sm:p-7"
+      className="group relative flex flex-col gap-4 rounded-2xl border border-hairline bg-surface p-5 transition-all duration-500 [transition-timing-function:var(--ease-out-quint)] hover:-translate-y-1 hover:border-accent/40 hover:shadow-[0_16px_40px_-12px_var(--accent-glow)] sm:gap-5 sm:p-7"
     >
       {/* accent glow on hover */}
       <div
@@ -82,11 +82,11 @@ function ServiceCard({ service, index }: { service: Service; index: number }) {
         <ServiceIcon icon={service.icon} />
       </span>
 
-      <div>
+      <div className="flex flex-1 flex-col">
         <h3 className="text-lg font-semibold tracking-tight text-foreground sm:min-h-[3.5rem]">
           {service.title[lang]}
         </h3>
-        <p className="mt-2 min-h-[5.125rem] text-sm leading-relaxed text-muted sm:min-h-[7.125rem]">
+        <p className="mt-2 flex-1 text-sm leading-relaxed text-muted">
           {service.description[lang]}
         </p>
       </div>

@@ -153,7 +153,7 @@ export function Hero() {
 
           <motion.p
             variants={item}
-            className="mt-6 min-h-[4.875em] max-w-lg text-base leading-relaxed text-muted sm:mt-7 sm:text-lg"
+            className="mt-6 max-w-lg text-base leading-relaxed text-muted sm:mt-7 sm:text-lg"
             style={{ textWrap: "pretty" } as React.CSSProperties}
           >
             {t.hero.bio}
@@ -162,13 +162,13 @@ export function Hero() {
           <motion.div variants={item} className="mt-7 flex flex-wrap gap-3 sm:mt-9">
             <a
               href="#contact"
-              className="rounded-full bg-foreground px-6 py-3 text-sm font-semibold text-background transition-transform duration-300 [transition-timing-function:var(--ease-out-quint)] hover:-translate-y-0.5 sm:px-7"
+              className="rounded-full bg-foreground px-6 py-3 text-sm font-semibold text-background transition-transform duration-300 [transition-timing-function:var(--ease-out-quint)] hover:-translate-y-0.5 focus-visible:rounded-full sm:px-7"
             >
               {t.hero.ctaPrimary}
             </a>
             <a
               href="#work"
-              className="rounded-full border border-hairline px-6 py-3 text-sm font-medium text-foreground transition-colors hover:bg-surface sm:px-7"
+              className="rounded-full border border-hairline px-6 py-3 text-sm font-medium text-foreground transition-[colors,border-color] duration-300 [transition-timing-function:var(--ease-out-quint)] hover:border-hairline-strong hover:bg-surface focus-visible:rounded-full sm:px-7"
             >
               {t.hero.ctaSecondary}
             </a>

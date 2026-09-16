@@ -1,12 +1,13 @@
 "use client";
 
-import { useApp } from "../providers";
+import { useApp, useReducedMotion } from "../providers";
 import { Reveal } from "../reveal";
 import { SectionHeader } from "../section-header";
 import { skillGroups, experience } from "@/lib/data";
 
 export function Skills() {
   const { t, lang } = useApp();
+  const reduced = useReducedMotion();
 
   return (
     <section
@@ -31,7 +32,7 @@ export function Skills() {
                       {group.items.map((item) => (
                         <li
                           key={item}
-                          className="rounded-lg border border-hairline bg-surface px-3.5 py-2 font-mono text-sm text-foreground transition-colors hover:border-accent hover:text-accent"
+                          className="cursor-default rounded-lg border border-hairline bg-surface px-3.5 py-2 font-mono text-sm text-foreground transition-colors duration-200 hover:border-accent hover:text-accent"
                         >
                           {item}
                         </li>
@@ -49,27 +50,37 @@ export function Skills() {
               <p className="eyebrow mb-5 text-xs text-faint sm:mb-7">{t.skills.timelineLabel}</p>
             </Reveal>
             <ol className="relative border-l border-hairline pl-8">
-              {experience.map((exp, i) => (
-                <Reveal as="li" key={`${exp.from}-${exp.role.en}`} delay={i * 0.065}>
-                  <div className="relative pb-10 last:pb-0">
-                    <span className="absolute -left-[2.6rem] top-1.5 grid h-3.5 w-3.5 place-items-center rounded-full border-2 border-accent bg-background">
-                      <span className="h-1.5 w-1.5 rounded-full bg-accent" />
-                    </span>
-                    <p className="font-mono text-xs text-accent">
-                      {exp.from}
-                      {exp.to && exp.to !== exp.from ? ` — ${exp.to}` : ""}
-                      {!exp.to ? ` — ${t.skills.present}` : ""}
-                    </p>
-                    <h3 className="mt-1.5 text-lg font-semibold text-foreground">
-                      {exp.role[lang]}
-                    </h3>
-                    <p className="text-sm text-muted">{exp.org[lang]}</p>
-                    <p className="mt-2 text-sm leading-relaxed text-faint">
-                      {exp.detail[lang]}
-                    </p>
-                  </div>
-                </Reveal>
-              ))}
+              {experience.map((exp, i) => {
+                const isCurrent = !exp.to;
+                return (
+                  <Reveal as="li" key={`${exp.from}-${exp.role.en}`} delay={i * 0.065}>
+                    <div className="relative pb-10 last:pb-0">
+                      {/* Pulse ring — only for current/present entry, respects reduced-motion */}
+                      {isCurrent && !reduced && (
+                        <span
+                          className="absolute -left-[2.4375rem] top-1.5 h-3.5 w-3.5 animate-ping rounded-full border border-accent/60"
+                          aria-hidden
+                        />
+                      )}
+                      <span className="absolute -left-[2.4375rem] top-1.5 grid h-3.5 w-3.5 place-items-center rounded-full border-2 border-accent bg-background">
+                        <span className="h-1.5 w-1.5 rounded-full bg-accent" />
+                      </span>
+                      <p className="font-mono text-xs text-accent">
+                        {exp.from}
+                        {exp.to && exp.to !== exp.from ? ` — ${exp.to}` : ""}
+                        {isCurrent ? ` — ${t.skills.present}` : ""}
+                      </p>
+                      <h3 className="mt-1.5 text-lg font-semibold text-foreground">
+                        {exp.role[lang]}
+                      </h3>
+                      <p className="text-sm text-muted">{exp.org[lang]}</p>
+                      <p className="mt-2 text-sm leading-relaxed text-faint">
+                        {exp.detail[lang]}
+                      </p>
+                    </div>
+                  </Reveal>
+                );
+              })}
             </ol>
           </div>
         </div>

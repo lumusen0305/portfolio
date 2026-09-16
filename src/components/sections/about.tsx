@@ -16,18 +16,18 @@ export function About() {
       <div className="mx-auto max-w-6xl">
         <SectionHeader label={t.about.sectionLabel} heading={t.about.heading} />
 
-        <div className="mt-10 grid gap-10 sm:mt-16 sm:gap-16 lg:grid-cols-[1.6fr_1fr]">
-          {/* bio column */}
-          <div className="space-y-6 text-lg leading-relaxed text-muted">
+        <div className="mt-10 grid gap-10 sm:mt-14 sm:gap-16 lg:grid-cols-[1.6fr_1fr]">
+          {/* bio column — max-w-[65ch] keeps line length readable at large screens */}
+          <div className="max-w-[65ch] space-y-6 text-lg leading-relaxed text-muted">
             <Reveal>
-              <p className="min-h-[5.5rem] sm:min-h-[3.65rem]">{t.about.paragraph1}</p>
+              <p>{t.about.paragraph1}</p>
             </Reveal>
             <Reveal delay={0.06}>
-              <p className="min-h-[9.15rem] sm:min-h-[5.5rem]">{t.about.paragraph2}</p>
+              <p>{t.about.paragraph2}</p>
             </Reveal>
             {/* motto as pull-quote */}
             <Reveal delay={0.12}>
-              <p className="border-l-2 border-accent pl-5 font-medium italic text-foreground">
+              <p className="border-l-[3px] border-accent pl-5 font-medium italic text-foreground">
                 {t.about.paragraph3}
               </p>
             </Reveal>
@@ -44,7 +44,7 @@ export function About() {
           {/* sidebar: avatar */}
           <div>
             <Reveal>
-              <div className="relative aspect-square w-32 overflow-hidden rounded-2xl border border-hairline shadow-xl sm:w-44 lg:w-full lg:max-w-xs">
+              <div className="relative aspect-square w-40 overflow-hidden rounded-2xl border border-hairline shadow-xl sm:w-52 lg:w-full lg:max-w-xs">
                 <Image
                   src="/img/avatar.jpg"
                   alt="Portrait of ChienHsien Wu"

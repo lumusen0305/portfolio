@@ -95,6 +95,16 @@ export interface Dict {
     backToTop: string;
     rights: string;
   };
+  logic: {
+    sectionLabel: string;
+    heading: string;
+    explainer: string;
+    schematicTitle: string;
+    tapHint: string;
+    idleHint: string;
+    tryHint: string;
+    legendTitle: string;
+  };
 }
 
 export const dict: Record<Lang, Dict> = {
@@ -197,6 +207,18 @@ export const dict: Record<Lang, Dict> = {
       backToTop: "回到頂部",
       rights: "保留所有權利。",
     },
+
+    // ---- Logic Circuit ------------------------------------------------------
+    logic: {
+      sectionLabel: "邏輯電路",
+      heading: "撥動開關，讓輸出高電平。",
+      explainer: "輸入端口 · 點擊切換 0 / 1",
+      schematicTitle: "電路圖 · 3 輸入 → 4 輸出",
+      tapHint: "每個輸出解鎖一段介紹",
+      idleHint: "// 點選端口，讓輸出高電平",
+      tryHint: "試著撥動 A",
+      legendTitle: "輸出對應",
+    },
   },
 
   en: {
@@ -297,6 +319,18 @@ export const dict: Record<Lang, Dict> = {
       built: "Built with Next.js & motion",
       backToTop: "Back to top",
       rights: "All rights reserved.",
+    },
+
+    // ---- Logic Circuit ------------------------------------------------------
+    logic: {
+      sectionLabel: "Logic Circuit",
+      heading: "Drive the outputs high.",
+      explainer: "INPUTS · click to toggle 0 / 1",
+      schematicTitle: "Schematic · 3 in → 4 out",
+      tapHint: "each output unlocks a chapter",
+      idleHint: "// click the ports to drive an output high",
+      tryHint: "Try flipping A",
+      legendTitle: "Output map",
     },
   },
 };

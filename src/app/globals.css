@@ -82,6 +82,8 @@
   --color-accent: var(--accent);
   --color-hairline: var(--hairline);
 
+  --color-hairline-strong: var(--hairline-strong);
+
   --font-sans: var(--font-manrope), ui-sans-serif, system-ui, sans-serif;
   --font-mono: var(--font-mono-term), ui-monospace, "SF Mono", monospace;
 
@@ -139,6 +141,12 @@ body {
   outline: 2px solid var(--accent);
   outline-offset: 3px;
   border-radius: 4px;
+}
+
+/* Pill-shaped interactive elements get a matching pill focus ring.
+   The global rule above forces border-radius: 4px; we override for rounded-full elements. */
+:is(a, button, [role="button"]):where([class*="rounded-full"]):focus-visible {
+  border-radius: 9999px;
 }
 
 /* thin, quiet scrollbar */

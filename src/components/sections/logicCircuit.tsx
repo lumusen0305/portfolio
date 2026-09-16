@@ -2,7 +2,7 @@
 
 import { useMemo, useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
-import { useReducedMotion } from "../providers";
+import { useReducedMotion, useApp } from "../providers";
 import { Reveal } from "../reveal";
 import { SectionHeader } from "../section-header";
 
@@ -67,7 +67,7 @@ const CATEGORIES: Category[] = [
       "ChienHsien Wu — ASIC physical-design engineer at NVIDIA, building AI-for-EDA tooling.",
       "I close GPU timing by day, and build the LLM-agent and MCP toolchains that let AI take part in chip design.",
     ],
-    motto: 'Dream big and dare to fail.',
+    motto: "Dream big and dare to fail.",
   },
   {
     id: "OUT2",
@@ -112,14 +112,6 @@ const sw = (live: boolean) => (live ? 2.2 : 1.3);
 
 /* ============================================================================
    SCHEMATIC (SVG) — clickable input ports → four gate networks → four LEDs.
-
-   Compact viewBox (0 0 600 360). Signal flows left → right:
-
-     ports (x≈54)  →  tap bus  →  4 stacked gate cells  →  OUT1..OUT4 LEDs
-
-   Ports A, B, C are <g role="button"> nodes: click / Enter / Space flips the bit.
-   Each row's gate symbol lights when its output is HIGH; the LED + its label
-   glow accent-blue. The whole SVG scales fluidly so it never overflows mobile.
    ========================================================================== */
 
 const PORT_X = 54;
@@ -128,26 +120,59 @@ const yB = 180;
 const yC = 300;
 const portY: Record<InputId, number> = { A: yA, B: yB, C: yC };
 
-// four gate-cell rows (vertical center of each)
 const ROW_Y: Record<OutId, number> = {
   OUT1: 58,
   OUT2: 142,
   OUT3: 226,
   OUT4: 310,
 };
-const GATE_X = 322; // gate symbol left edge
+const GATE_X = 322;
 const GATE_W = 60;
 const LED_X = 540;
-const BUS_X = 168; // vertical fan-out bus column
+const BUS_X = 168;
 
-function Schematic({ s, onToggle }: { s: State; onToggle: (id: InputId) => void }) {
+/* SVG-scoped styles: signal flow animation + hint pulse.
+   Using SVG <style> so we stay self-contained without touching globals.css. */
+const SVG_STYLES = `
+  .lc-wire-live {
+    stroke-dasharray: 8 4;
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .lc-wire-live {
+      animation: lc-flow 0.7s linear infinite;
+    }
+    @keyframes lc-flow {
+      to { stroke-dashoffset: -12; }
+    }
+  }
+  .lc-hint-text {
+    animation: lc-hint-pulse 2.4s ease-in-out infinite;
+  }
+  @keyframes lc-hint-pulse {
+    0%, 100% { opacity: 0.4; }
+    50%       { opacity: 1;   }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .lc-hint-text { animation: none; opacity: 0.65; }
+  }
+`;
+
+function Schematic({
+  s,
+  onToggle,
+  hasInteracted,
+  tryHint,
+}: {
+  s: State;
+  onToggle: (id: InputId) => void;
+  hasInteracted: boolean;
+  tryHint: string;
+}) {
   const A = s.A === 1;
   const B = s.B === 1;
   const C = s.C === 1;
   const out = outputs(s);
 
-  // Per-row input liveness (which signals feed each gate) drives the short
-  // "stub" wires that run from the bus into each gate cell.
   return (
     <svg
       viewBox="0 0 600 360"
@@ -163,26 +188,23 @@ function Schematic({ s, onToggle }: { s: State; onToggle: (id: InputId) => void 
             <feMergeNode in="SourceGraphic" />
           </feMerge>
         </filter>
+        {/* eslint-disable-next-line react/no-danger */}
+        <style dangerouslySetInnerHTML={{ __html: SVG_STYLES }} />
       </defs>
 
-      {/* ---- fan-out bus: each port runs right to the bus column, then the bus
-              taps down into the gate rows. Drawn under everything. --------- */}
-      {/* horizontal feeders from each port to its bus tap */}
+      {/* ---- fan-out bus: horizontal feeders from each port to bus column -- */}
       <Wire d={`M${PORT_X + 56} ${yA} H${BUS_X}`} live={A} />
       <Wire d={`M${PORT_X + 56} ${yB} H${BUS_X}`} live={B} />
       <Wire d={`M${PORT_X + 56} ${yC} H${BUS_X}`} live={C} />
 
-      {/* bus tap nodes (little dots where a signal can branch) */}
       <BusDot x={BUS_X} y={yA} live={A} />
       <BusDot x={BUS_X} y={yB} live={B} />
       <BusDot x={BUS_X} y={yC} live={C} />
 
       {/* ---- ROW 1 · OUT1 = Ā · B  (NOT A, AND B) ----------------------- */}
-      {/* A → inverter → gate top input ; B → gate bottom input */}
       <Wire d={`M${BUS_X} ${yA} V${ROW_Y.OUT1 - 12} H${GATE_X - 40}`} live={A} />
       <Wire d={`M${BUS_X} ${yB} V${ROW_Y.OUT1 + 12} H${GATE_X}`} live={B} />
       <Inverter x={GATE_X - 40} y={ROW_Y.OUT1 - 12} live={A} negLive={!A} />
-      {/* inverter out (= !A) into gate top */}
       <Wire d={`M${GATE_X - 12} ${ROW_Y.OUT1 - 12} H${GATE_X}`} live={!A} />
       <AndGate x={GATE_X} y={ROW_Y.OUT1 - 22} live={out.OUT1 === 1} label="&amp;" />
       <Wire d={`M${GATE_X + GATE_W - 4} ${ROW_Y.OUT1} H${LED_X - 13}`} live={out.OUT1 === 1} />
@@ -194,7 +216,6 @@ function Schematic({ s, onToggle }: { s: State; onToggle: (id: InputId) => void 
       <Wire d={`M${GATE_X + GATE_W + 4} ${ROW_Y.OUT2} H${LED_X - 13}`} live={out.OUT2 === 1} />
 
       {/* ---- ROW 3 · OUT3 = B + A · C  (AND feeds OR) ------------------- */}
-      {/* small AND (A·C) sits before the OR */}
       <Wire d={`M${BUS_X} ${yA} V${ROW_Y.OUT3 - 18} H${GATE_X - 78}`} live={A} />
       <Wire d={`M${BUS_X} ${yC} V${ROW_Y.OUT3 + 2} H${GATE_X - 78}`} live={C} />
       <AndGate
@@ -204,9 +225,10 @@ function Schematic({ s, onToggle }: { s: State; onToggle: (id: InputId) => void 
         small
         label="&amp;"
       />
-      {/* AND out (A·C) → OR bottom input */}
-      <Wire d={`M${GATE_X - 78 + 40} ${ROW_Y.OUT3 - 8} H${GATE_X - 6} V${ROW_Y.OUT3 + 12} H${GATE_X}`} live={A && C} />
-      {/* B → OR top input */}
+      <Wire
+        d={`M${GATE_X - 78 + 40} ${ROW_Y.OUT3 - 8} H${GATE_X - 6} V${ROW_Y.OUT3 + 12} H${GATE_X}`}
+        live={A && C}
+      />
       <Wire d={`M${BUS_X} ${yB} V${ROW_Y.OUT3 - 12} H${GATE_X}`} live={B} />
       <OrGate x={GATE_X} y={ROW_Y.OUT3 - 22} live={out.OUT3 === 1} />
       <Wire d={`M${GATE_X + GATE_W + 4} ${ROW_Y.OUT3} H${LED_X - 13}`} live={out.OUT3 === 1} />
@@ -261,18 +283,64 @@ function Schematic({ s, onToggle }: { s: State; onToggle: (id: InputId) => void 
       <Port id="A" x={PORT_X} y={portY.A} on={A} onToggle={onToggle} />
       <Port id="B" x={PORT_X} y={portY.B} on={B} onToggle={onToggle} />
       <Port id="C" x={PORT_X} y={portY.C} on={C} onToggle={onToggle} />
+
+      {/* ---- "try flipping A" hint — visible before first interaction --- */}
+      <g
+        aria-hidden="true"
+        style={{
+          opacity: hasInteracted ? 0 : undefined,
+          transition: "opacity 0.9s ease",
+          pointerEvents: "none",
+        }}
+      >
+        {/* small downward arrow */}
+        <path
+          d={`M82 ${yA - 34} L82 ${yA - 22}`}
+          stroke="var(--accent)"
+          strokeWidth={1.2}
+          strokeLinecap="round"
+          opacity={0.6}
+        />
+        <path
+          d={`M78 ${yA - 26} L82 ${yA - 22} L86 ${yA - 26}`}
+          fill="none"
+          stroke="var(--accent)"
+          strokeWidth={1.2}
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          opacity={0.6}
+        />
+        <text
+          x={82}
+          y={yA - 40}
+          textAnchor="middle"
+          className="lc-hint-text"
+          fontSize={8.5}
+          fontFamily="var(--font-mono)"
+          fill="var(--accent)"
+        >
+          {tryHint}
+        </text>
+      </g>
     </svg>
   );
 }
 
 /* ---- small bus tap dot ---------------------------------------------------- */
 function BusDot({ x, y, live }: { x: number; y: number; live: boolean }) {
-  return <circle cx={x} cy={y} r={live ? 3.4 : 2.6} fill={wireColor(live)} filter={live ? "url(#lc-glow)" : undefined} />;
+  return (
+    <circle
+      cx={x}
+      cy={y}
+      r={live ? 3.4 : 2.6}
+      fill={wireColor(live)}
+      filter={live ? "url(#lc-glow)" : undefined}
+    />
+  );
 }
 
 /* ----------------------------------------------------------------------------
-   Clickable input PORT — an SVG <g> with button semantics. Pill-shaped pad
-   with the label + live value; lights accent-blue when 1.
+   Clickable input PORT — an SVG <g> with button semantics.
    ------------------------------------------------------------------------- */
 function Port({
   id,
@@ -337,7 +405,11 @@ function Port({
         y1={top + 8}
         x2={left + 33}
         y2={top + h - 8}
-        stroke={on ? "color-mix(in oklab, var(--accent), transparent 55%)" : "var(--hairline-strong)"}
+        stroke={
+          on
+            ? "color-mix(in oklab, var(--accent), transparent 55%)"
+            : "var(--hairline-strong)"
+        }
         strokeWidth={1}
       />
       {/* value */}
@@ -352,7 +424,7 @@ function Port({
       >
         {on ? "1" : "0"}
       </text>
-      {/* output stub so the port reads as a terminal */}
+      {/* output stub */}
       <circle cx={left + w} cy={y} r={on ? 3 : 2.4} fill={wireColor(on)} />
     </g>
   );
@@ -368,6 +440,7 @@ function Wire({ d, live }: { d: string; live: boolean }) {
       strokeWidth={sw(live)}
       strokeLinecap="round"
       strokeLinejoin="round"
+      className={live ? "lc-wire-live" : undefined}
       filter={live ? "url(#lc-glow)" : undefined}
     />
   );
@@ -457,7 +530,6 @@ function XorGate({ x, y, live }: { x: number; y: number; live: boolean }) {
     Q${x + 40} ${y} ${x + 6} ${y} Z`;
   return (
     <g filter={live ? "url(#lc-glow)" : undefined}>
-      {/* extra back arc that distinguishes XOR from OR */}
       <path
         d={`M${x} ${y} Q${x + 13} ${cy} ${x} ${y + h}`}
         fill="none"
@@ -511,44 +583,39 @@ function Inverter({
 }
 
 /* ============================================================================
-   CATEGORY REVEAL card (pops up when its OUT = 1).
-   Reuses the mac-window terminal chrome (the owner's signature) but the body
-   is category content — no shell-command prompts.
+   CATEGORY REVEAL card — clean site-language card, energised by a thin
+   accent top-edge rather than heavy chrome.
    ========================================================================== */
 function CategoryCard({ cat, index }: { cat: Category; index: number }) {
   return (
     <div
-      className="overflow-hidden rounded-2xl border"
+      className="overflow-hidden rounded-2xl"
       style={{
-        borderColor: "color-mix(in oklab, var(--accent), transparent 55%)",
+        border: "1px solid var(--hairline)",
         background: "var(--surface)",
-        boxShadow: "0 0 0 1px var(--accent-soft), 0 24px 60px -32px var(--accent-glow)",
+        boxShadow: "0 4px 24px -8px var(--accent-glow)",
       }}
     >
-      {/* title bar — mac window chrome */}
+      {/* thin accent top-edge — the only "this output is HIGH" signal needed */}
       <div
-        className="flex items-center gap-2 border-b px-4 py-2.5"
-        style={{ borderColor: "var(--hairline)", background: "var(--surface-2)" }}
-      >
-        <span className="h-2.5 w-2.5 rounded-full" style={{ background: "#ff5f57" }} aria-hidden />
-        <span className="h-2.5 w-2.5 rounded-full" style={{ background: "#febc2e" }} aria-hidden />
-        <span className="h-2.5 w-2.5 rounded-full" style={{ background: "#28c840" }} aria-hidden />
-        <span className="ml-2 truncate font-mono text-[0.66rem] tracking-[0.1em] text-faint">
-          {`${cat.id} = 1 · ${cat.expr}`}
-        </span>
-      </div>
+        className="h-0.5 w-full"
+        style={{ background: "var(--accent)" }}
+        aria-hidden
+      />
 
-      {/* body */}
       <div className="px-4 py-4 sm:px-5 sm:py-5">
-        {/* category header */}
+        {/* eyebrow */}
         <div className="flex items-center gap-2">
           <span
             className="h-1.5 w-1.5 shrink-0 rounded-full"
-            style={{ background: "var(--accent)", boxShadow: "0 0 10px 1px var(--accent-glow)" }}
+            style={{
+              background: "var(--accent)",
+              boxShadow: "0 0 8px 1px var(--accent-glow)",
+            }}
             aria-hidden
           />
           <span className="font-mono text-[0.58rem] uppercase tracking-[0.14em] text-accent">
-            {`out${index + 1} high`}
+            {`OUT${index + 1} · HIGH`}
           </span>
         </div>
 
@@ -556,7 +623,7 @@ function CategoryCard({ cat, index }: { cat: Category; index: number }) {
           {cat.name}
         </h3>
 
-        {/* readout lines */}
+        {/* content lines */}
         <div className="mt-3 space-y-2 border-t border-hairline pt-3">
           {cat.lines.map((line, i) => (
             <p key={i} className="text-[0.8rem] leading-relaxed text-muted">
@@ -565,13 +632,12 @@ function CategoryCard({ cat, index }: { cat: Category; index: number }) {
           ))}
           {cat.motto ? (
             <p className="pt-0.5 font-mono text-[0.72rem] leading-relaxed text-accent">
-              {`// motto — “${cat.motto}”`}
+              {`// motto — "${cat.motto}"`}
             </p>
           ) : null}
         </div>
 
-        {/* contact block (mono, field:value) — wraps / breaks so the long
-            LinkedIn URL never overflows on mobile */}
+        {/* contact block */}
         {cat.contact ? (
           <dl
             className="mt-3 grid grid-cols-[auto_minmax(0,1fr)] gap-x-2.5 gap-y-1 rounded-lg border px-3 py-3"
@@ -609,10 +675,14 @@ function CategoryCard({ cat, index }: { cat: Category; index: number }) {
    ========================================================================== */
 export function LogicCircuit() {
   const reduced = useReducedMotion();
+  const { t } = useApp();
   const [state, setState] = useState<State>({ A: 0, B: 0, C: 0 });
+  const [hasInteracted, setHasInteracted] = useState(false);
 
-  const toggle = (id: InputId) =>
+  const toggle = (id: InputId) => {
+    setHasInteracted(true);
     setState((s) => ({ ...s, [id]: s[id] === 1 ? 0 : 1 }));
+  };
 
   const out = useMemo(() => outputs(state), [state]);
   const live = CATEGORIES.filter((c) => out[c.id] === 1);
@@ -623,59 +693,76 @@ export function LogicCircuit() {
       id="logic"
       className="scroll-mt-20 border-t border-hairline px-5 py-16 sm:px-8 sm:py-28 lg:py-36"
     >
-      {/* Deliberately narrow column — this module reads as a tidy little widget,
-          visibly smaller than the wide Work / Services sections. */}
       <div className="mx-auto max-w-2xl">
-        <SectionHeader label="Logic" heading="Drive the outputs high." />
-        <Reveal delay={0.08}>
-          <p className="mt-3 max-w-md text-sm text-muted sm:mt-4 sm:text-base">
-            Click the input ports to flip them 0 / 1. Three signals drive four
-            gate networks — each output that reads{" "}
-            <span className="font-mono text-foreground">1</span> opens a different
-            chapter of the intro. More than one can light at once.
-          </p>
-        </Reveal>
+        <SectionHeader label={t.logic.sectionLabel} heading={t.logic.heading} />
 
-        {/* SCHEMATIC — the ports inside are the controls. Capped width so the
-            diagram stays small and never stretches to fill the column. */}
-        <Reveal delay={0.16}>
+        {/* SCHEMATIC */}
+        <Reveal delay={0.1}>
           <div className="card mx-auto mt-6 max-w-lg overflow-hidden p-4 sm:mt-8 sm:p-5">
             <div className="mb-2.5 flex items-center justify-between">
               <p className="font-mono text-[0.62rem] uppercase tracking-[0.2em] text-faint">
-                Schematic · 3 in → 4 out
+                {t.logic.schematicTitle}
               </p>
-              <p className="font-mono text-[0.6rem] text-faint">tap a port ↻</p>
+              <p className="font-mono text-[0.6rem] text-faint">{t.logic.tapHint}</p>
             </div>
-            <Schematic s={state} onToggle={toggle} />
 
-            {/* expression legend — keeps the four boolean networks readable */}
-            <div className="mt-3 grid grid-cols-2 gap-x-4 gap-y-1.5 border-t border-hairline pt-3 sm:grid-cols-4">
-              {CATEGORIES.map((c, i) => {
-                const hi = out[c.id] === 1;
-                return (
-                  <div key={c.id} className="flex min-w-0 items-center gap-1.5">
-                    <span
-                      className="h-1.5 w-1.5 shrink-0 rounded-full"
-                      style={{
-                        background: hi ? "var(--accent)" : "var(--hairline-strong)",
-                        boxShadow: hi ? "0 0 8px 1px var(--accent-glow)" : "none",
-                      }}
-                      aria-hidden
-                    />
-                    <span
-                      className="truncate font-mono text-[0.62rem] tracking-tight"
-                      style={{ color: hi ? "var(--accent)" : "var(--faint)" }}
-                    >
-                      {`OUT${i + 1}=${c.expr}`}
-                    </span>
-                  </div>
-                );
-              })}
+            {/* Port-cluster instruction — teaches at the point of interaction */}
+            <p
+              className="mb-1.5 font-mono text-[0.58rem] uppercase tracking-[0.16em]"
+              style={{ color: "var(--accent)" }}
+            >
+              {t.logic.explainer}
+            </p>
+
+            <Schematic
+              s={state}
+              onToggle={toggle}
+              hasInteracted={hasInteracted}
+              tryHint={t.logic.tryHint}
+            />
+
+            {/* Legend — maps each output to its category name.
+                Two-line items make the "what does this unlock?" question obvious. */}
+            <div className="mt-3 border-t border-hairline pt-3">
+              <p className="mb-2 font-mono text-[0.55rem] uppercase tracking-[0.18em] text-faint">
+                {t.logic.legendTitle}
+              </p>
+              <div className="grid grid-cols-2 gap-x-4 gap-y-2 sm:grid-cols-4">
+                {CATEGORIES.map((c, i) => {
+                  const hi = out[c.id] === 1;
+                  return (
+                    <div key={c.id} className="flex min-w-0 flex-col gap-0.5">
+                      <div className="flex items-center gap-1.5">
+                        <span
+                          className="h-1.5 w-1.5 shrink-0 rounded-full transition-all duration-300"
+                          style={{
+                            background: hi ? "var(--accent)" : "var(--hairline-strong)",
+                            boxShadow: hi ? "0 0 8px 1px var(--accent-glow)" : "none",
+                          }}
+                          aria-hidden
+                        />
+                        <span
+                          className="truncate font-mono text-[0.62rem] tracking-tight transition-colors duration-200"
+                          style={{ color: hi ? "var(--accent)" : "var(--faint)" }}
+                        >
+                          {`OUT${i + 1} = ${c.expr}`}
+                        </span>
+                      </div>
+                      <span
+                        className="pl-3 font-mono text-[0.58rem] tracking-wide transition-colors duration-200"
+                        style={{ color: hi ? "var(--muted)" : "var(--faint)" }}
+                      >
+                        {`→ ${c.name}`}
+                      </span>
+                    </div>
+                  );
+                })}
+              </div>
             </div>
           </div>
         </Reveal>
 
-        {/* REVEALS / hint — compact 2-up tiles, not full-width tall blocks. */}
+        {/* REVEALS — category cards */}
         <div className="mt-5 sm:mt-6" aria-live="polite">
           {anyHigh ? (
             <div className="grid grid-cols-1 items-start gap-3 sm:grid-cols-2 sm:gap-4">
@@ -690,10 +777,10 @@ export function LogicCircuit() {
                     <motion.div
                       key={cat.id}
                       layout
-                      initial={{ opacity: 0, scale: 0.94, y: 12 }}
-                      animate={{ opacity: 1, scale: 1, y: 0 }}
-                      exit={{ opacity: 0, scale: 0.96, y: 8 }}
-                      transition={{ duration: 0.4, ease: EASE }}
+                      initial={{ opacity: 0, y: 24 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: 8 }}
+                      transition={{ duration: 0.5, ease: EASE }}
                     >
                       <CategoryCard cat={cat} index={index} />
                     </motion.div>
@@ -709,7 +796,7 @@ export function LogicCircuit() {
               transition={{ duration: 0.25 }}
               className="rounded-xl border border-dashed border-hairline px-4 py-5 text-center font-mono text-[0.8rem] text-faint"
             >
-              {"// click the ports to drive an output high"}
+              {t.logic.idleHint}
             </motion.p>
           )}
         </div>

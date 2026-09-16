@@ -34,7 +34,7 @@ function SegmentedFilter({
     <div
       role="group"
       aria-label="Filter projects by category"
-      className="inline-flex rounded-xl border border-hairline bg-surface p-1"
+      className="inline-flex rounded-xl border border-hairline bg-surface p-1 shadow-sm"
     >
       {options.map((opt) => (
         <button
@@ -50,7 +50,7 @@ function SegmentedFilter({
           {value === opt.key && (
             <motion.span
               layoutId="segment-pill"
-              className="absolute inset-0 rounded-lg bg-surface-2"
+              className="absolute inset-0 rounded-lg bg-surface-2 shadow-sm"
               style={{ zIndex: 0 }}
               transition={
                 reduced
