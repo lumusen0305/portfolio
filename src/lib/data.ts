@@ -328,7 +328,7 @@ export const skillGroups: SkillGroup[] = [
   },
   {
     label: { zh: "AI & 量化", en: "AI & Quant" },
-    items: ["Python", "PyTorch", "LangGraph", "LangChain", "Reinforcement Learning", "CUDA / HPC"],
+    items: ["Python", "PyTorch", "MCP", "Claude Agent SDK", "LangGraph", "LangChain", "pgvector", "Reinforcement Learning", "CUDA / HPC"],
   },
   {
     label: { zh: "HDL & 驗證", en: "HDL & Verification" },
@@ -373,8 +373,8 @@ export const experience: Experience[] = [
     role: { zh: "ASIC 實體設計工程師", en: "ASIC Physical Design Engineer" },
     org: { zh: "NVIDIA · 新竹", en: "NVIDIA · Hsinchu" },
     detail: {
-      zh: "完整實體設計流程：STA、時序約束、時序收斂、RTL 合成、Floorplan 與 netlist 品質檢查。",
-      en: "Full physical-design flow: STA, constraints, timing closure, RTL synthesis, floorplanning, and netlist quality checks.",
+      zh: "GPU 運算晶片的時序 ECO 收斂；打造團隊的 MCP-native timing web 平台與 LLM agent harness（團隊每日使用），並負責內部 STA 工具核心（C++/Perl）。",
+      en: "Timing-ECO closure on a GPU compute chiplet; built the team's MCP-native timing web platform and an LLM agent harness in daily use; own the in-house STA tool core (C++/Perl).",
     },
   },
   {
@@ -383,8 +383,8 @@ export const experience: Experience[] = [
     role: { zh: "數位設計工程師（實習）", en: "Digital Designer (Intern)" },
     org: { zh: "TSMC · 新竹", en: "TSMC · Hsinchu" },
     detail: {
-      zh: "最佳化 N7 ADPLL（可移植至 N3）：功耗降低 16%、面積縮減 21%。工具：Verilog、VC_Static、Verdi、JasperGold、Design Compiler。",
-      en: "Optimized the N7 ADPLL (portable to N3): power −16%, area −21%. Tools: Verilog, VC_Static, Verdi, JasperGold, Design Compiler.",
+      zh: "最佳化 N7 ADPLL（後續設計沿用）：功耗降低 16%、面積縮減 21%。工具：Verilog、VC_Static、Verdi、JasperGold、Design Compiler。",
+      en: "Optimized the N7 ADPLL (adopted in follow-on designs): power −16%, area −21%. Tools: Verilog, VC_Static, Verdi, JasperGold, Design Compiler.",
     },
   },
   {
@@ -423,7 +423,7 @@ export const experience: Experience[] = [
 //  CONTACT / SOCIAL
 // ---------------------------------------------------------------------------
 /** NOTE: Verify this address before publishing. */
-export const email = "lumusen8903052@gmail.com";
+export const email = "lumusen890305@gmail.com";
 
 export type Social = {
   icon: "github" | "linkedin" | "x" | "instagram";

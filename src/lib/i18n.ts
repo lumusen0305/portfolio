@@ -162,6 +162,7 @@ export const dict: Record<Lang, Dict> = {
       awardsLabel: "獲獎與發表",
       awards: [
         "2026 — 論文〈CHROMA: GPU 圖著色〉獲 GrAPL '26 接受",
+        "2026 — 論文獲選 NVIDIA NTECH China 發表",
         "2025 — CIC 競賽決賽入圍",
         "2023 — 台灣大學菁英碩士獎學金",
         "2023 — 中興大學優秀畢業生",
@@ -262,6 +263,7 @@ export const dict: Record<Lang, Dict> = {
       awardsLabel: "Awards & Papers",
       awards: [
         "2026 — \"CHROMA: GPU Graph Coloring\" accepted at GrAPL '26",
+        "2026 — Paper selected for NVIDIA NTECH China",
         "2025 — CIC Contest Finalist",
         "2023 — NTU Elite Master's Award",
         "2023 — NCHU Top Graduate",

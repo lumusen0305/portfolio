@@ -95,7 +95,7 @@ const CATEGORIES: Category[] = [
     name: "Get in touch",
     lines: ["Open to freelance work — AI products, full-stack, or prototypes."],
     contact: [
-      { field: "email", value: "lumusen8903052@gmail.com" },
+      { field: "email", value: "lumusen890305@gmail.com" },
       { field: "github", value: "github.com/lumusen0305" },
       { field: "linkedin", value: "linkedin.com/in/chienhsien-wu-9a1086268" },
     ],
