@@ -64,8 +64,8 @@ const CATEGORIES: Category[] = [
     expr: "Ā · B",
     name: "About",
     lines: [
-      "ChienHsien Wu — freelance AI & full-stack engineer, and a digital-IC / ASIC physical-design engineer at NVIDIA.",
-      "I build products end to end and bring hardware-grade rigor to software — verified, instrumented, stress-tested before production.",
+      "ChienHsien Wu — ASIC physical-design engineer at NVIDIA, building AI-for-EDA tooling.",
+      "I close GPU timing by day, and build the LLM-agent and MCP toolchains that let AI take part in chip design.",
     ],
     motto: 'Dream big and dare to fail.',
   },
@@ -93,7 +93,7 @@ const CATEGORIES: Category[] = [
     id: "OUT4",
     expr: "A · B · C",
     name: "Get in touch",
-    lines: ["Open to freelance work — AI products, full-stack, or prototypes."],
+    lines: ["Chips, AI-for-EDA, or just to say hi — my inbox is open."],
     contact: [
       { field: "email", value: "lumusen890305@gmail.com" },
       { field: "github", value: "github.com/lumusen0305" },

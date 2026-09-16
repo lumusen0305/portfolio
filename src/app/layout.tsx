@@ -16,9 +16,9 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "ChienHsien Wu — AI & Frontend Engineer",
+  title: "ChienHsien Wu — ASIC & AI Engineer",
   description:
-    "Freelance software engineer specializing in AI-agent integration and front-end development — LLM workflows, full-stack web apps, and real-time systems.",
+    "ASIC physical-design engineer at NVIDIA building AI-for-EDA tooling — LLM agents, MCP toolchains, GPU timing closure, and full-stack engineering platforms.",
   keywords: [
     "AI Agent",
     "LLM",
@@ -27,13 +27,14 @@ export const metadata: Metadata = {
     "Vue",
     "Full-Stack",
     "FastAPI",
-    "Go",
-    "Freelance",
-    "Web Development",
+    "ASIC",
+    "Physical Design",
+    "EDA",
+    "MCP",
   ],
   authors: [{ name: "ChienHsien Wu" }],
   openGraph: {
-    title: "ChienHsien Wu — AI & Frontend Engineer",
+    title: "ChienHsien Wu — ASIC & AI Engineer",
     description: "AI-agent integration and front-end development — freelance.",
     type: "website",
   },
