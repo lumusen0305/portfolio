@@ -35,7 +35,7 @@ export const metadata: Metadata = {
   authors: [{ name: "ChienHsien Wu" }],
   openGraph: {
     title: "ChienHsien Wu — ASIC & AI Engineer",
-    description: "AI-agent integration and front-end development — freelance.",
+    description: "ASIC physical design meets AI — agents, MCP, and the chip-design flow.",
     type: "website",
   },
 };
