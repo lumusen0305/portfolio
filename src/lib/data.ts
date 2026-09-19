@@ -407,16 +407,6 @@ export const experience: Experience[] = [
       en: "Foundations in systems and signals.",
     },
   },
-  {
-    from: "2018",
-    to: "2020",
-    role: { zh: "學士，軟體工程學系", en: "B.S., Software Engineering" },
-    org: { zh: "中南大學 · 中國", en: "Central South University · China" },
-    detail: {
-      zh: "網頁開發與無人機控制。軟體工程的扎實起點。",
-      en: "Web development and drone control — where the software roots started.",
-    },
-  },
 ];
 
 // ---------------------------------------------------------------------------
