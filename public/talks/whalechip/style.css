@@ -762,3 +762,13 @@ body.tpl-wc { --cyan: #3cc8d8; }
 .tpl-wc .actl em { font: 400 12px/1 var(--font-mono); font-style: normal; color: var(--text-3); margin-left: 8px; }
 .tpl-wc .slide svg.fe { cursor: pointer; }
 @media (prefers-reduced-motion: reduce) { .tpl-wc .slide.is-active .fe * { animation: none !important; } .tpl-wc .fe .jr { opacity: 1; } }
+
+/* ---------- footer progress ---------- */
+.tpl-wc .foot .stp { display: flex; align-items: center; letter-spacing: .14em; }
+.tpl-wc .stp i { position: relative; font: 600 16px/1 var(--font-mono); font-style: normal; color: var(--text-3); }
+.tpl-wc .stp i + i::before { content: ""; display: inline-block; width: 26px; height: 1px; margin: 0 14px; vertical-align: middle; background: var(--border-2); }
+.tpl-wc .stp i.done { color: var(--text-2); }
+.tpl-wc .stp i.on { color: var(--amber); font-weight: 700; }
+.tpl-wc .stp i.on::after { content: ""; position: absolute; right: 0; bottom: -10px; height: 2px; background: var(--amber); width: calc(100% - .14em); }
+.tpl-wc .stp i.on:not(:first-child)::after { width: calc(100% - 54px - .14em); }
+/* ---------- /footer progress ---------- */
