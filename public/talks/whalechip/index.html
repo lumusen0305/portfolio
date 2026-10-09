@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>吳建賢 · 鯨鏈科技 ASIC Team 面談</title>
+<link rel="stylesheet" href="assets/fonts.css">
+<link rel="stylesheet" href="assets/base.css">
+<link rel="stylesheet" id="theme-link" href="assets/themes/tokyo-night.css">
+<link rel="stylesheet" href="assets/animations/animations.css">
+<link rel="stylesheet" href="style.css">
+</head>
+<!-- 內容規則：只用已公開於履歷的事實與數字；所有架構圖皆為去識別示意，
+     不含任何內部代號、晶片/partition/cell 名稱、網址或截圖。 -->
+<body class="tpl-wc">
+<div class="deck">
+
+<!-- ============ 01 COVER ============ -->
+<section class="slide center" data-title="Cover">
+  <div class="pg">01 / 14</div>
+  <div class="cover">
+    <div class="who">
+      <p class="kicker">Interview · ASIC Team · 數位 IC 設計工程師</p>
+      <h1 class="t1 nm">Chien-Hsien<br><span class="hl">Wu</span></h1>
+      <div class="zh">吳建賢</div>
+      <div class="role">ASIC Physical Design Engineer</div>
+      <div class="org"><span class="g">●</span> NVIDIA · Hsinchu · 正職</div>
+    </div>
+    <div class="term whoami">
+      <div class="bar"><span>• • •</span><span>~ / about-me</span><span>zsh</span></div>
+      <div class="cmd"><span class="g">$</span> whoami</div>
+      <div class="kv"><span>role</span><span>ASIC Physical Design Engineer @ NVIDIA <span class="dim">（正職）</span></span></div>
+      <div class="kv"><span>focus</span><span>GPU timing signoff · ECO 自動化</span></div>
+      <div class="kv"><span>built</span><span>Agent × ECO 工具 · WebSocket hub · ECO 平台</span></div>
+      <div class="kv"><span>edu</span><span>台大 M.S. <span class="dim">(3.83)</span> · 中興 電機 B.S. <span class="dim">(4.24)</span></span></div>
+      <div class="kv"><span>intern</span><span>TSMC · N7 ADPLL 功耗 <span class="g">−16%</span> · 面積 <span class="g">−21%</span></span></div>
+      <div class="kv"><span>paper</span><span>CHROMA · GrAPL @ IPDPS 2026 · 共同第一作者</span></div>
+      <div class="cmd"><span class="g">$</span> <span class="cur"></span></div>
+    </div>
+  </div>
+  <div class="foot"><span>鯨鏈科技 · 2026 / 10 / 16</span><span>Illustrative · no proprietary data</span></div>
+  <aside class="notes">
+    <p>主管好，我是<strong>吳建賢</strong>，英文名 Chien-Hsien。目前在 <strong>NVIDIA 做 ASIC physical design</strong>，已經轉正職。右邊是我的簡介，等一下會一項一項展開。</p>
+    <p>今天大概十五到二十分鐘：先快速講經歷，再用四頁講我在 NVIDIA 做的 ECO 自動化：先看<strong>整體架構</strong>，再拆成三塊：讓 agent 跟 top agent 溝通的 <strong>WebSocket hub</strong>、每個 partition 的 <strong>in-house agent 和它的 skills</strong>，以及我重寫的 <strong>LSF farm 派送機制</strong>；接著是前端的三個專案和碩士研究 CHROMA，最後快速帶過其他作品、量化投資和修課獲獎。</p>
+    <p>先說明：<strong>圖都是重畫的示意圖</strong>，沒有放任何公司內部的資料。</p>
+  </aside>
+</section>
+
+<!-- ============ 02 ABOUT ============ -->
+<section class="slide" data-title="About">
+  <div class="pg">02 / 14</div>
+  <p class="kicker">About · Timeline</p>
+  <h2 class="t2">經歷</h2>
+  <div class="tl2">
+    <div class="n">
+      <div class="dot"></div>
+      <div class="card">
+        <div class="when">2021.02 – 2023.06</div>
+        <div class="org">中興大學</div>
+        <div class="what">電機工程 B.S.</div>
+        <div class="facts"><span>GPA 4.24 / 4.30</span><span>系排 1 / 47 · 優秀畢業生</span></div>
+      </div>
+    </div>
+    <div class="n">
+      <div class="dot"></div>
+      <div class="card">
+        <div class="when">2023.09 – 2025.07</div>
+        <div class="org">台灣大學</div>
+        <div class="what">重點科技研究學院 M.S.</div>
+        <div class="facts"><span>IC 設計與自動化 · GPA 3.83</span><span>CHROMA · GrAPL '26 共同一作</span></div>
+      </div>
+    </div>
+    <div class="n">
+      <div class="dot"></div>
+      <div class="card">
+        <div class="when">2024.07 – 2024.08</div>
+        <div class="org">TSMC</div>
+        <div class="what">數位設計實習</div>
+        <div class="facts"><span>N7 ADPLL 數位區塊</span><span>功耗 <span class="g">−16%</span> · 面積 <span class="g">−21%</span></span></div>
+      </div>
+    </div>
+    <div class="n now">
+      <div class="dot"></div>
+      <div class="card">
+        <div class="when">2025.10 – NOW</div>
+        <div class="org">NVIDIA</div>
+        <div class="what">ASIC PD Engineer（正職）</div>
+        <div class="facts"><span>GPU timing signoff / ECO</span><span>ECO 自動化工具 · NTECH China 2026</span></div>
+      </div>
+    </div>
+  </div>
+  <div class="foot"><span>吳建賢 · Chien-Hsien Wu</span><span>About</span></div>
+  <aside class="notes">
+    <p>快速帶過經歷。<strong>大學中興電機</strong>，系排第一畢業；<strong>碩士台大重點科技研究學院</strong>，做 IC 設計與自動化，研究是 GPU 平行運算，CHROMA 是共同第一作者。</p>
+    <p>碩班期間 2024 夏天在 <strong>TSMC 實習</strong>，做 N7 ADPLL 的數位區塊，功耗降 16%、面積降 21%。</p>
+    <p>2025 年 10 月進 <strong>NVIDIA 做 ASIC PD</strong>，主要是 GPU 的 timing signoff 和 ECO，也做了團隊用的 ECO 自動化工具——接下來四頁就講這些。</p>
+  </aside>
+</section>
+
+<!-- ============ 03 NVIDIA OVERVIEW ============ -->
+<section class="slide" data-title="ECO overview" data-tick="1000" data-phase="0.95" data-steps="5">
+  <div class="pg">03 / 14</div>
+  <p class="kicker"><span class="pn">1 / 4</span>NVIDIA · ECO 自動化架構</p>
+  <h2 class="t2">一個 top agent 指揮，每個 partition 一個 agent 修</h2>
+  <p class="sub" style="margin-bottom:24px">top agent 透過 LSF 派送下指令；各 partition 的 in-house agent 照 skills 修，雙方經 hub 溝通，最後由人放行</p>
+  <svg class="arch fe" viewBox="0 0 1700 470" role="img" aria-label="ECO 自動化架構：top agent、LSF 派送、各 partition 的 in-house agent、hub 與人工放行"><defs><marker id="mov" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" class="ahd"/></marker><marker id="movp" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" class="ahd p"/></marker><marker id="moo" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" class="ahd o"/></marker></defs><g class="stx ovk ovk0"><rect class="ovb c" x="0" y="120" width="300" height="156" rx="12"/><text class="lb2 c" x="24" y="158">TOP AGENT</text><text class="tiny" x="24" y="186">LangChain</text><text class="tiny dimt" x="24" y="226">透過 LSF 派送下指令</text><text class="tiny dimt" x="24" y="252">透過 hub 跟各 agent 溝通</text></g><g class="stx ovk ovk1"><rect class="ovb b" x="380" y="162" width="300" height="72" rx="10"/><text class="lb2 mid b" x="530" y="188">LSF FARM 派送</text><text class="tiny mid" x="530" y="214">開 session · 下指令</text><text class="tiny ovpg" x="680" y="150" text-anchor="end">4 / 4</text><path class="wire w2" d="M300 198.0 H376" marker-end="url(#mov)"/><path class="wire w2" d="M680 198.0 C 724 198.0, 716 80.0, 756 80.0" marker-end="url(#mov)"/><path class="wire w2" d="M680 198.0 C 724 198.0, 716 186.0, 756 186.0" marker-end="url(#mov)"/><path class="wire w2" d="M680 198.0 C 724 198.0, 716 292.0, 756 292.0" marker-end="url(#mov)"/></g><g class="stx ovk ovk2"><text class="tiny dimt" x="760" y="20">每個 partition 一個 in-house agent · Claude Agent SDK</text><text class="tiny ovpg" x="1360" y="20" text-anchor="end">3 / 4</text><rect class="ovb g" x="760" y="34" width="600" height="92" rx="10"/><text class="lb2" x="780" y="62">PARTITION A</text><text class="tiny dimt" x="918" y="62">live ECO session</text><rect class="ovc g" x="780" y="80" width="190" height="32" rx="7"/><text class="tiny mid ovct g" x="875" y="96">in-house agent</text><path class="wire" d="M970 96 H1006" marker-end="url(#mov)"/><rect class="ovc o" x="1010" y="80" width="150" height="32" rx="7"/><text class="tiny mid ovct o" x="1085" y="96">skills</text><path class="wire" d="M1160 96 H1196" marker-end="url(#mov)"/><rect class="ovc b" x="1200" y="80" width="140" height="32" rx="7"/><text class="tiny mid ovct b" x="1270" y="96">ECO 工具</text><rect class="ovb g" x="760" y="140" width="600" height="92" rx="10"/><text class="lb2" x="780" y="168">PARTITION B</text><text class="tiny dimt" x="918" y="168">live ECO session</text><rect class="ovc g" x="780" y="186" width="190" height="32" rx="7"/><text class="tiny mid ovct g" x="875" y="202">in-house agent</text><path class="wire" d="M970 202 H1006" marker-end="url(#mov)"/><rect class="ovc o" x="1010" y="186" width="150" height="32" rx="7"/><text class="tiny mid ovct o" x="1085" y="202">skills</text><path class="wire" d="M1160 202 H1196" marker-end="url(#mov)"/><rect class="ovc b" x="1200" y="186" width="140" height="32" rx="7"/><text class="tiny mid ovct b" x="1270" y="202">ECO 工具</text><rect class="ovb g" x="760" y="246" width="600" height="92" rx="10"/><text class="lb2" x="780" y="274">PARTITION C</text><text class="tiny dimt" x="918" y="274">live ECO session</text><rect class="ovc g" x="780" y="292" width="190" height="32" rx="7"/><text class="tiny mid ovct g" x="875" y="308">in-house agent</text><path class="wire" d="M970 308 H1006" marker-end="url(#mov)"/><rect class="ovc o" x="1010" y="292" width="150" height="32" rx="7"/><text class="tiny mid ovct o" x="1085" y="308">skills</text><path class="wire" d="M1160 308 H1196" marker-end="url(#mov)"/><rect class="ovc b" x="1200" y="292" width="140" height="32" rx="7"/><text class="tiny mid ovct b" x="1270" y="308">ECO 工具</text></g><g class="stx ovk ovk3"><rect class="ovb p" x="120" y="390" width="1240" height="52" rx="10"/><text class="lb2 mid p" x="740" y="416">WEBSOCKET HUB · in-house agent ↔ top agent · 跨 partition</text><text class="tiny ovpg" x="1360" y="464" text-anchor="end">2 / 4</text><path class="wire w2 pp" d="M1060.0 342 V386" marker-start="url(#movp)" marker-end="url(#movp)"/><path class="wire w2 pp" d="M150.0 386 V280" marker-start="url(#movp)" marker-end="url(#movp)"/></g><g class="stx ovk ovk4"><rect class="ovb o dash" x="1430" y="150" width="270" height="126" rx="12"/><text class="lb2 o" x="1454" y="188">HUMAN</text><text class="tiny" x="1454" y="216">工程師</text><text class="lb2" x="1454" y="254">審核 → 放行</text><path class="wire w2 oo" d="M1360 416.0 H1565.0 V280" marker-end="url(#moo)"/><text class="tiny mid" x="1462.5" y="404">提案上平台</text></g></svg>
+  <div class="term" style="margin-top:20px;font-size:18px;line-height:1.8">
+    <div><span class="tag c">top agent</span>LangChain · 透過 LSF 派送開 session、對各 partition 下指令</div>
+    <div><span class="tag g">in-house</span>每個 partition 一個 Claude Agent SDK agent，照 skills 修 · 改動只在 live session</div>
+    <div><span class="tag p">hub</span>in-house agent 跟 top agent 在這裡溝通，跨 partition 也走這裡</div>
+    <div><span class="tag g">result</span>一輪自動修正：≈23 萬筆 violation <span class="g">−97%</span> · setup TNS −250 ns → ≈0 · 6 partitions / 3 spins · NTECH China 2026 共同發表</div>
+  </div>
+  <div class="foot"><span>吳建賢 · Chien-Hsien Wu</span><span>Architecture</span></div>
+  <aside class="notes">
+    <p>在 NVIDIA 我負責 <strong>GPU chip 的 timing ECO closure</strong>。每個 spin 都有大量 violation，<strong>分類、修、驗證、放行</strong>原本全靠人工，所以我做了一套自動化系統。先看全貌，接下來三頁再拆開講。</p>
+    <p>最上層是一個 <strong>top agent</strong>，用 LangChain 寫，透過我重寫的 <strong>LSF 派送</strong>開 session、對各 partition 下指令。</p>
+    <p>每個 partition 底下有一個 <strong>in-house agent</strong>，用 Claude Agent SDK 寫，照一套 <strong>skills</strong> 在 live session 裡修；它跟 top agent 透過我寫的 <strong>WebSocket hub</strong> 溝通，跨 partition 的問題也走 hub。最後一定是<strong>人審核才放行</strong>。</p>
+    <p>結果是<strong>一輪自動修正處理掉約 23 萬筆裡的 97%</strong>，setup TNS 從 −250 ns 收到大約 0；這套流程也跟同事一起在 <strong>NTECH China 2026</strong> 發表。</p>
+    <p>（動畫：P 暫停、逗號／句號一步一步走）</p>
+    <p>接下來一塊一塊講，先從 hub 開始。</p>
+  </aside>
+</section>
+
+<!-- ============ 06 HUB CROSS-PARTITION ============ -->
+<section class="slide" data-title="Cross-partition" data-tick="1000" data-phase="0.95" data-steps="7">
+  <div class="pg">04 / 14</div>
+  <p class="kicker"><span class="pn">2 / 4</span>NVIDIA · WebSocket Hub × Cross-Partition ECO</p>
+  <h2 class="t2">一個 WebSocket hub，讓 ECO 可以跨 partition</h2>
+  <p class="sub" style="margin-bottom:28px">我寫的 hub 串起工具 session、in-house agent 和 top agent；跨 partition 時，兩邊的 agent 拿著雙方證據一起修邊界</p>
+  <div class="xp">
+    <svg class="arch die" viewBox="0 0 1140 364" role="img" aria-label="一顆 die 上六個 partition 與中央 hub 的示意圖">
+      <defs><pattern id="dg" width="22" height="22" patternUnits="userSpaceOnUse"><path d="M22 0H0V22" fill="none" stroke="rgba(63,208,122,.07)" stroke-width="1"/></pattern></defs>
+      <rect class="diebg" x="8" y="8" width="1124" height="324" rx="6"/>
+      <rect x="8" y="8" width="1124" height="324" rx="6" fill="url(#dg)"/>
+      <rect class="pad" x="40" y="4" width="8" height="8"/><rect class="pad" x="40" y="328" width="8" height="8"/><rect class="pad" x="76" y="4" width="8" height="8"/><rect class="pad" x="76" y="328" width="8" height="8"/><rect class="pad" x="112" y="4" width="8" height="8"/><rect class="pad" x="112" y="328" width="8" height="8"/><rect class="pad" x="148" y="4" width="8" height="8"/><rect class="pad" x="148" y="328" width="8" height="8"/><rect class="pad" x="184" y="4" width="8" height="8"/><rect class="pad" x="184" y="328" width="8" height="8"/><rect class="pad" x="220" y="4" width="8" height="8"/><rect class="pad" x="220" y="328" width="8" height="8"/><rect class="pad" x="256" y="4" width="8" height="8"/><rect class="pad" x="256" y="328" width="8" height="8"/><rect class="pad" x="292" y="4" width="8" height="8"/><rect class="pad" x="292" y="328" width="8" height="8"/><rect class="pad" x="328" y="4" width="8" height="8"/><rect class="pad" x="328" y="328" width="8" height="8"/><rect class="pad" x="364" y="4" width="8" height="8"/><rect class="pad" x="364" y="328" width="8" height="8"/><rect class="pad" x="400" y="4" width="8" height="8"/><rect class="pad" x="400" y="328" width="8" height="8"/><rect class="pad" x="436" y="4" width="8" height="8"/><rect class="pad" x="436" y="328" width="8" height="8"/><rect class="pad" x="472" y="4" width="8" height="8"/><rect class="pad" x="472" y="328" width="8" height="8"/><rect class="pad" x="508" y="4" width="8" height="8"/><rect class="pad" x="508" y="328" width="8" height="8"/><rect class="pad" x="544" y="4" width="8" height="8"/><rect class="pad" x="544" y="328" width="8" height="8"/><rect class="pad" x="580" y="4" width="8" height="8"/><rect class="pad" x="580" y="328" width="8" height="8"/><rect class="pad" x="616" y="4" width="8" height="8"/><rect class="pad" x="616" y="328" width="8" height="8"/><rect class="pad" x="652" y="4" width="8" height="8"/><rect class="pad" x="652" y="328" width="8" height="8"/><rect class="pad" x="688" y="4" width="8" height="8"/><rect class="pad" x="688" y="328" width="8" height="8"/><rect class="pad" x="724" y="4" width="8" height="8"/><rect class="pad" x="724" y="328" width="8" height="8"/><rect class="pad" x="760" y="4" width="8" height="8"/><rect class="pad" x="760" y="328" width="8" height="8"/><rect class="pad" x="796" y="4" width="8" height="8"/><rect class="pad" x="796" y="328" width="8" height="8"/><rect class="pad" x="832" y="4" width="8" height="8"/><rect class="pad" x="832" y="328" width="8" height="8"/><rect class="pad" x="868" y="4" width="8" height="8"/><rect class="pad" x="868" y="328" width="8" height="8"/><rect class="pad" x="904" y="4" width="8" height="8"/><rect class="pad" x="904" y="328" width="8" height="8"/><rect class="pad" x="940" y="4" width="8" height="8"/><rect class="pad" x="940" y="328" width="8" height="8"/><rect class="pad" x="976" y="4" width="8" height="8"/><rect class="pad" x="976" y="328" width="8" height="8"/><rect class="pad" x="1012" y="4" width="8" height="8"/><rect class="pad" x="1012" y="328" width="8" height="8"/><rect class="pad" x="1048" y="4" width="8" height="8"/><rect class="pad" x="1048" y="328" width="8" height="8"/><rect class="pad" x="1084" y="4" width="8" height="8"/><rect class="pad" x="1084" y="328" width="8" height="8"/><rect class="pad" x="4" y="40" width="8" height="8"/><rect class="pad" x="1128" y="40" width="8" height="8"/><rect class="pad" x="4" y="76" width="8" height="8"/><rect class="pad" x="1128" y="76" width="8" height="8"/><rect class="pad" x="4" y="112" width="8" height="8"/><rect class="pad" x="1128" y="112" width="8" height="8"/><rect class="pad" x="4" y="148" width="8" height="8"/><rect class="pad" x="1128" y="148" width="8" height="8"/><rect class="pad" x="4" y="184" width="8" height="8"/><rect class="pad" x="1128" y="184" width="8" height="8"/><rect class="pad" x="4" y="220" width="8" height="8"/><rect class="pad" x="1128" y="220" width="8" height="8"/><rect class="pad" x="4" y="256" width="8" height="8"/><rect class="pad" x="1128" y="256" width="8" height="8"/><rect class="pad" x="4" y="292" width="8" height="8"/><rect class="pad" x="1128" y="292" width="8" height="8"/>
+      <rect class="pt" x="30" y="30" width="250" height="150" rx="5"/><rect class="stx st-on st4-a" x="30" y="30" width="250" height="150" rx="5"/><text class="pn" x="46" y="58">PARTITION A</text><text class="ps gs" x="46" y="80">agent · fixing</text>
+      <rect class="pt  " x="296" y="30" width="160" height="100" rx="5"/><text class="pn" x="312" y="58">PARTITION C</text><text class="ps " x="312" y="80">clean</text>
+      <rect class="pt  " x="472" y="30" width="170" height="100" rx="5"/><text class="pn" x="488" y="58">PARTITION F</text><text class="ps os" x="488" y="80">2 vios</text>
+      <rect class="pt" x="658" y="30" width="452" height="150" rx="5"/><rect class="stx st-on st4-b" x="658" y="30" width="452" height="150" rx="5"/><text class="pn" x="674" y="58">PARTITION B</text><text class="ps gs" x="674" y="80">agent · idle</text>
+      <rect class="pt  " x="296" y="146" width="160" height="160" rx="5"/><text class="pn" x="312" y="174">PARTITION D</text><text class="ps " x="312" y="196">clean</text>
+      <rect class="pt  " x="30" y="196" width="250" height="110" rx="5"/><text class="pn" x="46" y="224">PARTITION E</text><text class="ps " x="46" y="246">queued</text>
+      <rect class="pt mac" x="818" y="196" width="140" height="110" rx="5"/><text class="ps" x="834" y="224">sram</text>
+      <rect class="pt mac" x="974" y="196" width="136" height="50" rx="5"/><text class="ps" x="990" y="224">sram</text>
+      <rect class="pt mac" x="974" y="256" width="136" height="50" rx="5"/><text class="ps" x="990" y="284">pll · io</text>
+      <path class="ws" d="M280 138 H560 V196"/><path class="stx st-flow st4-f1" d="M280 138 H560 V196"/><circle class="node" cx="560" cy="138" r="4"/>
+      <path class="ws" d="M658 160 H620 V196"/><path class="stx st-flow st4-f2" d="M620 196 V160 H658"/><circle class="node" cx="620" cy="160" r="4"/>
+      <path class="ws q" d="M155 306 V320 H520 V306"/><circle class="node" cx="520" cy="320" r="4"/>
+      <rect class="pt hub dim0" x="472" y="196" width="330" height="110" rx="6"/><rect class="stx st4-hub" x="472" y="196" width="330" height="110" rx="6"/>
+      <text class="hubt" x="637" y="222">HUB</text>
+      <text class="ps mid" x="637" y="245">WebSocket · 每個 partition 一個 room</text>
+      <rect class="hc" x="509" y="262" width="96" height="28" rx="5"/><text class="hct" x="557" y="276">PrimeTime</text><rect class="hc" x="615" y="262" width="52" height="28" rx="5"/><text class="hct" x="641" y="276">VC</text><rect class="hc" x="677" y="262" width="88" height="28" rx="5"/><text class="hct" x="721" y="276">ECO tool</text>
+      <rect class="stx st-rb st4-rb" x="30" y="30" width="250" height="150" rx="5"/><rect class="stx st-rb st4-rb" x="658" y="30" width="452" height="150" rx="5"/><text class="stx st-ok st4-ok" x="264" y="80" text-anchor="end">✓ readback</text><text class="stx st-ok st4-ok" x="1094" y="80" text-anchor="end">✓ readback</text><circle class="stx st-pk st4-p1" cx="280" cy="138" r="6"/><circle class="stx st-pk st4-p2" cx="620" cy="196" r="6"/><text class="cap" x="1132" y="356">ONE DIE · 6 PARTITIONS · 1 HUB · ILLUSTRATIVE</text>
+    </svg>
+    <div class="box glow-p case stx st4-case">
+      <div class="lbl p" style="text-align:center">Platform · Shared Case</div>
+      <div class="sm" style="text-align:center">routing · progress · evidence · one view</div>
+      <div class="rows">
+        <span>case #17 · A ↔ B</span><span class="r">boundary skew</span>
+        <span>partition A · agent</span><span class="g">trial proposed</span>
+        <span>partition B · agent</span><span class="g">approved · local trial</span>
+        <span>readback A ✓ · B ✓</span><span class="g">KEEP</span>
+        <span>human owner</span><span class="o">review → release</span>
+      </div>
+    </div>
+  </div>
+  <div class="term walk xw" style="margin-top:18px">
+    <div class="bar"><span>• • •</span><span>partition A · hub · partition B — illustrative transcript</span><span>pilot · 元件已完成，整合流程驗證中</span></div>
+    <div class="ln"><span class="tag r">A · agent</span>邊界 skew：跨邊界 path 需要 B 側吸收 9 ps <span class="dim">· 以前：找 owner、等回覆</span></div>
+    <div class="ln"><span class="tag b">hub</span>A → B：任務送進 partition B 的 room <span class="dim">· 只是同儕分析，不授權遠端 ECO</span></div>
+    <div class="ln"><span class="tag g">B · agent</span>一次核准的本地試修：接收端 retime / CG swap → <span class="g">邊界乾淨，0 新 violation</span></div>
+    <div class="ln"><span class="tag b">readback</span>ECO 後重新讀回 A + B → path 兩側都收斂 · keep <span class="dim">· 缺證據 = pending</span></div>
+    <div class="ln"><span class="tag p">platform</span>兩個 session 一個畫面：路由、進度、證據 → <span class="o">工程師審核後才放行</span> <span class="g">✓</span></div>
+  </div>
+  <div class="foot"><span>吳建賢 · Chien-Hsien Wu</span><span>Cross-Partition</span></div>
+  <aside class="notes">
+    <p>這是我寫的 <strong>WebSocket hub</strong>，in-house agent 跟 top agent 就是在這裡溝通。它可以接 <strong>PrimeTime、VC</strong> 這些工具的 session，再串我們 <strong>in-house 的 ECO 工具</strong>，每個 partition 一個 room。</p>
+    <p>有了它就能做<strong>跨 partition 的 ECO</strong>。舉例：A 的邊界有 skew，需要 B 那邊吸收幾個 ps。以前要找對方 owner、等回覆；現在 A 的 agent 把任務送進 B 的 room，<strong>B 的 agent 做一次核准過的本地試修</strong>，改完兩邊<strong>重新讀回</strong>，兩側都收斂才 keep。</p>
+    <p>右邊這個<strong>共享案件的畫面</strong>，是最後要介紹的平台；最後還是<strong>人審核才放行</strong>。這裡的元件都已經做好，<strong>整合流程還在 pilot 驗證</strong>。</p>
+    <p>有了 hub，再來看每個 partition 的 in-house agent 怎麼修。</p>
+  </aside>
+</section>
+
+<!-- ============ 04 AUTO ECO 1/2 ============ -->
+<section class="slide" data-title="Auto ECO architecture" data-tick="1000" data-phase="0.95" data-steps="9">
+  <div class="pg">05 / 14</div>
+  <p class="kicker"><span class="pn">3 / 4</span>NVIDIA · In-house Agent × Skills</p>
+  <h2 class="t2">In-house agent 照 skills 修，人來放行</h2>
+  <p class="sub" style="margin-bottom:30px">每個 partition 一個 Claude Agent SDK agent：agent 判斷，指令經 WebSocket hub 送到 live session，由 ECO 工具執行</p>
+  <svg class="arch" viewBox="0 0 1700 412" role="img" aria-label="自動 ECO 架構示意圖：agent 技能、socket hub、LSF 上的 live session 與人工核准">
+      <rect class="pnl" x="1" y="1" width="998" height="378" rx="12"/>
+      <text class="ttl o" x="26" y="42">IN-HOUSE AGENT</text>
+      <text class="st" x="26" y="68">每個 partition 一個 · Claude Agent SDK · 人核准才放行</text>
+      <rect class="pnl" x="1030" y="1" width="280" height="378" rx="12"/>
+      <text class="ttl" x="1052" y="42">WEBSOCKET HUB</text>
+      <text class="st" x="1052" y="68">每個 partition 一個 channel</text>
+      <rect class="pnl dash" x="1430" y="1" width="269" height="378" rx="12"/>
+      <text class="ttl" x="1452" y="42">LSF 運算節點</text>
+      <text class="st" x="1452" y="68">live ECO session · 只往外連</text>
+      <line class="wire" x1="150" y1="116" x2="850" y2="116"/><path class="stx st-conn st5-c0" d="M87 116 H225"/><path class="stx st-conn st5-c1" d="M225 116 H363"/><path class="stx st-conn st5-c2" d="M363 116 H500"/><path class="stx st-conn st5-c3" d="M500 116 H638"/><path class="stx st-conn st5-c4" d="M638 116 H776"/><path class="stx st-conn st5-c5" d="M776 116 H913"/>
+      <rect class="bx" x="24" y="92" width="126" height="48" rx="7"/><rect class="stx st-lit st5-k0" x="24" y="92" width="126" height="48" rx="7"/><text class="lb mid " x="87" y="116">PREFLIGHT</text><rect class="bx" x="162" y="92" width="126" height="48" rx="7"/><rect class="stx st-lit st5-k1" x="162" y="92" width="126" height="48" rx="7"/><text class="lb mid " x="225" y="116">AUTOFIX</text><rect class="bx" x="300" y="92" width="126" height="48" rx="7"/><rect class="stx st-lit st5-k2" x="300" y="92" width="126" height="48" rx="7"/><text class="lb mid " x="363" y="116">TRIAGE</text><rect class="bx" x="437" y="92" width="126" height="48" rx="7"/><rect class="stx st-lit st5-k3" x="437" y="92" width="126" height="48" rx="7"/><text class="lb mid o" x="500" y="116">FIX</text><rect class="bx" x="575" y="92" width="126" height="48" rx="7"/><rect class="stx st-lit st5-k4" x="575" y="92" width="126" height="48" rx="7"/><text class="lb mid " x="638" y="116">READBACK</text><rect class="bx" x="713" y="92" width="126" height="48" rx="7"/><rect class="stx st-lit st5-k5" x="713" y="92" width="126" height="48" rx="7"/><text class="lb mid " x="776" y="116">EXIT GATE</text><rect class="bx" x="850" y="92" width="126" height="48" rx="7"/><rect class="stx st-litg st5-rel" x="850" y="92" width="126" height="48" rx="7"/><text class="lb mid g" x="913" y="116">RELEASE</text>
+      <path class="wire" d="M500 140 V164 M242 164 H758 M242 164 V186 M414 164 V186 M586 164 V186 M758 164 V186"/>
+      <circle class="node" cx="500" cy="164" r="4"/><path class="stx st-tree st5-tree" d="M500 140 V164" style="stroke-dasharray:280 280"/><path class="stx st-tree r st5-tree" d="M500 164 H242 V186" style="stroke-dasharray:280 280"/><path class="stx st-tree hold st5-tree" d="M500 164 H414 V186" style="stroke-dasharray:280 280"/><path class="stx st-tree p st5-tree" d="M500 164 H758 V186" style="stroke-dasharray:280 280"/><path class="stx st-tree o st5-tree" d="M500 164 H586 V186" style="stroke-dasharray:280 280"/><path class="stx st-tree r st5-drop" d="M242 232 V252" style="stroke-dasharray:20 20"/><path class="stx st-tree hold st5-drop" d="M414 232 V252" style="stroke-dasharray:20 20"/><path class="stx st-tree o st5-drop" d="M586 232 V252" style="stroke-dasharray:20 20"/><path class="stx st-tree p st5-drop" d="M758 232 V252" style="stroke-dasharray:20 20"/>
+      <rect class="bx r " x="167" y="186" width="150" height="46" rx="7"/><rect class="stx st-cat r st5-cat" x="167" y="186" width="150" height="46" rx="7"/><text class="lb mid r" x="242" y="209">SETUP</text><rect class="bx b2" x="339" y="186" width="150" height="46" rx="7"/><rect class="stx st-cat b hold st5-cat" x="339" y="186" width="150" height="46" rx="7"/><text class="lb mid b" x="414" y="209">HOLD</text><rect class="bx o " x="511" y="186" width="150" height="46" rx="7"/><rect class="stx st-cat o st5-cat" x="511" y="186" width="150" height="46" rx="7"/><text class="lb mid o" x="586" y="209">TRAN / CAP</text><rect class="bx p " x="683" y="186" width="150" height="46" rx="7"/><rect class="stx st-cat p st5-cat" x="683" y="186" width="150" height="46" rx="7"/><text class="lb mid p" x="758" y="209">SI</text>
+      <rect class="bar" x="167" y="252" width="666" height="44" rx="7"/><rect class="stx st-bar st5-bar" x="167" y="252" width="666" height="44" rx="7"/>
+      <text class="lb mid g" x="500" y="274">修正規則 + 處置帳本 · 每筆改動都留下理由</text>
+      <rect class="bx p" x="876" y="186" width="100" height="70" rx="7"/><rect class="stx st-dsp st5-dsp" x="876" y="186" width="100" height="70" rx="7"/>
+      <text class="lb mid p" x="926" y="211" style="font-size:13px">DISPATCH</text>
+      <text class="tiny mid" x="926" y="234">skill → hub</text>
+      <path class="wire o" d="M862 140 V382 H810"/><path class="stx st-apath st5-apath" d="M810 382 H862 V140"/>
+      <rect class="apr" x="560" y="356" width="250" height="52" rx="8"/><rect class="stx st-aprw st5-aprw" x="560" y="356" width="250" height="52" rx="8"/>
+      <text class="lb mid o" x="685" y="374">HUMAN APPROVAL</text>
+      <text class="tiny mid" x="685" y="396">工程師審核後才套用</text><text class="stx st-hint st5-hint" x="685" y="342" text-anchor="middle">▲ 點一下放行</text><text class="stx st-ok st5-ok" x="685" y="342" text-anchor="middle">✓ 已核准 · 放行套用</text>
+      <path class="wire" d="M976 221 H1013 M1013 135 V319 M1013 135 H1048 M1013 227 H1048 M1013 319 H1048"/>
+      <circle class="node" cx="1013" cy="221" r="4"/><path class="stx st-wb st5-w1" d="M976 221 H1013 V135 H1048" style="stroke-dasharray:158 158"/>
+      <rect class="bx b" x="1048" y="104" width="242" height="62" rx="7"/><rect class="stx st-ch st5-cha" x="1048" y="104" width="242" height="62" rx="7"/><text class="lb " x="1066" y="130">CHANNEL A</text><text class="tiny" x="1066" y="152">partition-a · user</text><rect class="bx b " x="1048" y="196" width="242" height="62" rx="7"/><text class="lb " x="1066" y="222">CHANNEL B</text><text class="tiny" x="1066" y="244">partition-b · user</text><rect class="bx b " x="1048" y="288" width="242" height="62" rx="7"/><text class="lb " x="1066" y="314">CHANNEL C</text><text class="tiny" x="1066" y="336">partition-c · user</text>
+      <circle class="dot" cx="1169" cy="181" r="2.5"/><circle class="dot" cx="1169" cy="273" r="2.5"/>
+      <path class="wire" d="M1290 135 H1450 M1290 227 H1450 M1290 319 H1450"/><path class="stx st-wb st5-w2" d="M1290 135 H1450" style="stroke-dasharray:160 160"/>
+      <text class="tiny mid wss" x="1370" y="171">OUTBOUND WSS</text>
+      <text class="tiny mid" x="1370" y="190" style="font-size:11px">commands / results</text>
+      <rect class="bx" x="1450" y="104" width="230" height="62" rx="7"/><rect class="stx st-ch st5-sea" x="1450" y="104" width="230" height="62" rx="7"/><text class="lb r" x="1468" y="130">■ SESSION A</text><text class="tiny" x="1468" y="152">timing tool executor</text><rect class="bx  " x="1450" y="196" width="230" height="62" rx="7"/><text class="lb b" x="1468" y="222">■ SESSION B</text><text class="tiny" x="1468" y="244">timing tool executor</text><rect class="bx  " x="1450" y="288" width="230" height="62" rx="7"/><text class="lb p" x="1468" y="314">■ SESSION C</text><text class="tiny" x="1468" y="336">timing tool executor</text>
+      <text class="tiny mid" x="1565" y="366" style="letter-spacing:.16em">NO INBOUND</text><circle class="stx st-adot st5-adot" cx="810" cy="382" r="7"/><rect class="apr-hit" data-approve="1" x="556" y="352" width="258" height="60" rx="8"/>
+    </svg>
+  <div class="term walk" style="margin-top:22px">
+    <div class="bar"><span>• • •</span><span>一筆 hold violation 怎麼被修 · illustrative</span><span>示意圖</span></div>
+    <div class="ln"><span class="tag" style="color:var(--text-1)">preflight</span>corner、資料與權限齊全才開工</div>
+    <div class="ln"><span class="tag b">triage</span>#042 hold −3.0 ps → 走 hold 的修法階梯</div>
+    <div class="ln"><span class="tag o">fix</span>最小可行改動 · 先算 setup 代價 → 經 WebSocket hub 派到 Session A</div>
+    <div class="ln"><span class="tag g">readback</span>讀回新 timing：path 收斂 → keep；沒有證據 = pending</div>
+    <div class="ln"><span class="tag o">human</span>工程師審核 → 放行套用 <span class="g">✓</span></div>
+    <div class="ln res"><span class="tag g">principle</span>每次呼叫工具都是一個 skill、可單獨重跑 · 讀回通過才算數，沒證據 = pending · 修不了的標 needs human</div>
+  </div>
+  <div class="foot"><span>吳建賢 · Chien-Hsien Wu</span><span>In-house Agent</span></div>
+  <aside class="notes">
+    <p>每個 partition 的 <strong>in-house agent</strong> 用 <strong>Claude Agent SDK</strong> 寫，照左邊這排 <strong>skills</strong> 一步步修：前檢、自動修、分類，再依 violation 類型分成 setup、hold、tran/cap、SI 各自的修法，讀回、出口檢查之後才放行。</p>
+    <p>分工是：<strong>agent 只做判斷</strong>，真正的改動透過 skill 叫 in-house ECO 工具，經剛剛那個 <strong>WebSocket hub</strong> 送到 <strong>LSF 上的 live session</strong> 執行；session 只往外連、不開 inbound。</p>
+    <p>三個原則：每次工具呼叫都是一個 skill、可以單獨重跑；<strong>讀回通過才算數</strong>，沒證據就是 pending；修不了的標 needs human。</p>
+    <p>底下是<strong>一筆 hold violation 實際走過的路</strong>：分類、擬最小改動並先算 setup 代價、派到 session、讀回、最後人來核准。</p>
+    <p>（動畫：逗號／句號一步一步走，最後點 HUMAN APPROVAL 放行）</p>
+    <p>session 一多，top agent 下指令用的派送本身就成了瓶頸。</p>
+  </aside>
+</section>
+
+<!-- ============ 07 SESSION PLATFORM ============ -->
+<section class="slide" data-title="Session platform">
+  <div class="pg">06 / 14</div>
+  <p class="kicker"><span class="pn">4 / 4</span>NVIDIA · LSF Farm 派送 × ECO 平台</p>
+  <h2 class="t2">讓派送工具，不只是派送工具</h2>
+  <p class="sub" style="margin-bottom:30px">先重寫公司 LSF farm 的派送機制，再把它變成看得見每一筆 ECO 的平台</p>
+  <div class="two">
+    <div class="box glow-b pt2">
+      <div class="hd"><span class="num b">01</span><div><div class="lbl" style="color:var(--blue)">重寫 LSF farm 派送</div><div class="sm">更快、而且絕不重複派送</div></div></div>
+      <div class="grid3" style="gap:16px;margin-top:22px">
+        <div class="box"><div class="stat"><div class="v b">3.2×</div><div class="l">派送吞吐量</div></div></div>
+        <div class="box"><div class="stat"><div class="v b">150×</div><div class="l">輪詢更快</div></div></div>
+        <div class="box glow-g"><div class="stat"><div class="v g">0</div><div class="l">重複派送<br><span class="dim">32 路並行</span></div></div></div>
+      </div>
+      <div class="term" style="margin-top:18px;font-size:18px;line-height:1.8">
+        <div class="bar"><span>before → after</span><span>illustrative</span></div>
+        <div><span class="tag r">before</span>送上 farm 就看不到，只能一直輪詢</div>
+        <div><span class="tag g">after</span>session 主動回報 · 一個 channel 一個 session</div>
+        <div><span class="tag b">nodes</span>LSF 節點只往外連，不開 inbound</div>
+      </div>
+    </div>
+    <div class="box glow-g pt2">
+      <div class="hd"><span class="num g">02</span><div><div class="lbl g">不只是派送：ECO 平台</div><div class="sm">每一筆修正的狀態，即時看得見</div></div></div>
+      <div class="box" style="padding:0;overflow:hidden;margin-top:22px">
+        <div class="row" style="justify-content:space-between;padding:12px 18px;border-bottom:1px solid var(--border)">
+          <span class="lbl" style="font-size:16px"><span class="g">●</span>&nbsp; PARTITION A <span class="o" style="margin-left:8px">▸ RUNNING</span></span>
+          <span class="mono o" style="font-size:16px">1 needs human</span>
+        </div>
+        <table class="con sm2">
+          <tr><th>Violation</th><th>Change</th><th>Outcome</th><th>Slack (ps)</th></tr>
+          <tr><td>#017</td><td class="dim">—</td><td class="o">Needs human</td><td>−8.4 → —</td></tr>
+          <tr class="sel"><td>#042</td><td class="g">+ BUF</td><td>Pending</td><td>−3.0 → —</td></tr>
+          <tr><td>#108</td><td class="g">resize</td><td class="g">Applied</td><td>−0.6 → +0.4</td></tr>
+        </table>
+      </div>
+      <div class="chips3">
+        <span class="chip">即時狀態</span><span class="chip">修正歷史</span><span class="chip p">agent 提案</span><span class="chip o">需要人的排最前</span><span class="chip b">跨 partition 案件</span><span class="chip g">網頁讀取 12×</span>
+      </div>
+    </div>
+  </div>
+  <p class="caption">原型壓測，對照原本的派送系統 · 示意畫面</p>
+  <div class="foot"><span>吳建賢 · Chien-Hsien Wu</span><span>LSF Farm × Platform</span></div>
+  <aside class="notes">
+    <p>最後一個，我想講的是<strong>讓派送工具不只是派送工具</strong>，分兩個重點。</p>
+    <p><strong>第一，派送本身</strong>：top agent 就是透過它下指令。我重寫了公司派送 LSF 的 farm 機制。原本 job 送上 farm 就是黑盒子，只能一直輪詢；改寫後 session 主動回報。原型壓測對照原本的系統：<strong>吞吐量 3.2 倍、輪詢快 150 倍</strong>，而且 <strong>32 路並行下零重複派送</strong>——同一筆 ECO 改兩次就壞了，所以這點我最在意。</p>
+    <p><strong>第二，不只是派送</strong>：因為每個 session 都會回報，派送工具就變成一個 <strong>ECO 平台</strong>。每一筆修正的狀態、歷史、agent 的提案都即時看得見，需要人的排最前面，剛剛跨 partition 的共享案件也是在這裡看，網頁讀取也快了 12 倍。</p>
+    <p>NVIDIA 的部分到這裡，接下來講前端。</p>
+  </aside>
+</section>
+
+<!-- ============ FE1 TSMC ADPLL ============ -->
+<section class="slide" data-title="TSMC ADPLL">
+  <div class="pg">07 / 14</div>
+  <p class="kicker"><span class="pn">1 / 3</span>Front-end · TSMC 數位設計實習</p>
+  <h2 class="t2">N7 ADPLL 數位區塊：運算單元共用</h2>
+  <p class="sub" style="margin-bottom:26px">2024 暑期 TSMC DTP 實習：負責優化 N7 ADPLL 的數位電路，優化結果後續被設計採用</p>
+  <svg class="arch fe" viewBox="0 0 1700 340" role="img" aria-label="乘法器共用：優化前後對照"><defs><marker id="mt" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" class="ahd "/></marker><marker id="mtg" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" class="ahd g"/></marker><marker id="mta" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" class="ahd o"/></marker></defs><rect class="pnl" x="0" y="0" width="790" height="340" rx="12"/><text class="lb r" x="26" y="40">BEFORE</text><text class="tiny" x="26" y="68">3 顆乘法器各算一份，算完才用 MUX 選</text><text class="tagt r" x="764" y="40" text-anchor="end">3 × MUL</text><text class="opl" x="30" y="129">A</text><path class="wire w2" d="M56 114 H175" marker-end="url(#mt)"/><path class="wire w2" d="M56 134 H175" marker-end="url(#mt)"/><circle class="mul r" cx="200" cy="124" r="26"/><text class="op x mid" x="200" y="124">×</text><text class="opl" x="30" y="207">B</text><path class="wire w2" d="M56 192 H175" marker-end="url(#mt)"/><path class="wire w2" d="M56 212 H175" marker-end="url(#mt)"/><circle class="mul r" cx="200" cy="202" r="26"/><text class="op x mid" x="200" y="202">×</text><text class="opl" x="30" y="291">C</text><path class="wire w2" d="M56 276 H375" marker-end="url(#mt)"/><path class="wire w2" d="M56 296 H375" marker-end="url(#mt)"/><circle class="mul r" cx="400" cy="286" r="26"/><text class="op x mid" x="400" y="286">×</text><path class="wire w2" d="M226 124 H316" marker-end="url(#mt)"/><path class="wire w2" d="M226 202 H316" marker-end="url(#mt)"/><polygon class="mux " points="320,96 366,124 366,208 320,236"/><text class="muxl mid" x="343" y="166" transform="rotate(90 343 166)">MUX</text><path class="wire sel" d="M343 222 V252"/><text class="tiny dimt" x="351" y="250">sel</text><path class="wire w2" d="M366 166 H516" marker-end="url(#mt)"/><path class="wire w2" d="M426 286 H516" marker-end="url(#mt)"/><polygon class="mux " points="520,136 566,172 566,280 520,316"/><text class="muxl mid" x="543" y="226" transform="rotate(90 543 226)">MUX</text><path class="wire sel" d="M543 298 V326"/><text class="tiny dimt" x="551" y="324">sel</text><path class="wire w2" d="M566 226 H680" marker-end="url(#mt)"/><text class="io" x="690" y="232">OUT</text><path class="bigarr" d="M808 170 H888" marker-end="url(#mta)"/><text class="lb2 mid o" x="848" y="150">共用</text><rect class="pnl g" x="910" y="0" width="790" height="340" rx="12"/><text class="lb g" x="936" y="40">AFTER</text><text class="tiny" x="936" y="68">先用 MUX 選運算元，只留 1 顆乘法器</text><text class="tagt g" x="1674" y="40" text-anchor="end">1 × MUL</text><text class="opl" x="940" y="129">A</text><path class="wire w2" d="M966 114 H1006" marker-end="url(#mt)"/><path class="wire w2" d="M966 134 H1006" marker-end="url(#mt)"/><rect class="bx b" x="1010" y="98" width="150" height="52" rx="8"/><text class="lb2 mid b" x="1085" y="124">BIT EXT</text><path class="wire w2 g" d="M1160 114 H1226" marker-end="url(#mtg)"/><path class="wire w2 g" d="M1160 134 H1226" marker-end="url(#mtg)"/><text class="opl" x="940" y="207">B</text><path class="wire w2" d="M966 192 H1006" marker-end="url(#mt)"/><path class="wire w2" d="M966 212 H1006" marker-end="url(#mt)"/><rect class="bx b" x="1010" y="176" width="150" height="52" rx="8"/><text class="lb2 mid b" x="1085" y="202">BIT EXT</text><path class="wire w2 g" d="M1160 192 H1226" marker-end="url(#mtg)"/><path class="wire w2 g" d="M1160 212 H1226" marker-end="url(#mtg)"/><text class="tiny mid" x="1085" y="252">補齊位寬才能共用</text><polygon class="mux g" points="1230,96 1276,124 1276,208 1230,236"/><text class="muxl mid" x="1253" y="166" transform="rotate(90 1253 166)">MUX</text><path class="wire sel" d="M1253 222 V252"/><text class="tiny dimt" x="1261" y="250">sel</text><path class="wire w2 g" d="M1276 156 H1426" marker-end="url(#mtg)"/><path class="wire w2 g" d="M1276 176 H1426" marker-end="url(#mtg)"/><text class="opl" x="940" y="291">C</text><path class="wire w2" d="M966 276 H1426" marker-end="url(#mt)"/><path class="wire w2" d="M966 296 H1426" marker-end="url(#mt)"/><polygon class="mux g" points="1430,136 1476,172 1476,280 1430,316"/><text class="muxl mid" x="1453" y="226" transform="rotate(90 1453 226)">MUX</text><path class="wire sel" d="M1453 298 V326"/><text class="tiny dimt" x="1461" y="324">sel</text><path class="wire w2 g" d="M1476 216 H1523" marker-end="url(#mtg)"/><path class="wire w2 g" d="M1476 236 H1523" marker-end="url(#mtg)"/><circle class="mul g" cx="1550" cy="226" r="28"/><text class="op x mid" x="1550" y="226">×</text><path class="wire w2 g" d="M1578 226 H1626" marker-end="url(#mtg)"/><text class="io" x="1634" y="232">OUT</text></svg>
+  <div class="spec" style="margin-top:20px"><div><span class="k">power</span><span class="v g">−16%</span><span class="u">ADPLL 數位區塊</span></div><div><span class="k">area</span><span class="v g">−21%</span><span class="u">ADPLL 數位區塊</span></div><div><span class="k">做法</span><span class="v t">先選運算元、再共用乘法器</span><span class="u">同一時間只會用到一組運算</span></div></div>
+  <div class="term" style="margin-top:16px;font-size:18px;line-height:1.75">
+    <div><span class="tag o">verdi</span>把內部狀態機可視化，追 FSM 行為</div>
+    <div><span class="tag o">vc_static</span>CDC、DFT 分析 · 另用 JasperGold 形式驗證、Design Compiler 合成</div>
+  </div>
+  <div class="foot"><span>吳建賢 · Chien-Hsien Wu</span><span>TSMC ADPLL</span></div>
+  <aside class="notes">
+    <p>前端先講 <strong>TSMC 實習</strong>。2024 暑假參加 DTP，負責優化 <strong>N7 ADPLL 的數位電路</strong>。</p>
+    <p>做法是<strong>運算單元共用</strong>：原本三組運算各有一顆乘法器，算完才用 MUX 選其中一個結果，但同一時間只會用到一組。所以我把 MUX 移到乘法器前面，<strong>先選運算元、再乘</strong>，三組共用一顆乘法器；位寬不同的運算元先做 bit extension 對齊。</p>
+    <p>結果是 ADPLL 數位區塊<strong>功耗降 16%、面積降 21%</strong>，優化後續也被設計採用。</p>
+    <p>另外用 Verdi 把內部狀態機可視化來追行為，用 VC_STATIC 做 CDC、DFT 分析，也用 JasperGold 做形式驗證。</p>
+  </aside>
+</section>
+
+<!-- ============ FE2 SPHERE DECODER ============ -->
+<section class="slide" data-title="Sphere decoder">
+  <div class="pg">08 / 14</div>
+  <p class="kicker"><span class="pn">2 / 3</span>Front-end · MIMO Sphere Decoder · 8-PSK · K = 4</p>
+  <h2 class="t2" style="margin-bottom:26px">4×4 MIMO K-best sphere decoder</h2>
+  <svg class="arch fe" viewBox="0 0 1700 244" role="img" aria-label="K-best sphere decoder 四層八級 pipeline"><defs><marker id="ms" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" class="ahd "/></marker><marker id="msb" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" class="ahd b"/></marker></defs><rect class="bx b" x="0" y="40" width="140" height="136" rx="10"/><text class="lb2 b" x="16" y="68">INPUT</text><text class="tiny" x="16" y="100">R：先載入 4 拍</text><text class="tiny" x="16" y="126">ŷ：每拍 1 筆</text><text class="tiny" x="16" y="152">12-bit Q4.8</text><path class="bus" d="M70 176 V206 H1210"/><rect class="bx" x="170" y="36" width="300" height="142" rx="10"/><text class="lb2" x="184" y="58">LAYER 1</text><path class="wire rin" d="M270 4 V68" marker-end="url(#msb)"/><text class="tiny rl" x="280" y="16">R44</text><rect class="bx p" x="184" y="72" width="104" height="72" rx="7"/><text class="lb2 mid p" x="236" y="98">PDE1</text><text class="tiny mid" x="236" y="124">8 條</text><path class="wire" d="M288 108 H294"/><rect class="ff" x="294" y="66" width="12" height="84" rx="2"/><path class="ffck" d="M294 135 L302 141 L294 147"/><text class="stg mid" x="300" y="166">S1</text><path class="wire" d="M306 108 H312"/><rect class="bx o" x="312" y="72" width="112" height="72" rx="7"/><text class="lb2 mid o" x="368" y="98">SORT</text><text class="tiny mid" x="368" y="124">8 → 4</text><path class="wire" d="M424 108 H430"/><rect class="ff" x="430" y="66" width="12" height="84" rx="2"/><path class="ffck" d="M430 135 L438 141 L430 147"/><text class="stg mid" x="436" y="166">S2</text><path class="bus" d="M210 206 V148" marker-end="url(#msb)"/><rect class="dly" x="356" y="194" width="46" height="24" rx="5"/><text class="tiny mid" x="379" y="206">z⁻²</text><path class="wire w2" d="M442 108 H506" marker-end="url(#ms)"/><rect class="bx" x="496" y="36" width="300" height="142" rx="10"/><text class="lb2" x="510" y="58">LAYER 2</text><path class="wire rin" d="M596 4 V68" marker-end="url(#msb)"/><text class="tiny rl" x="606" y="16">R33 · R34</text><rect class="bx p" x="510" y="72" width="104" height="72" rx="7"/><text class="lb2 mid p" x="562" y="98">PDE2</text><text class="tiny mid" x="562" y="124">32 條</text><path class="wire" d="M614 108 H620"/><rect class="ff" x="620" y="66" width="12" height="84" rx="2"/><path class="ffck" d="M620 135 L628 141 L620 147"/><text class="stg mid" x="626" y="166">S3</text><path class="wire" d="M632 108 H638"/><rect class="bx o" x="638" y="72" width="112" height="72" rx="7"/><text class="lb2 mid o" x="694" y="98">SORT</text><text class="tiny mid" x="694" y="124">32 → 4</text><path class="wire" d="M750 108 H756"/><rect class="ff" x="756" y="66" width="12" height="84" rx="2"/><path class="ffck" d="M756 135 L764 141 L756 147"/><text class="stg mid" x="762" y="166">S4</text><path class="bus" d="M536 206 V148" marker-end="url(#msb)"/><rect class="dly" x="682" y="194" width="46" height="24" rx="5"/><text class="tiny mid" x="705" y="206">z⁻²</text><path class="wire w2" d="M768 108 H832" marker-end="url(#ms)"/><rect class="bx" x="822" y="36" width="300" height="142" rx="10"/><text class="lb2" x="836" y="58">LAYER 3</text><path class="wire rin" d="M922 4 V68" marker-end="url(#msb)"/><text class="tiny rl" x="932" y="16">R22 · R23 · R24</text><rect class="bx p" x="836" y="72" width="104" height="72" rx="7"/><text class="lb2 mid p" x="888" y="98">PDE3</text><text class="tiny mid" x="888" y="124">32 條</text><path class="wire" d="M940 108 H946"/><rect class="ff" x="946" y="66" width="12" height="84" rx="2"/><path class="ffck" d="M946 135 L954 141 L946 147"/><text class="stg mid" x="952" y="166">S5</text><path class="wire" d="M958 108 H964"/><rect class="bx o" x="964" y="72" width="112" height="72" rx="7"/><text class="lb2 mid o" x="1020" y="98">SORT</text><text class="tiny mid" x="1020" y="124">32 → 4</text><path class="wire" d="M1076 108 H1082"/><rect class="ff" x="1082" y="66" width="12" height="84" rx="2"/><path class="ffck" d="M1082 135 L1090 141 L1082 147"/><text class="stg mid" x="1088" y="166">S6</text><path class="bus" d="M862 206 V148" marker-end="url(#msb)"/><rect class="dly" x="1008" y="194" width="46" height="24" rx="5"/><text class="tiny mid" x="1031" y="206">z⁻²</text><path class="wire w2" d="M1094 108 H1158" marker-end="url(#ms)"/><rect class="bx" x="1148" y="36" width="300" height="142" rx="10"/><text class="lb2" x="1162" y="58">LAYER 4</text><path class="wire rin" d="M1248 4 V68" marker-end="url(#msb)"/><text class="tiny rl" x="1258" y="16">R11 … R14</text><rect class="bx p" x="1162" y="72" width="104" height="72" rx="7"/><text class="lb2 mid p" x="1214" y="98">PDE4</text><text class="tiny mid" x="1214" y="124">32 條</text><path class="wire" d="M1266 108 H1272"/><rect class="ff" x="1272" y="66" width="12" height="84" rx="2"/><path class="ffck" d="M1272 135 L1280 141 L1272 147"/><text class="stg mid" x="1278" y="166">S7</text><path class="wire" d="M1284 108 H1290"/><rect class="bx o" x="1290" y="72" width="112" height="72" rx="7"/><text class="lb2 mid o" x="1346" y="98">FIND MIN</text><text class="tiny mid" x="1346" y="124">32 → 1</text><path class="wire" d="M1402 108 H1408"/><rect class="ff" x="1408" y="66" width="12" height="84" rx="2"/><path class="ffck" d="M1408 135 L1416 141 L1408 147"/><text class="stg mid" x="1414" y="166">S8</text><path class="bus" d="M1188 206 V148" marker-end="url(#msb)"/><path class="wire w2" d="M140 108 H180" marker-end="url(#ms)"/><text class="tiny" x="160" y="234">ŷ 每層延遲 2 拍，跟 pipeline 對齊</text><path class="wire w2" d="M1420 108 H1476" marker-end="url(#ms)"/><rect class="bx g" x="1480" y="40" width="220" height="136" rx="10"/><text class="lb2 g" x="1496" y="68">PATH → DATA</text><text class="tiny" x="1496" y="100">最佳 path（12 bit）</text><text class="tiny" x="1496" y="126">→ 4 個 8-PSK 符號</text><text class="tiny" x="1496" y="152">x̂ 輸出</text></svg>
+  <div style="height:16px"></div>
+  <svg class="arch fe" viewBox="0 0 1700 300" role="img" aria-label="PDE 電路與排序網路細節"><defs><marker id="ms2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" class="ahd "/></marker></defs><rect class="pnl" x="0" y="0" width="1010" height="296" rx="12"/><text class="lb2 p" x="22" y="34">PDE 電路 · 每條候選</text><text class="tiny" x="988" y="34" text-anchor="end">每層 32 條並行（4 survivor × 8）</text><text class="sig2" x="22" y="146">ŷ</text><path class="wire w2" d="M60 140 H174" marker-end="url(#ms2)"/><circle class="mul " cx="200" cy="140" r="22"/><text class="op mid" x="200" y="140">−</text><path class="wire w2" d="M222 140 H354" marker-end="url(#ms2)"/><circle class="mul " cx="380" cy="140" r="22"/><text class="op mid" x="380" y="140">−</text><path class="wire w2" d="M402 140 H466" marker-end="url(#ms2)"/><rect class="bx p" x="470" y="110" width="150" height="60" rx="8"/><text class="lb2 mid p" x="545" y="140">|Re| + |Im|</text><path class="wire w2" d="M620 140 H674" marker-end="url(#ms2)"/><circle class="mul " cx="700" cy="140" r="22"/><text class="op mid" x="700" y="140">+</text><path class="wire w2" d="M722 140 H776" marker-end="url(#ms2)"/><rect class="bx o" x="780" y="108" width="210" height="64" rx="8"/><text class="lb2 mid o" x="885" y="132">{ path, PDE }</text><text class="tiny mid" x="885" y="158">24 bit → SORT</text><text class="tiny mid" x="700" y="72">上層 PDE</text><path class="wire w2" d="M700 84 V114" marker-end="url(#ms2)"/><text class="tiny mid" x="885" y="92">path 多接 3 bit</text><rect class="bx b" x="110" y="202" width="180" height="62" rx="8"/><text class="lb2 mid b" x="200" y="226">R · s（本層）</text><text class="tiny mid" x="200" y="250">8 種候選</text><path class="wire w2" d="M200 202 V166" marker-end="url(#ms2)"/><rect class="bx b" x="300" y="202" width="170" height="62" rx="8"/><text class="lb2 mid b" x="385" y="226">R · ŝ（已選）</text><text class="tiny mid" x="385" y="250">8:1 MUX ← path</text><path class="wire w2" d="M380 202 V166" marker-end="url(#ms2)"/><text class="tiny" x="492" y="216">×s：±1、±j 只是正負號 / 實虛部交換</text><text class="tiny" x="492" y="242">×0.707 ≈ (x>>1)+(x>>2)；8 個乘積每層只算一次再共用</text><text class="tiny gtx" x="492" y="268">→ PDE 不用乘法器；|Re|+|Im| 取代平方</text><rect class="pnl" x="1040" y="0" width="660" height="296" rx="12"/><text class="lb2 o" x="1062" y="34">SORT 網路 · 32 → 4</text><text class="tiny" x="1678" y="34" text-anchor="end">bitonic · compare-swap</text><path class="wire w2" d="M1062 72 H1098" marker-end="url(#ms2)"/><path class="slash" d="M1074 79 L1082 65"/><text class="tiny mid" x="1078" y="60">8</text><rect class="bx o" x="1102" y="52" width="124" height="40" rx="6"/><text class="lb2 mid o" x="1164" y="72">MERGE8</text><path class="wire w2" d="M1062 124 H1098" marker-end="url(#ms2)"/><path class="slash" d="M1074 131 L1082 117"/><text class="tiny mid" x="1078" y="112">8</text><rect class="bx o" x="1102" y="104" width="124" height="40" rx="6"/><text class="lb2 mid o" x="1164" y="124">MERGE8</text><path class="wire w2" d="M1062 176 H1098" marker-end="url(#ms2)"/><path class="slash" d="M1074 183 L1082 169"/><text class="tiny mid" x="1078" y="164">8</text><rect class="bx o" x="1102" y="156" width="124" height="40" rx="6"/><text class="lb2 mid o" x="1164" y="176">MERGE8</text><path class="wire w2" d="M1062 228 H1098" marker-end="url(#ms2)"/><path class="slash" d="M1074 235 L1082 221"/><text class="tiny mid" x="1078" y="216">8</text><rect class="bx o" x="1102" y="208" width="124" height="40" rx="6"/><text class="lb2 mid o" x="1164" y="228">MERGE8</text><path class="wire" d="M1226 72 H1256 V90 H1282" marker-end="url(#ms2)"/><path class="wire" d="M1226 124 H1256 V106 H1282" marker-end="url(#ms2)"/><rect class="bx o" x="1286" y="74" width="150" height="48" rx="6"/><text class="lb2 mid o" x="1361" y="91">MERGE16</text><text class="tiny mid" x="1361" y="111">16 → 4</text><path class="wire" d="M1226 176 H1256 V194 H1282" marker-end="url(#ms2)"/><path class="wire" d="M1226 228 H1256 V210 H1282" marker-end="url(#ms2)"/><rect class="bx o" x="1286" y="178" width="150" height="48" rx="6"/><text class="lb2 mid o" x="1361" y="195">MERGE16</text><text class="tiny mid" x="1361" y="215">16 → 4</text><path class="wire" d="M1436 98 H1466 V142 H1492" marker-end="url(#ms2)"/><path class="wire" d="M1436 202 H1466 V158 H1492" marker-end="url(#ms2)"/><rect class="bx o" x="1496" y="126" width="120" height="48" rx="6"/><text class="lb2 mid o" x="1556" y="143">SELECT</text><text class="tiny mid" x="1556" y="163">8 → 4</text><path class="wire w2" d="M1616 150 H1680" marker-end="url(#ms2)"/><text class="tiny mid" x="1648" y="136">4 條</text><text class="tiny" x="1062" y="282">比 12-bit PDE，整筆 24-bit 紀錄一起換 · 第 4 層取最小 = find min</text></svg>
+  <div class="spec" style="margin-top:18px"><div><span class="k">cycle time</span><span class="v g">0.71 ns</span><span class="u">8 級 pipeline</span></div><div><span class="k">cell area</span><span class="v">42,337 µm²</span><span class="u">N16 標準元件 · DC 合成</span></div><div><span class="k">throughput</span><span class="v">1 ŷ / cycle</span><span class="u">R 載入後連續輸入</span></div><div><span class="k">verify</span><span class="v">1,056 bits</span><span class="u">對 MATLAB 定點 golden 全部一致</span></div></div>
+  <div class="foot"><span>吳建賢 · Chien-Hsien Wu</span><span>Sphere Decoder</span></div>
+  <aside class="notes">
+    <p>第二個是 <strong>4×4 MIMO 的 K-best sphere decoder</strong>，8-PSK、K = 4。上面是整體架構：先用 4 拍載入 QR 分解後的 R，之後 <strong>每拍進一筆 ŷ</strong>；四層各有 PDE 跟 SORT，<strong>每層兩級 pipeline、共 8 級</strong>，ŷ 每層延遲兩拍對齊。</p>
+    <p>左下是 PDE 的電路：每條候選算 ŷ 減掉 R 乘符號，取 <strong>|Re|+|Im|</strong> 當距離，再加上一層留下來的 PDE。乘符號的部分<strong>沒有用乘法器</strong>：8-PSK 的 ±1、±j 只是正負號或實虛部交換，0.707 用 shift-add 近似；8 個乘積每層只算一次，再用 path 的 3-bit symbol index 透過 8 選 1 MUX 分給各條候選。</p>
+    <p>右下是排序網路：32 筆分 4 組做 MERGE8，再兩兩 MERGE16 各留 4 筆，最後 8 取 4；比的是 12-bit 的 PDE，整筆 24-bit 紀錄一起交換。第 4 層取最小的那條，path 轉回符號輸出。</p>
+    <p>（被問到是不是完整排序時）最小值一定正確，所以最後的最佳路徑沒問題；第 1 層因為 8-PSK 的距離照角度排是 bitonic，8 取 4 也是準的。但第 2、3 層留下的 4 條不保證是真正的前 4 名，這套網路比完整排序少了幾級比較，等於近似；golden 用的是同一套網路，所以 bit-exact 一致。</p>
+    <p>合成用 <strong>N16 標準元件</strong>：cycle time 0.71 ns、面積約 42,337 µm²；VCS 跟 MATLAB 定點 golden 比對，1,056 bits 全部一致。</p>
+  </aside>
+</section>
+
+<!-- ============ FE3 CNN ============ -->
+<section class="slide" data-title="CNN accelerator">
+  <div class="pg">09 / 14</div>
+  <p class="kicker"><span class="pn">3 / 3</span>Front-end · Quantized CNN · 手勢辨識 20 類</p>
+  <h2 class="t2">QAT INT8 CNN：從量化訓練到 APR</h2>
+  <p class="sub" style="margin-bottom:22px">PyTorch QAT 帶著 fake-quant 訓練，convert() 轉成 INT8，再把 bias 與 scale 換成整數參數給 RTL</p>
+  <svg class="arch fe" viewBox="0 0 1700 206" role="img" aria-label="QAT INT8 CNN 硬體架構"><defs><marker id="mqa" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" class="ahd "/></marker><marker id="mqg" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" class="ahd g"/></marker></defs><text class="tiny" x="0" y="36">10×10×1 · uint8</text><rect class="bx b" x="2" y="48" width="122" height="122" rx="6"/><rect class="px" x="27" y="61" width="11" height="11" rx="2"/><rect class="px" x="87" y="61" width="11" height="11" rx="2"/><rect class="px" x="27" y="73" width="11" height="11" rx="2"/><rect class="px" x="75" y="73" width="11" height="11" rx="2"/><rect class="px" x="39" y="85" width="11" height="11" rx="2"/><rect class="px" x="75" y="85" width="11" height="11" rx="2"/><rect class="px" x="39" y="97" width="11" height="11" rx="2"/><rect class="px" x="63" y="97" width="11" height="11" rx="2"/><rect class="px" x="39" y="109" width="11" height="11" rx="2"/><rect class="px" x="51" y="109" width="11" height="11" rx="2"/><rect class="px" x="63" y="109" width="11" height="11" rx="2"/><rect class="px" x="39" y="121" width="11" height="11" rx="2"/><rect class="px" x="51" y="121" width="11" height="11" rx="2"/><rect class="px" x="63" y="121" width="11" height="11" rx="2"/><rect class="px" x="75" y="121" width="11" height="11" rx="2"/><rect class="px" x="39" y="133" width="11" height="11" rx="2"/><rect class="px" x="51" y="133" width="11" height="11" rx="2"/><rect class="px" x="63" y="133" width="11" height="11" rx="2"/><rect class="px" x="75" y="133" width="11" height="11" rx="2"/><rect class="px" x="51" y="145" width="11" height="11" rx="2"/><rect class="px" x="63" y="145" width="11" height="11" rx="2"/><path class="wire w2" d="M124 109 H166" marker-end="url(#mqa)"/><rect class="pnl cv" x="170" y="22" width="330" height="176" rx="12"/><text class="lb2 mid o" x="335" y="46">CONV 1 · 4 個 PE</text><rect class="bx o" x="188" y="62" width="294" height="26" rx="5"/><text class="tiny mid" x="335" y="75">PE · 3×3 conv → ReLU → pool</text><rect class="bx o" x="188" y="94" width="294" height="26" rx="5"/><text class="tiny mid" x="335" y="107">PE · 3×3 conv → ReLU → pool</text><rect class="bx o" x="188" y="126" width="294" height="26" rx="5"/><text class="tiny mid" x="335" y="139">PE · 3×3 conv → ReLU → pool</text><rect class="bx o" x="188" y="158" width="294" height="26" rx="5"/><text class="tiny mid" x="335" y="171">PE · 3×3 conv → ReLU → pool</text><path class="wire w2" d="M500 109 H566" marker-end="url(#mqa)"/><text class="tiny mid" x="533" y="96">4×4×4</text><rect class="pnl cv" x="570" y="22" width="330" height="176" rx="12"/><text class="lb2 mid o" x="735" y="46">CONV 2 · 6 ch 時間多工</text><rect class="bx o" x="588" y="64" width="140" height="120" rx="6"/><text class="lb2 mid o" x="658" y="112">frame</text><text class="lb2 mid o" x="658" y="136">buffer + FSM</text><path class="wire" d="M728 124 H742" marker-end="url(#mqa)"/><rect class="bx o" x="746" y="64" width="136" height="120" rx="6"/><text class="lb2 mid o" x="814" y="112">shared PE</text><text class="tiny mid" x="814" y="136">36 MAC</text><path class="wire w2" d="M900 109 H966" marker-end="url(#mqa)"/><text class="tiny mid" x="933" y="96">1×1×6</text><rect class="pnl fcp" x="970" y="22" width="250" height="176" rx="12"/><text class="lb2 mid p" x="1095" y="46">FC × 2</text><rect class="bx p" x="988" y="64" width="214" height="54" rx="6"/><text class="lb2 mid p" x="1095" y="91">fc_shared + FIFO</text><rect class="bx p" x="988" y="128" width="214" height="54" rx="6"/><text class="lb2 mid p" x="1095" y="155">6 → 6 → 20</text><path class="wire w2 g" d="M1220 109 H1266" marker-end="url(#mqg)"/><rect class="bx g" x="1270" y="48" width="170" height="122" rx="8"/><text class="lb2 mid g" x="1355" y="92">20 類分數</text><text class="tiny mid" x="1355" y="124">uint8 × 20</text><rect class="pnl" x="1470" y="22" width="230" height="176" rx="12"/><text class="lb2 mid b" x="1585" y="44">PyTorch QAT</text><rect class="bx" x="1477" y="58" width="216" height="28" rx="6"/><text class="tiny mid" x="1585" y="72">FP32 + fake-quant</text><rect class="bx b" x="1477" y="110" width="216" height="28" rx="6"/><text class="tiny mid" x="1585" y="124">INT8 權重 · UINT8</text><rect class="bx" x="1477" y="162" width="216" height="28" rx="6"/><text class="tiny mid" x="1585" y="176">INT32 bias · Q31 乘數</text><text class="tiny mid dimt" x="1585" y="98">↓ convert()</text><text class="tiny mid dimt" x="1585" y="150">↓ 匯出給 RTL</text></svg>
+  <div style="height:14px"></div>
+  <svg class="arch fe" viewBox="0 0 1700 300" role="img" aria-label="line buffer 與 requant pipeline"><defs><marker id="mqa2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" class="ahd "/></marker><marker id="mqg2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" class="ahd g"/></marker></defs><rect class="pnl" x="0" y="0" width="860" height="296" rx="12"/><text class="lb2 b" x="22" y="34">LINE BUFFER × 2 + 3×3 視窗</text><text class="tiny" x="838" y="34" text-anchor="end">每拍進 1 像素 → 出 1 個 3×3 視窗</text><text class="tiny mid" x="124" y="58">輸入影像 10 × 10</text><g class="qa-band"><rect class="buf" x="24" y="130" width="200" height="40" rx="0"/></g><path class="gridln" d="M24 70 V270"/><path class="gridln" d="M24 70 H224"/><path class="gridln" d="M44 70 V270"/><path class="gridln" d="M24 90 H224"/><path class="gridln" d="M64 70 V270"/><path class="gridln" d="M24 110 H224"/><path class="gridln" d="M84 70 V270"/><path class="gridln" d="M24 130 H224"/><path class="gridln" d="M104 70 V270"/><path class="gridln" d="M24 150 H224"/><path class="gridln" d="M124 70 V270"/><path class="gridln" d="M24 170 H224"/><path class="gridln" d="M144 70 V270"/><path class="gridln" d="M24 190 H224"/><path class="gridln" d="M164 70 V270"/><path class="gridln" d="M24 210 H224"/><path class="gridln" d="M184 70 V270"/><path class="gridln" d="M24 230 H224"/><path class="gridln" d="M204 70 V270"/><path class="gridln" d="M24 250 H224"/><path class="gridln" d="M224 70 V270"/><path class="gridln" d="M24 270 H224"/><g class="qa-win"><rect class="buf2" x="24" y="170" width="60" height="20" rx="0"/><rect class="cur qa-cur" x="64" y="170" width="20" height="20"/><rect class="win" x="24" y="130" width="60" height="60" rx="1"/></g><rect class="cell" x="450" y="96" width="22" height="24" rx="3"/><rect class="cell" x="476" y="96" width="22" height="24" rx="3"/><rect class="cell" x="502" y="96" width="22" height="24" rx="3"/><rect class="cell" x="528" y="96" width="22" height="24" rx="3"/><rect class="cell" x="554" y="96" width="22" height="24" rx="3"/><rect class="cell" x="580" y="96" width="22" height="24" rx="3"/><rect class="cell" x="606" y="96" width="22" height="24" rx="3"/><rect class="cell" x="632" y="96" width="22" height="24" rx="3"/><rect class="cell" x="658" y="96" width="22" height="24" rx="3"/><rect class="cell" x="684" y="96" width="22" height="24" rx="3"/><text class="tiny dimt" x="716" y="113">LB2 · r−2</text><rect class="cell" x="450" y="134" width="22" height="24" rx="3"/><rect class="cell" x="476" y="134" width="22" height="24" rx="3"/><rect class="cell" x="502" y="134" width="22" height="24" rx="3"/><rect class="cell" x="528" y="134" width="22" height="24" rx="3"/><rect class="cell" x="554" y="134" width="22" height="24" rx="3"/><rect class="cell" x="580" y="134" width="22" height="24" rx="3"/><rect class="cell" x="606" y="134" width="22" height="24" rx="3"/><rect class="cell" x="632" y="134" width="22" height="24" rx="3"/><rect class="cell" x="658" y="134" width="22" height="24" rx="3"/><rect class="cell" x="684" y="134" width="22" height="24" rx="3"/><text class="tiny dimt" x="716" y="151">LB1 · r−1</text><g class="qa-tap"><rect class="tapc" x="500" y="92" width="26" height="70" rx="4"/><path class="wire w2 g qa-wb" d="M513 132 V122" marker-end="url(#mqg2)"/><path class="wire w2 g qa-wb" d="M513 180 V160" marker-end="url(#mqg2)"/></g><text class="tiny" x="450" y="84">tap = 目前這一欄 x：讀出兩列、再往上寫回</text><rect class="cell t" x="330" y="96" width="24" height="24" rx="3"/><rect class="cell t" x="358" y="96" width="24" height="24" rx="3"/><rect class="cell t" x="386" y="96" width="24" height="24" rx="3"/><rect class="cell t" x="330" y="134" width="24" height="24" rx="3"/><rect class="cell t" x="358" y="134" width="24" height="24" rx="3"/><rect class="cell t" x="386" y="134" width="24" height="24" rx="3"/><rect class="cell t" x="330" y="172" width="24" height="24" rx="3"/><rect class="cell t" x="358" y="172" width="24" height="24" rx="3"/><rect class="cell t" x="386" y="172" width="24" height="24" rx="3"/><text class="tiny mid" x="370" y="214">3×3 視窗暫存</text><clipPath id="qclip0"><rect x="327" y="94" width="86" height="28"/></clipPath><g clip-path="url(#qclip0)"><g class="qa-tok"><rect class="tok" x="337" y="103" width="10" height="10" rx="2"/><rect class="tok" x="365" y="103" width="10" height="10" rx="2"/><rect class="tok" x="393" y="103" width="10" height="10" rx="2"/><rect class="tok" x="421" y="103" width="10" height="10" rx="2"/></g></g><clipPath id="qclip1"><rect x="327" y="132" width="86" height="28"/></clipPath><g clip-path="url(#qclip1)"><g class="qa-tok"><rect class="tok" x="337" y="141" width="10" height="10" rx="2"/><rect class="tok" x="365" y="141" width="10" height="10" rx="2"/><rect class="tok" x="393" y="141" width="10" height="10" rx="2"/><rect class="tok" x="421" y="141" width="10" height="10" rx="2"/></g></g><clipPath id="qclip2"><rect x="327" y="170" width="86" height="28"/></clipPath><g clip-path="url(#qclip2)"><g class="qa-tok"><rect class="tok" x="337" y="179" width="10" height="10" rx="2"/><rect class="tok" x="365" y="179" width="10" height="10" rx="2"/><rect class="tok" x="393" y="179" width="10" height="10" rx="2"/><rect class="tok" x="421" y="179" width="10" height="10" rx="2"/></g></g><g class="qa-new"><rect class="tok-new" x="420" y="178" width="12" height="12" rx="2"/></g><circle class="lb-ring qa-ring" cx="398" cy="184" r="8"/><path class="wire w2" d="M446 108 H416" marker-end="url(#mqa2)"/><path class="wire w2" d="M446 146 H416" marker-end="url(#mqa2)"/><path class="wire w2" d="M780 184 H416" marker-end="url(#mqa2)"/><text class="tiny" x="716" y="176">data_in</text><path class="wire w2" d="M370 222 V252 H884" marker-end="url(#mqa2)"/><text class="tiny mid" x="620" y="238">9 個值 → PE</text><text class="tiny" x="22" y="284">兩條 line buffer 依欄定址存前兩列，每列再接 3 級 shift；新像素從右邊進來</text><rect class="pnl" x="890" y="0" width="810" height="296" rx="12"/><text class="lb2 o" x="912" y="34">PE · 3×3 MAC → REQUANT</text><text class="tiny" x="1678" y="34" text-anchor="end">INT8 權重 × UINT8 → INT32</text><circle class="mul o" cx="930" cy="90" r="12"/><text class="op xs mid" x="930" y="90">×</text><circle class="mul o" cx="964" cy="90" r="12"/><text class="op xs mid" x="964" y="90">×</text><circle class="mul o" cx="998" cy="90" r="12"/><text class="op xs mid" x="998" y="90">×</text><path class="wire" d="M1010 90 H1036"/><circle class="mul o" cx="930" cy="124" r="12"/><text class="op xs mid" x="930" y="124">×</text><circle class="mul o" cx="964" cy="124" r="12"/><text class="op xs mid" x="964" y="124">×</text><circle class="mul o" cx="998" cy="124" r="12"/><text class="op xs mid" x="998" y="124">×</text><path class="wire" d="M1010 124 H1036"/><circle class="mul o" cx="930" cy="158" r="12"/><text class="op xs mid" x="930" y="158">×</text><circle class="mul o" cx="964" cy="158" r="12"/><text class="op xs mid" x="964" y="158">×</text><circle class="mul o" cx="998" cy="158" r="12"/><text class="op xs mid" x="998" y="158">×</text><path class="wire" d="M1010 158 H1036"/><g class="qa-mac"><circle class="macg" cx="930" cy="90" r="14"/><circle class="macg" cx="964" cy="90" r="14"/><circle class="macg" cx="998" cy="90" r="14"/><circle class="macg" cx="930" cy="124" r="14"/><circle class="macg" cx="964" cy="124" r="14"/><circle class="macg" cx="998" cy="124" r="14"/><circle class="macg" cx="930" cy="158" r="14"/><circle class="macg" cx="964" cy="158" r="14"/><circle class="macg" cx="998" cy="158" r="14"/></g><rect class="bx o" x="1040" y="70" width="56" height="108" rx="8"/><text class="sig mid" x="1068" y="114">Σ</text><text class="tiny mid" x="1068" y="150">int32</text><text class="stgl" x="1126" y="84">REQUANT · 7 級 pipeline</text><rect class="bx" x="1126" y="96" width="60" height="56" rx="6"/><text class="tiny mid" x="1153" y="108">×M</text><text class="tiny mid" x="1153" y="125">低</text><rect class="ff" x="1180" y="96" width="6" height="56" rx="1"/><rect class="bx" x="1196" y="96" width="60" height="56" rx="6"/><text class="tiny mid" x="1223" y="108">×M</text><text class="tiny mid" x="1223" y="125">高</text><rect class="ff" x="1250" y="96" width="6" height="56" rx="1"/><rect class="bx" x="1266" y="96" width="60" height="56" rx="6"/><text class="tiny mid" x="1293" y="114">合併</text><rect class="ff" x="1320" y="96" width="6" height="56" rx="1"/><rect class="bx" x="1336" y="96" width="60" height="56" rx="6"/><text class="tiny mid" x="1363" y="108">捨入</text><text class="tiny mid" x="1363" y="125">低</text><rect class="ff" x="1390" y="96" width="6" height="56" rx="1"/><rect class="bx" x="1406" y="96" width="60" height="56" rx="6"/><text class="tiny mid" x="1433" y="108">捨入</text><text class="tiny mid" x="1433" y="125">高</text><rect class="ff" x="1460" y="96" width="6" height="56" rx="1"/><rect class="bx" x="1476" y="96" width="60" height="56" rx="6"/><text class="tiny mid" x="1503" y="114">≫ e</text><rect class="ff" x="1530" y="96" width="6" height="56" rx="1"/><rect class="bx" x="1546" y="96" width="60" height="56" rx="6"/><text class="tiny mid" x="1573" y="108">+zp</text><text class="tiny mid" x="1573" y="125">clamp</text><rect class="ff" x="1600" y="96" width="6" height="56" rx="1"/><path class="wire w2" d="M1096 124 H1122" marker-end="url(#mqa2)"/><clipPath id="qpclip"><rect x="1126" y="134" width="480" height="18"/></clipPath><g clip-path="url(#qpclip)"><g class="qa-pipe"><rect class="tok" x="1078.0" y="138" width="10" height="10" rx="2"/><rect class="tok" x="1148.0" y="138" width="10" height="10" rx="2"/><rect class="tok" x="1218.0" y="138" width="10" height="10" rx="2"/><rect class="tok" x="1288.0" y="138" width="10" height="10" rx="2"/><rect class="tok" x="1358.0" y="138" width="10" height="10" rx="2"/><rect class="tok" x="1428.0" y="138" width="10" height="10" rx="2"/><rect class="tok" x="1498.0" y="138" width="10" height="10" rx="2"/><rect class="tok" x="1568.0" y="138" width="10" height="10" rx="2"/></g></g><path class="wire w2 g" d="M1606 124 H1652" marker-end="url(#mqg2)"/><text class="tiny mid" x="1632" y="148">uint8</text><text class="tiny" x="1126" y="196">y = clamp( ((acc·M + 2^(e−1)) ≫ e) + zp , 0, 255 )</text><text class="tiny" x="1126" y="222">M：每通道 Q31 乘數 · acc 先截掉低 8 bit</text><text class="tiny" x="912" y="262">conv1：4 PE × 9 = 36 · conv2：36（6 ch 時間多工）· FC：12</text><text class="tiny" x="912" y="284">→ 共 84 個 MAC 乘法器；requant 另有 7 組、每組 2 個乘法</text></svg>
+  <div class="spec" style="margin-top:18px"><div><span class="k">clock</span><span class="v g">100 MHz</span><span class="u">TSMC 0.13 µm · 10 ns 目標</span></div><div><span class="k">setup wns</span><span class="v">+1.30 ns</span><span class="u">post-route · 0 / 13,741 違規 · Innovus</span></div><div><span class="k">area</span><span class="v">880k µm²</span><span class="u">DC 合成 · 53,524 cells</span></div><div><span class="k">core</span><span class="v">1165 × 1162</span><span class="u">µm · density 60.6%</span></div></div>
+  <div class="foot"><span>吳建賢 · Chien-Hsien Wu</span><span class="actl"><button type="button" data-a="prev" aria-label="上一拍">‹</button><button type="button" data-a="toggle" aria-label="暫停或播放">❚❚</button><button type="button" data-a="next" aria-label="下一拍">›</button><em>P 暫停 · , . 逐拍 · 點圖也可暫停</em></span><span>Quantized CNN</span></div>
+  <aside class="notes">
+    <p>第三個是 <strong>QAT 量化的 INT8 CNN</strong>，做手勢辨識、20 類。</p>
+    <p>精度是分三步轉的：先在 FP32 模型插 <strong>fake-quant</strong> 做 QAT，用 fbgemm 的設定訓練 20 個 epoch；再用 <strong>convert()</strong> 轉成真正的 INT8 模型，權重 INT8、per-channel，activation UINT8；最後匯出給 RTL：bias 換算成 INT32，每通道的 scale 換成 <strong>Q31 乘數加 shift</strong>。</p>
+    <p>硬體上 MAC 累加是 INT32，每一層輸出都要 requant：acc 乘上每通道的 Q31 乘數再右移、加 zero point、clamp 到 0–255。這個乘法很寬，我把它拆成 <strong>7 級 pipeline</strong>：乘法拆兩段、再合併、64-bit 捨入加法分兩拍、移位，最後加 zp 並 clamp。</p>
+    <p>資料流一拍進一個像素：兩條 line buffer 依欄定址存前兩列，每列再接 3 級 shift 組出 3×3 視窗，新像素從右邊進來。conv1 是 4 個 PE、conv2 用時間多工跑 6 個通道，總共 <strong>84 個 MAC 乘法器</strong>，requant 另外 7 組。</p>
+    <p>實作：DC 合成在 TSMC 0.13、100 MHz，面積約 88 萬 µm²；Innovus APR 完 post-route setup WNS +1.30 ns、setup 沒有違規；hold 還有 2 條、差不到 0.001 ns，另有少量 max cap / tran / fanout 要收。</p>
+    <p>（被問到準確率）50×50 版 INT8 98.38%、10×10 完整版 97.75%；合成的是 10×10 縮小版（4/6/6 通道），那版的準確率沒有留紀錄；選 epoch 用的也是 test set，數字偏樂觀。</p>
+    <p>（被問到驗證）golden 從 PyTorch INT8 模型逐層抓，testbench 逐拍比 20 個輸出；最後一次留下紀錄的比對（4 月）還差 1–2 LSB，原因是 golden 跟匯出的參數來自不同 checkpoint、加上累加器先截 8 bit；之後 RTL 跟 golden 都改過，目前狀態要重跑確認。</p>
+    <p>（動畫：P 暫停、逗號／句號逐拍）</p>
+    <p>前端到這裡。</p>
+  </aside>
+</section>
+
+<!-- ============ RESEARCH CHROMA ============ -->
+<section class="slide" data-title="CHROMA">
+  <div class="pg">10 / 14</div>
+  <p class="kicker">Research · 台大碩士研究 · GrAPL @ IPDPS 2026</p>
+  <h2 class="t2">CHROMA：高品質圖著色搬上多 GPU</h2>
+  <p class="sub" style="margin-bottom:24px">高品質的平行圖著色跑得慢、快的方法品質差；CHROMA 把 smallest-last 的 priority allocation 平行化到 GPU</p>
+  <svg class="arch fe" viewBox="0 0 1700 400" role="img" aria-label="CHROMA 架構與 JP 上色過程"><defs><marker id="mh" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" class="ahd "/></marker><marker id="mj" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" class="ahd j"/></marker></defs><line class="ge" x1="40" y1="44" x2="92" y2="22"/><line class="ge" x1="92" y1="22" x2="134" y2="54"/><line class="ge" x1="40" y1="44" x2="70" y2="90"/><line class="ge" x1="70" y1="90" x2="124" y2="100"/><line class="ge" x1="134" y1="54" x2="124" y2="100"/><line class="ge" x1="92" y1="22" x2="70" y2="90"/><circle class="gn" cx="40" cy="44" r="7"/><circle class="gn" cx="92" cy="22" r="7"/><circle class="gn" cx="134" cy="54" r="7"/><circle class="gn" cx="70" cy="90" r="7"/><circle class="gn" cx="124" cy="100" r="7"/><text class="lb2 mid b" x="86" y="124">GRAPH</text><path class="wire w2" d="M160 56 H318" marker-end="url(#mh)"/><text class="tiny mid it" x="239" y="44">partition</text><rect class="bx c" x="322" y="20" width="300" height="72" rx="10"/><text class="lb c" x="342" y="50">RGP</text><text class="tiny" x="342" y="78">邊界先上色 · ghost vertices</text><path class="wire w2" d="M86 134 V146" marker-end="url(#mh)"/><path class="wire w2" d="M446 92 V146" marker-end="url(#mh)"/><path class="wire w2" d="M472 92 V146" marker-end="url(#mh)"/><path class="wire w2" d="M498 92 V146" marker-end="url(#mh)"/><rect class="gpu" x="28" y="150" width="872" height="230" rx="12"/><rect class="gpu" x="14" y="160" width="872" height="230" rx="12"/><rect class="gpu f" x="0" y="170" width="872" height="230" rx="12"/><text class="lb2 mid" x="436" y="196">SINGLE GPU</text><text class="tiny" x="852" y="196" text-anchor="end">× 1–8 張（多 GPU 走 RGP）</text><rect class="pnl o2" x="16" y="206" width="840" height="114" rx="10"/><text class="lb2 o" x="32" y="232">PRIORITY ALLOCATION</text><rect class="bx o" x="306" y="214" width="260" height="36" rx="7"/><text class="lb2 mid o" x="436" y="232">cuSL · GPU smallest-last</text><path class="wire" d="M436 250 V260 M150 260 H722"/><path class="wire" d="M150 260 V268" marker-end="url(#mh)"/><path class="wire" d="M436 260 V268" marker-end="url(#mh)"/><path class="wire" d="M722 260 V268" marker-end="url(#mh)"/><rect class="bx o" x="40" y="272" width="220" height="40" rx="7"/><text class="lb2 o" x="56" y="298">ELS</text><text class="tiny" x="112" y="298">迴圈掃描效率</text><rect class="bx o" x="326" y="272" width="220" height="40" rx="7"/><text class="lb2 o" x="342" y="298">EGC</text><text class="tiny" x="398" y="298">θ 粒度可調</text><rect class="bx o" x="612" y="272" width="220" height="40" rx="7"/><text class="lb2 o" x="628" y="298">SDC</text><text class="tiny" x="684" y="298">最小度數校正</text><path class="wire w2" d="M436 314 V334" marker-end="url(#mh)"/><rect class="pnl g2" x="16" y="328" width="840" height="62" rx="10"/><text class="lb2 g" x="32" y="364">COLOR ALLOCATION</text><rect class="bx g" x="306" y="338" width="300" height="42" rx="7"/><text class="lb2 mid g" x="456" y="359">沿用 ECL-GC kernel</text><rect class="pnl" x="940" y="0" width="760" height="400" rx="12"/><text class="lb2 c" x="962" y="34">JP 上色示意 · 每一輪平行</text><text class="tiny" x="1678" y="34" text-anchor="end">優先的鄰居都上完色 → 選最小可用色</text><path class="jpe" d="M1249.6 94.6 L1153.0 153.9" marker-end="url(#mj)"/><path class="jpe" d="M1292.7 89.7 L1414.4 131.3" marker-end="url(#mj)"/><path class="jpe" d="M1246.8 88.0 L1032.1 143.3" marker-end="url(#mj)"/><path class="jpe" d="M1106.2 164.6 L1032.7 153.9" marker-end="url(#mj)"/><path class="jpe" d="M1149.4 182.1 L1248.2 254.1" marker-end="url(#mj)"/><path class="jpe" d="M1153.1 174.5 L1394.0 242.7" marker-end="url(#mj)"/><path class="jpe" d="M1248.2 260.1 L1030.6 161.2" marker-end="url(#mj)"/><path class="jpe" d="M1293.8 266.8 L1393.2 253.6" marker-end="url(#mj)"/><path class="jpe" d="M1435.7 163.6 L1424.8 223.4" marker-end="url(#mj)"/><path class="jpe" d="M1462.3 148.9 L1564.9 190.0" marker-end="url(#mj)"/><path class="jpe" d="M1443.0 243.2 L1564.1 207.6" marker-end="url(#mj)"/><circle class="jpn" cx="1270" cy="82" r="22"/><circle class="jpc k1 jr jr1" cx="1270" cy="82" r="22"/><text class="jpl mid" x="1270" y="82">A</text><circle class="jpn" cx="1130" cy="168" r="22"/><circle class="jpc k2 jr jr2" cx="1130" cy="168" r="22"/><text class="jpl mid" x="1130" y="168">B</text><circle class="jpn" cx="1440" cy="140" r="22"/><circle class="jpc k2 jr jr2" cx="1440" cy="140" r="22"/><text class="jpl mid" x="1440" y="140">D</text><circle class="jpn" cx="1270" cy="270" r="22"/><circle class="jpc k1 jr jr3" cx="1270" cy="270" r="22"/><text class="jpl mid" x="1270" y="270">C</text><circle class="jpn" cx="1006" cy="150" r="22"/><circle class="jpc k3 jr jr4" cx="1006" cy="150" r="22"/><text class="jpl mid" x="1006" y="150">G</text><circle class="jpn" cx="1420" cy="250" r="22"/><circle class="jpc k3 jr jr4" cx="1420" cy="250" r="22"/><text class="jpl mid" x="1420" y="250">E</text><circle class="jpn" cx="1590" cy="200" r="22"/><circle class="jpc k1 jr jr5" cx="1590" cy="200" r="22"/><text class="jpl mid" x="1590" y="200">F</text><rect class="jchip" x="962" y="318" width="136" height="58" rx="8"/><rect class="jchip-on jr jr1" x="962" y="318" width="136" height="58" rx="8"/><text class="stg" x="976" y="342">R1</text><text class="tiny" x="976" y="364">A → 1</text><circle class="jpc k1" cx="1080" cy="347" r="8"/><rect class="jchip" x="1108" y="318" width="136" height="58" rx="8"/><rect class="jchip-on jr jr2" x="1108" y="318" width="136" height="58" rx="8"/><text class="stg" x="1122" y="342">R2</text><text class="tiny" x="1122" y="364">B · D → 2</text><circle class="jpc k2" cx="1226" cy="347" r="8"/><rect class="jchip" x="1254" y="318" width="136" height="58" rx="8"/><rect class="jchip-on jr jr3" x="1254" y="318" width="136" height="58" rx="8"/><text class="stg" x="1268" y="342">R3</text><text class="tiny" x="1268" y="364">C → 1</text><circle class="jpc k1" cx="1372" cy="347" r="8"/><rect class="jchip" x="1400" y="318" width="136" height="58" rx="8"/><rect class="jchip-on jr jr4" x="1400" y="318" width="136" height="58" rx="8"/><text class="stg" x="1414" y="342">R4</text><text class="tiny" x="1414" y="364">G · E → 3</text><circle class="jpc k3" cx="1518" cy="347" r="8"/><rect class="jchip" x="1546" y="318" width="136" height="58" rx="8"/><rect class="jchip-on jr jr5" x="1546" y="318" width="136" height="58" rx="8"/><text class="stg" x="1560" y="342">R5</text><text class="tiny" x="1560" y="364">F → 1</text><circle class="jpc k1" cx="1664" cy="347" r="8"/></svg>
+  <div class="spec" style="margin-top:18px"><div><span class="k">single GPU</span><span class="v c">7.14×</span><span class="u">幾何平均加速，顏色數不變</span></div><div><span class="k">vs CPU</span><span class="v">17.4×</span><span class="u">對 192 執行緒 CPU 版本</span></div><div><span class="k">multi-GPU</span><span class="v">3.7×</span><span class="u">uk-2002：2 GPU 對 1 GPU</span></div><div><span class="k">datasets</span><span class="v">17</span><span class="u">個真實圖 · 最大 5,091 萬頂點</span></div></div>
+  <div class="term" style="margin-top:16px;font-size:18px;line-height:1.75">
+    <div><span class="tag c">paper</span>CHROMA: High-Quality Robust Graph Coloring on GPUs · GrAPL @ IPDPS 2026 · 已開源於 GitHub</div>
+  </div>
+  <div class="foot"><span>吳建賢 · Chien-Hsien Wu</span><span class="actl"><button type="button" data-a="prev" aria-label="上一拍">‹</button><button type="button" data-a="toggle" aria-label="暫停或播放">❚❚</button><button type="button" data-a="next" aria-label="下一拍">›</button><em>P 暫停 · , . 逐拍 · 點圖也可暫停</em></span><span>CHROMA</span></div>
+  <aside class="notes">
+    <p>再來是碩士研究 <strong>CHROMA</strong>，多 GPU 的圖著色框架，發表在 <strong>IPDPS 2026 的 GrAPL workshop</strong>。</p>
+    <p>背景是：品質好的平行圖著色跑得慢，快的方法上色品質又差。品質好的 smallest-last 排序是循序的，<strong>priority allocation 在 CPU 上可以比上色本身慢 100 倍</strong>。</p>
+    <p>左邊是架構：每張 GPU 先做 priority allocation，我們的 cuSL 把它平行化，再加三個優化：ELS 提高掃描效率、EGC 用 θ 控制每輪的粒度、SDC 校正最小度數保住品質；上色沿用 ECL-GC 的 kernel。多 GPU 時用 RGP 切圖，邊界先上色、子圖帶 ghost vertex。</p>
+    <p>右邊是 JP 上色的過程：比自己優先的鄰居都上完色，就挑最小的可用顏色；<strong>同一輪可以很多點一起上色</strong>，所以適合 GPU。</p>
+    <p>結果在單張 RTX 4090 上，<strong>顏色數不變、幾何平均快 7 倍</strong>；比 192 執行緒的 CPU 版快 17 倍。</p>
+    <p>CHROMA 的程式基本上都是我寫的：<strong>GPU 上的 priority allocation、多 GPU 的 RGP 模組和 CPU baseline</strong>。這跟硬體設計的思路很像：找出循序的瓶頸、拆成能平行的結構、再處理同步。</p>
+    <p>（動畫：P 暫停、逗號／句號一次前進一輪）</p>
+    <p>（被問到履歷上的 14× 時）那是只開 ELS 的最快設定，顏色數會多三成多；<strong>顏色數不變的是 7.14 倍</strong>，所以簡報用這個數字。</p>
+    <p>專案就介紹到這裡，接著快速看一下其他作品。</p>
+  </aside>
+</section>
+
+<!-- ============ OTHER WORK ============ -->
+<section class="slide" data-title="Other work">
+  <div class="pg">11 / 14</div>
+  <p class="kicker">Other Work · 硬體 × 軟體</p>
+  <h2 class="t2" style="margin-bottom:26px">其他作品</h2>
+  <div class="ow"><div class="ow-card"><div class="ow-img"><img src="assets/other/qr_layout.png" alt="MIMO QR 分解"></div><div class="ow-tx"><span class="m">CVSD 期末 · SRAM 版</span><span class="t">MIMO QR 分解</span><span class="d">CORDIC 做 QR 分解<br>RTL → DC 合成 → Innovus APR（圖為 layout）</span></div></div><div class="ow-card"><div class="ow-img paper"><img src="assets/other/sca_idea.png" alt="RTL 旁通道評估"></div><div class="ow-tx"><span class="m">碩士研究 · HF-SCA</span><span class="t">RTL 旁通道評估</span><span class="d">VCS → SAIF → toggle → KL divergence<br>評估 20 種加密電路、階層樹定位危險模組</span></div></div><div class="ow-card"><div class="ow-img"><img src="assets/other/style_filter.jpg" alt="Style Filter（HLS → SoC）"></div><div class="ow-tx"><span class="m">高階 SoC 設計 · 團隊專案</span><span class="t">Style Filter（HLS → SoC）</span><span class="d">Catapult HLS：edge detect + K-means + mix RGB<br>整合進 FSIC SoC、FPGA 驗證</span></div></div><div class="ow-card"><div class="ow-img paper"><img src="assets/other/cic_convex.png" alt="CONVEX 凸包硬體"></div><div class="ow-tx"><span class="m">CIC 2025 · 決賽</span><span class="t">CONVEX 凸包硬體</span><span class="d">競賽題目：凸包系統的硬體實作，進入決賽</span></div></div></div>
+  <div class="ow2"><div class="ow2-card"><img src="assets/other/web_meeting.jpg" alt="會議室預約網站"><div><div class="t">會議室預約網站</div><div class="d">Web 前後端</div></div></div><div class="ow2-card"><img src="assets/other/web_comics.jpg" alt="漫畫閱讀網站"><div><div class="t">漫畫閱讀網站</div><div class="d">Flask 後端 + 爬蟲</div></div></div><div class="ow2-card"><img src="assets/other/game_2d.jpg" alt="2D 平台遊戲"><div><div class="t">2D 平台遊戲</div><div class="d">遊戲開發</div></div></div><div class="ow2-card"><img src="assets/other/quant_bt.jpg" alt="量化策略回測"><div><div class="t">量化策略回測</div><div class="d">布林通道 · 日內 K 線</div></div></div></div>
+  <div class="foot"><span>吳建賢 · Chien-Hsien Wu</span><span>Other Work</span></div>
+  <aside class="notes">
+    <p>這頁每個作品都有留下紀錄。</p>
+    <p>硬體的部分：<strong>QR 分解</strong>是 CVSD 的期末專案，CORDIC 做 QR，從 RTL、DC 合成一路走到 Innovus APR，這張是 layout。<strong>RTL 旁通道評估</strong>是碩士研究，用 VCS 模擬產生 SAIF、算 toggle 的 KL divergence，評估 20 種加密電路、用階層樹定位危險模組。<strong>Style Filter</strong> 是高階 SoC 設計的團隊專案，用 Catapult HLS 做濾鏡 IP，整合進 SoC 跑 FPGA。<strong>CIC 2025</strong> 進了決賽，題目是凸包的硬體。</p>
+    <p>軟體的部分：網站前後端、爬蟲、遊戲、量化回測都自己寫過，在 NVIDIA 能自己把平台做起來也是靠這些。</p>
+    <p>再來是我自己在跑的量化投資系統。</p>
+  </aside>
+</section>
+
+<!-- ============ QUANT ============ -->
+<section class="slide" data-title="Quant" data-tick="1000" data-phase="0.95" data-steps="8">
+  <div class="pg">12 / 14</div>
+  <p class="kicker">Side Project · 量化投資 · 自有資金實盤</p>
+  <h2 class="t2">量化投資系統</h2>
+  <p class="sub" style="margin-bottom:24px">S&amp;P 500 動能策略，每個交易日自動跑、自動對帳；研究端用 Rust 自寫因子引擎</p>
+  <div class="box glow-b pt2 ql">
+    <div class="hd"><span class="num b">01</span><div><div class="lbl b">實盤 · 每一關都 fail-closed</div><div class="sm">每個交易日 10:05 ET · systemd 自動執行</div></div>
+      <span class="qaud"><span class="t">audit</span>補上 3 個 critical、4 個 high 的漏洞</span></div>
+    <svg class="arch fe" viewBox="0 0 1640 148" role="img" aria-label="實盤流程：三道 fail-closed 閘門"><defs><marker id="mq" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" class="ahd"/></marker></defs><g class="stx q12k q12k0"><rect class="qnode" x="0" y="10" width="184" height="72" rx="8"/><text class="lb2 mid" x="92" y="35">DATA</text><text class="tiny mid" x="92" y="61">yfinance · Futu</text></g><g class="stx q12a q12a0"><path class="wire w2" d="M184 46 H204" marker-end="url(#mq)"/></g><g class="stx q12k q12k1"><rect class="qnode" x="208" y="10" width="184" height="72" rx="8"/><text class="lb2 mid" x="300" y="35">SIGNAL</text><text class="tiny mid" x="300" y="61">12-1 動能 · 前 10</text></g><g class="stx q12a q12a1"><path class="wire w2" d="M392 46 H412" marker-end="url(#mq)"/></g><g class="stx q12k q12k2"><polygon class="gate" points="426,10 590,10 600,20 600,72 590,82 426,82 416,72 416,20"/><path class="abort" d="M508 82 V124"/><text class="tiny abt" x="498" y="110" text-anchor="end">抓不到新聞</text><circle class="abx" cx="508" cy="132" r="8"/><path class="abxx" d="M504.5 128.5 L511.5 135.5 M511.5 128.5 L504.5 135.5"/><text class="lb2 mid o" x="508" y="35">NEWS VETO</text><text class="tiny mid" x="508" y="61">Yahoo · Futu · 8-K</text></g><g class="stx q12a q12a2"><path class="wire w2" d="M600 46 H620" marker-end="url(#mq)"/></g><g class="stx q12k q12k3"><rect class="qnode" x="624" y="10" width="184" height="72" rx="8"/><text class="lb2 mid" x="716" y="35">BAND</text><text class="tiny mid" x="716" y="61">±20% 內不動</text><text class="tiny mid g" x="716" y="108">回測手續費 −81%</text></g><g class="stx q12a q12a3"><path class="wire w2" d="M808 46 H828" marker-end="url(#mq)"/></g><g class="stx q12k q12k4"><polygon class="gate" points="842,10 1006,10 1016,20 1016,72 1006,82 842,82 832,72 832,20"/><path class="abort" d="M924 82 V124"/><text class="tiny abt" x="914" y="110" text-anchor="end">超過上限</text><circle class="abx" cx="924" cy="132" r="8"/><path class="abxx" d="M920.5 128.5 L927.5 135.5 M927.5 128.5 L920.5 135.5"/><text class="lb2 mid o" x="924" y="35">PRE-TRADE</text><text class="tiny mid" x="924" y="61">killswitch · 上限</text></g><g class="stx q12a q12a4"><path class="wire w2" d="M1016 46 H1036" marker-end="url(#mq)"/></g><g class="stx q12k q12k5"><rect class="qnode" x="1040" y="10" width="184" height="72" rx="8"/><text class="lb2 mid" x="1132" y="35">ORDER</text><text class="tiny mid" x="1132" y="61">先賣後買 · 不重複</text><text class="tiny mid dimt" x="1132" y="108">六狀態機 · cid 冪等</text></g><g class="stx q12a q12a5"><path class="wire w2" d="M1224 46 H1244" marker-end="url(#mq)"/></g><g class="stx q12k q12k6"><rect class="qnode" x="1248" y="10" width="184" height="72" rx="8"/><text class="lb2 mid" x="1340" y="35">BROKER</text><text class="tiny mid" x="1340" y="61">Futu OpenD</text></g><g class="stx q12a q12a6"><path class="wire w2" d="M1432 46 H1452" marker-end="url(#mq)"/></g><g class="stx q12k q12k7"><polygon class="gate" points="1466,10 1630,10 1640,20 1640,72 1630,82 1466,82 1456,72 1456,20"/><path class="abort" d="M1548 82 V124"/><text class="tiny abt" x="1538" y="110" text-anchor="end">對帳不符</text><circle class="abx" cx="1548" cy="132" r="8"/><path class="abxx" d="M1544.5 128.5 L1551.5 135.5 M1551.5 128.5 L1544.5 135.5"/><text class="lb2 mid o" x="1548" y="35">RECONCILE</text><text class="tiny mid" x="1548" y="61">帳本 vs 券商持股</text></g><g class="stx q12r"><rect class="abtag" x="0" y="118" width="132" height="28" rx="6"/><text class="tiny mid abt abb" x="66" y="132">FAIL-CLOSED</text><text class="tiny abt cb" x="146" y="132">不下單 / 中止</text><path class="rail" d="M262 132 H500"/><path class="rail" d="M516 132 H916"/><path class="rail" d="M932 132 H1540"/></g></svg>
+    <div class="qmods">
+      <div class="qm b"><span class="k">RUST portfolio_core</span><span class="d">部位計算 · 研究與實盤共用同一份</span></div>
+      <div class="qm r"><span class="k">RISK BREAKER</span><span class="d">−35% 停買 · −40% 出清（三種算法都成立、至少隔 60 分鐘再確認）</span></div>
+      <div class="qm g"><span class="k">RUST WATCHDOG</span><span class="d">唯讀 · systemd 守護 · 異常發 Telegram</span></div>
+    </div>
+  </div>
+  <div class="qlow">
+    <div class="box glow-c pt2">
+      <div class="hd"><span class="num c">02</span><div><div class="lbl c">研究端 · Rust 因子引擎</div><div class="sm">factor-lab · 自己寫的因子引擎</div></div></div>
+      <div class="grid3 qst">
+        <div class="box"><div class="stat"><div class="v c">63 ms</div><div class="l">每條公式，原本 10 s<br><span class="dim">4,300 天 × 505 檔</span></div></div></div>
+        <div class="box"><div class="stat"><div class="v g">38 / 41</div><div class="l">注入的 bug<br><span class="dim">golden 案例抓到</span></div></div></div>
+        <div class="box"><div class="stat"><div class="v">0 / 696</div><div class="l">條公式過門檻<br><span class="dim">多重檢定</span></div></div></div>
+      </div>
+    </div>
+    <div class="box glow-o pt2">
+      <div class="hd"><span class="num o">03</span><div><div class="lbl o">結果：長期跟 QQQ 差不多</div><div class="sm">v4.2 規則回測 2010–26 · 含已下市股 · 1 美元的成長，對數軸</div></div></div>
+      <div class="qhb qc"><svg class="arch fe" viewBox="0 0 724 148" role="img" aria-label="v4.2 規則回測與 QQQ，2010 到 2026 年 1 美元的成長（對數軸）：v4.2 ×16.2，QQQ ×18.7"><path class="qc-grid" d="M42 117.5 H640"/><text class="qc-ax cb" x="34" y="117.517" text-anchor="end">1×</text><path class="qc-grid" d="M42 97.4 H640"/><text class="qc-ax cb" x="34" y="97.3793" text-anchor="end">2×</text><path class="qc-grid" d="M42 70.8 H640"/><text class="qc-ax cb" x="34" y="70.7585" text-anchor="end">5×</text><path class="qc-grid" d="M42 50.6 H640"/><text class="qc-ax cb" x="34" y="50.6207" text-anchor="end">10×</text><path class="qc-grid" d="M42 30.5 H640"/><text class="qc-ax cb" x="34" y="30.4829" text-anchor="end">20×</text><text class="qc-ax" x="173.207" y="142" text-anchor="middle">2014</text><text class="qc-ax" x="319.65" y="142" text-anchor="middle">2018</text><text class="qc-ax" x="466.093" y="142" text-anchor="middle">2022</text><text class="qc-ax" x="612.536" y="142" text-anchor="middle">2026</text><text class="qc-ax" x="42" y="142">2010</text><rect class="qc-band" x="246.378" y="24" width="219.714" height="100" rx="0"/><text class="qc-bl" x="356.236" y="40" text-anchor="middle">2016–21</text><text class="qc-bv" x="356.236" y="57" text-anchor="middle">4.1% vs 24.5%</text><path class="qc-div" d="M466.1 24 V124"/><text class="qc-bl" x="553.046" y="98" text-anchor="middle">2022–26</text><text class="qc-bv" x="553.046" y="115" text-anchor="middle">37.3% vs 15.0%</text><path class="qc-v" d="M42.0 117.5 L44.8 121.4 L47.8 118.5 L51.0 119.2 L54.0 115.9 L56.9 114.5 L60.1 113.3 L63.2 112.8 L66.4 112.5 L69.2 112.1 L72.3 111.1 L75.2 110.4 L78.4 110.4 L81.4 110.3 L84.3 109.0 L87.6 111.1 L90.6 116.8 L93.7 111.4 L96.7 112.6 L99.7 114.0 L102.9 114.8 L105.8 112.3 L108.9 111.4 L112.0 110.8 L115.1 112.3 L118.0 111.1 L121.2 111.4 L124.3 110.1 L127.1 109.4 L130.4 109.0 L133.4 108.9 L136.5 108.1 L139.6 105.5 L142.4 104.4 L145.2 102.8 L148.5 103.6 L151.7 101.9 L154.5 104.4 L157.8 101.5 L160.8 101.8 L163.9 99.9 L167.0 98.1 L169.9 97.1 L173.1 96.3 L176.2 97.4 L179.0 94.0 L182.1 96.3 L185.1 97.0 L188.1 95.4 L191.2 94.3 L194.4 94.9 L197.3 92.6 L200.5 93.0 L203.6 92.9 L206.4 91.2 L209.7 91.5 L212.7 90.5 L215.5 88.5 L218.7 87.8 L221.7 89.6 L224.6 87.6 L227.8 87.5 L230.9 86.8 L234.0 88.9 L237.1 89.9 L240.1 87.5 L243.2 86.7 L246.3 87.2 L249.2 90.2 L252.3 90.3 L255.4 88.8 L258.3 89.2 L261.5 88.0 L264.5 87.0 L267.4 85.7 L270.7 86.7 L273.7 86.1 L276.8 87.2 L279.9 86.1 L282.9 86.3 L286.1 85.2 L288.9 85.9 L292.0 86.1 L294.8 86.9 L298.1 85.1 L301.1 86.0 L304.2 85.5 L307.3 85.4 L310.2 83.8 L313.4 82.0 L316.4 81.8 L319.3 82.3 L322.7 79.5 L325.5 79.6 L328.4 80.5 L331.6 81.3 L334.7 78.6 L337.6 79.4 L340.8 79.8 L343.9 77.4 L346.7 78.8 L350.0 84.7 L353.0 85.2 L356.1 88.5 L359.2 85.1 L362.0 83.7 L365.0 82.2 L368.2 82.3 L371.3 84.4 L374.1 81.9 L377.4 80.9 L380.4 79.9 L383.5 81.2 L386.6 80.8 L389.5 80.0 L392.7 79.0 L395.8 79.1 L398.6 81.9 L401.8 89.0 L404.8 86.3 L407.8 85.1 L411.0 84.3 L414.1 80.8 L417.2 79.1 L420.2 80.7 L423.2 81.8 L426.3 79.3 L429.4 78.1 L432.3 77.8 L435.1 76.2 L438.4 80.0 L441.4 79.7 L444.2 80.3 L447.5 80.2 L450.6 81.7 L453.8 82.0 L456.8 81.9 L459.7 79.3 L462.9 79.3 L466.0 80.2 L469.1 82.0 L471.9 79.5 L475.0 77.4 L477.9 78.8 L481.1 75.0 L484.1 81.1 L487.0 78.3 L490.3 76.8 L493.4 79.9 L496.5 74.7 L499.5 74.9 L502.5 77.3 L505.7 75.4 L508.5 76.9 L511.6 76.1 L514.4 76.2 L517.7 77.1 L520.7 75.6 L523.8 74.6 L526.9 74.7 L529.8 76.9 L533.0 77.1 L536.1 72.3 L539.0 70.4 L542.3 68.8 L545.2 66.5 L548.0 66.0 L551.3 68.6 L554.4 66.1 L557.2 65.8 L560.5 68.4 L563.5 68.4 L566.6 66.3 L569.7 66.2 L572.6 62.4 L575.8 65.4 L579.0 62.0 L581.8 63.0 L584.9 65.4 L587.9 65.0 L590.9 62.2 L594.0 60.4 L597.1 59.5 L600.0 60.8 L603.2 58.9 L606.3 56.8 L609.1 57.0 L612.4 54.9 L615.4 50.1 L618.2 49.4 L621.5 51.1 L624.5 42.0 L627.4 36.2 L630.6 33.2 L633.7 41.6 L636.8 40.3 L639.8 37.4 L640.0 36.6"/><path class="qc-q" d="M42.0 117.5 L44.8 119.7 L47.8 117.7 L51.0 119.2 L54.0 115.6 L56.9 113.8 L60.1 113.9 L63.2 112.5 L66.4 111.7 L69.2 110.8 L72.3 110.9 L75.2 110.1 L78.4 110.5 L81.4 111.1 L84.3 110.6 L87.6 112.1 L90.6 113.4 L93.7 110.6 L96.7 111.4 L99.7 111.5 L102.9 109.2 L105.8 107.4 L108.9 106.0 L112.0 106.3 L115.1 108.4 L118.0 107.4 L121.2 107.1 L124.3 105.6 L127.1 105.4 L130.4 106.9 L133.4 106.6 L136.5 106.7 L139.6 105.9 L142.4 105.8 L145.2 105.0 L148.5 104.2 L151.7 103.2 L154.5 103.9 L157.8 102.1 L160.8 102.3 L163.9 100.9 L167.0 99.5 L169.9 98.5 L173.1 97.6 L176.2 98.2 L179.0 96.7 L182.1 97.5 L185.1 97.6 L188.1 96.4 L191.2 95.5 L194.4 95.1 L197.3 93.7 L200.5 93.9 L203.6 93.2 L206.4 91.9 L209.7 92.5 L212.7 93.1 L215.5 91.1 L218.7 91.8 L221.7 91.3 L224.6 90.6 L227.8 91.3 L230.9 90.1 L234.0 92.1 L237.1 92.8 L240.1 89.6 L243.2 89.5 L246.3 89.9 L249.2 92.0 L252.3 92.5 L255.4 90.5 L258.3 91.5 L261.5 90.2 L264.5 90.9 L267.4 88.9 L270.7 88.6 L273.7 88.0 L276.8 88.4 L279.9 88.3 L282.9 87.9 L286.1 86.5 L288.9 85.2 L292.0 84.6 L294.8 83.9 L298.1 82.7 L301.1 83.4 L304.2 82.3 L307.3 81.7 L310.2 81.8 L313.4 80.5 L316.4 79.9 L319.3 79.7 L322.7 77.3 L325.5 77.7 L328.4 78.9 L331.6 78.7 L334.7 77.1 L337.6 76.8 L340.8 76.0 L343.9 74.3 L346.7 74.4 L350.0 77.0 L353.0 77.1 L356.1 79.8 L359.2 77.2 L362.0 76.4 L365.0 75.3 L368.2 73.7 L371.3 76.2 L374.1 74.1 L377.4 73.4 L380.4 74.0 L383.5 73.7 L386.6 72.5 L389.5 71.3 L392.7 70.2 L395.8 69.3 L398.6 71.1 L401.8 73.3 L404.8 69.3 L407.8 67.4 L411.0 65.7 L414.1 63.6 L417.2 60.6 L420.2 62.3 L423.2 63.2 L426.3 60.1 L429.4 58.7 L432.3 58.6 L435.1 58.7 L438.4 58.2 L441.4 56.5 L444.2 56.9 L447.5 55.1 L450.6 54.3 L453.8 53.1 L456.8 54.8 L459.7 52.6 L462.9 52.0 L466.0 51.7 L469.1 54.3 L471.9 55.7 L475.0 54.3 L477.9 58.6 L481.1 59.1 L484.1 61.8 L487.0 58.3 L490.3 59.9 L493.4 63.1 L496.5 62.0 L499.5 60.4 L502.5 63.1 L505.7 60.2 L508.5 60.3 L511.6 57.7 L514.4 57.5 L517.7 55.3 L520.7 53.5 L523.8 52.4 L526.9 52.9 L529.8 54.4 L533.0 55.0 L536.1 52.0 L539.0 50.4 L542.3 49.9 L545.2 48.4 L548.0 48.0 L551.3 49.3 L554.4 47.6 L557.2 45.8 L560.5 46.3 L563.5 46.0 L566.6 45.2 L569.7 45.5 L572.6 43.9 L575.8 43.8 L579.0 43.2 L581.8 44.0 L584.9 46.3 L587.9 45.9 L590.9 43.3 L594.0 41.5 L597.1 40.8 L600.0 40.6 L603.2 39.0 L606.3 37.7 L609.1 38.1 L612.4 38.3 L615.4 38.0 L618.2 38.7 L621.5 40.1 L624.5 35.9 L627.4 32.9 L630.6 33.0 L633.7 35.0 L636.8 33.8 L639.8 32.8 L640.0 32.4"/><circle class="qc-dq" cx="640.0" cy="32.4" r="4.5"/><text class="qc-end cb" x="652" y="20.4469">QQQ ×18.7</text><circle class="qc-dv" cx="640.0" cy="36.6" r="4.5"/><text class="qc-end cb" x="652" y="50.625">v4.2 ×16.2</text><path class="qc-v" d="M42 10 H64"/><text class="qc-lg cb" x="72" y="10">v4.2 回測</text><path class="qc-q" d="M170 10 H192"/><text class="qc-lg cb" x="200" y="10">QQQ</text><rect class="qc-hit" x="42.0" y="24" width="21.3" height="100"><title>2010-12：v4.2 ×1.18 · QQQ ×1.19</title></rect><rect class="qc-hit" x="63.3" y="24" width="36.6" height="100"><title>2011-12：v4.2 ×1.13 · QQQ ×1.23</title></rect><rect class="qc-hit" x="99.9" y="24" width="36.7" height="100"><title>2012-12：v4.2 ×1.38 · QQQ ×1.45</title></rect><rect class="qc-hit" x="136.6" y="24" width="36.6" height="100"><title>2013-12：v4.2 ×2.07 · QQQ ×1.98</title></rect><rect class="qc-hit" x="173.2" y="24" width="36.6" height="100"><title>2014-12：v4.2 ×2.45 · QQQ ×2.36</title></rect><rect class="qc-hit" x="209.8" y="24" width="36.6" height="100"><title>2015-12：v4.2 ×2.84 · QQQ ×2.59</title></rect><rect class="qc-hit" x="246.4" y="24" width="36.7" height="100"><title>2016-12：v4.2 ×2.93 · QQQ ×2.77</title></rect><rect class="qc-hit" x="283.1" y="24" width="36.6" height="100"><title>2017-12：v4.2 ×3.36 · QQQ ×3.67</title></rect><rect class="qc-hit" x="319.7" y="24" width="36.6" height="100"><title>2018-12：v4.2 ×2.71 · QQQ ×3.67</title></rect><rect class="qc-hit" x="356.2" y="24" width="36.6" height="100"><title>2019-12：v4.2 ×3.77 · QQQ ×5.10</title></rect><rect class="qc-hit" x="392.8" y="24" width="36.7" height="100"><title>2020-12：v4.2 ×3.89 · QQQ ×7.57</title></rect><rect class="qc-hit" x="429.5" y="24" width="36.6" height="100"><title>2021-12：v4.2 ×3.61 · QQQ ×9.64</title></rect><rect class="qc-hit" x="466.1" y="24" width="36.6" height="100"><title>2022-12：v4.2 ×3.99 · QQQ ×6.50</title></rect><rect class="qc-hit" x="502.7" y="24" width="36.6" height="100"><title>2023-12：v4.2 ×5.06 · QQQ ×10.07</title></rect><rect class="qc-hit" x="539.3" y="24" width="36.7" height="100"><title>2024-12：v4.2 ×6.02 · QQQ ×12.64</title></rect><rect class="qc-hit" x="576.0" y="24" width="36.6" height="100"><title>2025-12：v4.2 ×8.62 · QQQ ×15.27</title></rect><rect class="qc-hit" x="612.5" y="24" width="27.5" height="100"><title>2026-10：v4.2 ×16.19 · QQQ ×18.69</title></rect></svg></div>
+      <div class="qv">→ 年化 18.6% vs 19.7%，回撤 −45% vs −35%：不宣稱有 alpha</div>
+    </div>
+  </div>
+  <div class="foot"><span>吳建賢 · Chien-Hsien Wu</span><span>Quant</span></div>
+  <aside class="notes">
+    <p>這套是用自己的錢在<strong>實盤</strong>跑的。</p>
+    <p>上面是實盤流程，每個交易日美東 10:05 由 systemd 自動跑：抓資料、算 12-1 動能取前 10 檔，中間有<strong>三道閘門</strong>：新聞否決、下單前檢查、最後對帳。任何一關不過就 <strong>fail-closed</strong>，不下單或直接中止；抓不到新聞也算不過。</p>
+    <p>離目標 ±20% 以內不動，這個帶寬在回測裡把手續費降了 81%。訂單是六狀態的狀態機，cid 用 hash 產生，重送也不會重複下單。</p>
+    <p>下面三個是共用模組：Rust 的部位計算核心，研究跟實盤共用同一份；斷路器 −35% 停買、−40% 出清；看門狗只讀不寫，有異常就發 Telegram。也做過一次 fail-closed 稽核，補上 3 個 critical、4 個 high 的漏洞。</p>
+    <p>研究端是我用 Rust 寫的因子引擎，一條公式從 10 秒變 63 毫秒；用 golden 案例驗證，故意注入 41 個 bug 抓到 38 個。</p>
+    <p>結果我照實說：右下這張是用現在的規則、含已下市股票的資料，回測 2010 到 2026 年。長期年化 18.6%，QQQ 是 19.7%，差不多；但最大回撤 −45%，比 QQQ 的 −35% 深，而且輸贏是一段一段的：2016 到 21 年每年落後 20 點，2022 年之後每年領先 22 點。這張回測的參數用過這段資料，不算樣本外；更早的 v3 參數只用 2022 年之後的資料挑，拿 2016 到 21 年當樣本外驗證，也是年化 8.6% 對 QQQ 25%。因子搜尋試了 696 條公式，也沒有一條過多重檢定門檻，所以<strong>我不宣稱有 alpha</strong>，也就是不宣稱有超額報酬。這套系統練的是驗證跟 fail-closed 的習慣，跟做晶片驗證的思路一樣。</p>
+    <p>（動畫：P 暫停、逗號／句號一步一步走）</p>
+    <p>接著快速補充修課跟獲獎。</p>
+  </aside>
+</section>
+
+<!-- ============ COURSES & AWARDS ============ -->
+<section class="slide" data-title="Courses & awards">
+  <div class="pg">13 / 14</div>
+  <p class="kicker">Education · 修課 · 獲獎 · 訓練</p>
+  <h2 class="t2" style="margin-bottom:28px">修課與獲獎</h2>
+  <div class="ca">
+    <div class="box ca-aw"><div class="lbl o">獲獎與發表</div><ul class="aw"><li><span class="y">2026</span><span class="w">NVIDIA NTECH China 2026 論文入選<em>共同發表</em></span></li><li><span class="y">2026</span><span class="w">GrAPL @ IPDPS 2026 論文<em>CHROMA</em></span></li><li><span class="y">2025</span><span class="w">CIC 競賽 · 決賽</span></li><li><span class="y">2023</span><span class="w">台大 精英碩士獎學金</span></li><li><span class="y">2023</span><span class="w">中興電機 優秀畢業生<em>系排 1 / 47</em></span></li><li><span class="y">大三</span><span class="w">中興電機 菁英獎</span></li><li><span class="y">大三上</span><span class="w">中興電機 書卷獎</span></li><li><span class="y">大二下</span><span class="w">中興電機 書卷獎</span></li></ul></div>
+    <div class="col" style="gap:18px">
+      <div class="box"><div class="lbl b">數位設計 · 驗證修課</div>
+        <div class="ca-g"><span class="k">設計</span><div class="row cw"><span class="chip">高階系統晶片設計</span><span class="chip">系統晶片設計實驗</span><span class="chip">數位訊號處理架構設計</span><span class="chip">電腦輔助積體電路系統設計</span><span class="chip">通信數位積體電路設計</span><span class="chip">數位通信</span></div></div>
+        <div class="ca-g"><span class="k">驗證 / 測試</span><div class="row cw"><span class="chip g">積體電路系統測試</span><span class="chip g">系統晶片驗證</span></div></div></div>
+      <div class="box"><div class="lbl g">教育訓練</div><ul class="tr"><li>Logic Synthesis with Design Compiler</li><li>Cell-Based IC Physical Design and Verification with IC Compiler II</li><li>Cell-Based IC Implementation and Verification</li><li>Full-Custom 晶片設計與實作</li><li>AISOC Platform Hands-on Tutorial</li></ul></div>
+      <div class="box"><div class="lbl">軟體基礎</div><div class="row cw"><span class="chip s">C++ 程式設計</span><span class="chip s">Java 程式設計</span><span class="chip s">作業系統原理</span><span class="chip s">組合語言程式設計</span><span class="chip s">演算法分析與設計</span><span class="chip s">計算機圖形學</span><span class="chip s">Web 應用開發</span><span class="chip s">使用者介面設計</span></div></div>
+    </div>
+  </div>
+  <div class="foot"><span>吳建賢 · Chien-Hsien Wu</span><span>Courses &amp; Awards</span></div>
+  <aside class="notes">
+    <p>獲獎跟發表：今年有兩篇論文，一篇是 <strong>NVIDIA NTECH China 2026</strong> 的共同發表，一篇是 <strong>GrAPL @ IPDPS 2026</strong> 的 CHROMA；2025 年 <strong>CIC 競賽進決賽</strong>；碩士拿台大精英碩士獎學金，大學是中興電機優秀畢業生、系排第一，菁英獎跟兩次書卷獎。</p>
+    <p>修課跟這個職缺最相關的是<strong>積體電路系統測試、系統晶片驗證</strong>，加上高階系統晶片設計、DSP 架構設計、通信數位 IC 設計；也上過 DC 合成、ICC2 實體設計、Full-Custom 的訓練課程。</p>
+    <p>我的部分到這裡。</p>
+  </aside>
+</section>
+
+<!-- ============ RECAP ============ -->
+
+<!-- ============ 10 THANKS ============ -->
+<section class="slide center" data-title="Thanks">
+  <div class="pg">14 / 14</div>
+  <div style="display:flex;flex-direction:column;justify-content:center;height:100%">
+    <p class="kicker">Q &amp; A</p>
+    <h1 class="t1">謝謝，<span class="hl">歡迎提問</span></h1>
+    <p class="sub">最快可到職日：2027 / 02 / 23 之後（研發替代役期滿）</p>
+    <div class="row" style="gap:14px;margin-top:22px">
+      <span class="chip">lumusen890305@gmail.com</span>
+      <span class="chip">linkedin.com/in/chienhsien-wu</span>
+      <span class="chip">github.com/lumusen0305</span>
+    </div>
+  </div>
+  <div class="foot"><span>吳建賢 · Chien-Hsien Wu</span><span>Thank you</span></div>
+  <aside class="notes">
+    <p>以上是我的分享，謝謝主管。</p>
+    <p>補充一點：我目前是<strong>研發替代役</strong>，最快 <strong>2027 年 2 月 23 日之後</strong>可以到職。</p>
+    <p>有任何問題都歡迎問。</p>
+  </aside>
+</section>
+
+</div>
+
+<!-- circuit-trace decoration, injected into every slide (purely visual) -->
+<script>
+(function(){
+  var svg = '<svg class="traces" viewBox="0 0 1920 1080" preserveAspectRatio="xMidYMid slice" aria-hidden="true">'
+   +'<path d="M1500 0 V60 H1760 V150"/><circle cx="1760" cy="150" r="6"/>'
+   +'<path d="M1860 0 V40 H1920"/><path d="M1640 120 H1820 V230"/><circle cx="1820" cy="230" r="6"/>'
+   +'<path class="hot" d="M1540 60 H1600"/>'
+   +'<path d="M0 960 H90 V1080"/><circle cx="90" cy="960" r="6"/>'
+   +'<path d="M30 1080 V1010 H240"/><circle cx="240" cy="1010" r="6"/>'
+   +'<path d="M0 860 H40 V900"/><path class="hot" d="M130 960 H190"/>'
+   +'</svg>';
+  document.querySelectorAll('.deck > .slide').forEach(function(s){ s.insertAdjacentHTML('afterbegin', svg); });
+})();
+</script>
+<!-- anim-ctl -->
+<script>
+/* diagram animations: P pause/play; comma/period step (per-slide data-tick/data-phase);
+   period on the last step of a data-steps slide = approve; also works from the presenter window */
+(function () {
+  var RE = /^wc-(lb|tok|out|g\d|jr|new|ring|cur|st|q)/;
+  function cfg(s) { var T = +(s.dataset.tick || 800); return { T: T, P: +(s.dataset.phase || 0.45) * T, N: +(s.dataset.steps || 0) }; }
+  function anims(s) { return s ? s.getAnimations({ subtree: true }).filter(function (a) { return RE.test(a.animationName || ''); }) : []; }
+  function label(s, paused) { var b = s && s.querySelector('.actl [data-a="toggle"]'); if (b) { b.textContent = paused ? '▶' : '❚❚'; b.classList.toggle('paused', paused); } }
+  function approve(s) { if (s && s.querySelector('[data-approve]') && !s.classList.contains('approved')) { s.classList.add('approved'); return true; } return false; }
+  function ctl(act) {
+    var s = document.querySelector('.slide.is-active'), as = anims(s);
+    if (!as.length) return false;
+    var c = cfg(s), running = as.some(function (a) { return a.playState === 'running'; });
+    if (act === 'toggle') { as.forEach(function (a) { running ? a.pause() : a.play(); }); label(s, running); return true; }
+    var t = Math.max.apply(null, as.map(function (a) { return a.currentTime || 0; }));
+    var i = Math.floor((t - c.P) / c.T + 1e-6);
+    if (act === 'next') { if (c.N && i + 1 >= c.N && approve(s)) { label(s, false); return true; } i += 1; }
+    else i = Math.max(0, i - 1);
+    if (c.N) i = Math.min(i, c.N - 1);
+    as.forEach(function (a) { a.pause(); a.currentTime = i * c.T + c.P; });
+    label(s, true); return true;
+  }
+  function onKey(e) {
+    if (e.ctrlKey || e.metaKey || e.altKey) return;
+    var k = e.key, act = (k === 'p' || k === 'P') ? 'toggle' : k === '.' ? 'next' : k === ',' ? 'prev' : null;
+    if (act && ctl(act)) e.preventDefault();
+  }
+  document.addEventListener('keydown', onKey);
+  document.addEventListener('click', function (e) {
+    var t = e.target, b = t.closest && t.closest('.actl [data-a]');
+    if (b) { ctl(b.getAttribute('data-a')); b.blur(); return; }
+    var ap = t.closest && t.closest('[data-approve]');
+    if (ap) { approve(ap.closest('.slide')); return; }
+    if (t.closest && t.closest('.slide.is-active svg.fe')) ctl('toggle');
+  });
+  new MutationObserver(function (ms) { ms.forEach(function (m) {
+    var el = m.target; if (!el.classList || !el.classList.contains('slide')) return;
+    var was = (' ' + (m.oldValue || '') + ' ').indexOf(' is-active ') >= 0;
+    if (el.classList.contains('is-active') && !was) { el.classList.remove('approved'); label(el, false); }
+  }); }).observe(document.documentElement, { subtree: true, attributes: true, attributeFilter: ['class'], attributeOldValue: true });
+  var open0 = window.open;
+  window.open = function (u, name) {
+    var w = open0.apply(window, arguments);
+    if (w && name === 'html-ppt-presenter') setTimeout(function () { try { w.document.addEventListener('keydown', onKey); } catch (err) {} }, 0);
+    return w;
+  };
+})();
+</script>
+<!-- /anim-ctl -->
+<!-- i18n -->
+<script src="i18n/en.js"></script>
+<script>
+/* language switch: L toggles 中 / EN (remembered); ?lang=en or ?lang=zh forces one.
+   Chinese in the markup is the source; window.I18N_EN maps its normalized text to English HTML. */
+(function () {
+  var D = window.I18N_EN || {}, KEY = 'wc-lang', units = null, attrs = null, title0 = document.title;
+  var INL = { STRONG: 1, EM: 1, B: 1, I: 1, BR: 1, SPAN: 1, SUB: 1, SUP: 1, CODE: 1, A: 1, SMALL: 1, U: 1 };
+  function norm(t) { return (t || '').replace(/\s+/g, ' ').trim(); }
+  function inlineOnly(el) {
+    for (var c = el.firstElementChild; c; c = c.nextElementSibling) if (!INL[c.tagName.toUpperCase()] || !inlineOnly(c)) return false;
+    return true;
+  }
+  function ownText(el) {
+    for (var n = el.firstChild; n; n = n.nextSibling) if (n.nodeType === 3 && n.nodeValue.trim()) return true;
+    return false;
+  }
+  function walk(el, out) {
+    var tag = el.tagName.toLowerCase();
+    if (tag === 'script' || tag === 'style') return;
+    if (tag === 'text' || (ownText(el) && inlineOnly(el))) { out.push({ el: el, key: norm(el.textContent), zh: el.innerHTML }); return; }
+    for (var c = el.firstElementChild; c; c = c.nextElementSibling) walk(c, out);
+  }
+  function collect() {
+    units = []; attrs = [];
+    var slides = document.querySelectorAll('.slide');
+    for (var i = 0; i < slides.length; i++) {
+      walk(slides[i], units);
+      var an = slides[i].querySelectorAll('[aria-label], img[alt]');
+      for (var j = 0; j < an.length; j++) {
+        var name = an[j].hasAttribute('aria-label') ? 'aria-label' : 'alt';
+        attrs.push({ el: an[j], name: name, zh: an[j].getAttribute(name) });
+      }
+    }
+  }
+  function apply(lang) {
+    if (!units) collect();
+    var en = lang === 'en';
+    units.forEach(function (u) { var v = D[u.key]; if (v != null) u.el.innerHTML = en ? v : u.zh; });
+    attrs.forEach(function (a) { var v = D[norm(a.zh)]; if (v != null) a.el.setAttribute(a.name, en ? v : a.zh); });
+    var t = D[norm(title0)]; document.title = en && t ? t : title0;
+    document.documentElement.lang = en ? 'en' : 'zh-Hant';
+  }
+  var q = /[?&]lang=(en|zh)\b/.exec(location.search || ''), cur = 'zh';
+  try { cur = q ? q[1] : (localStorage.getItem(KEY) || 'zh'); } catch (e) { cur = q ? q[1] : 'zh'; }
+  apply(cur);
+  window.wcI18n = { apply: apply, units: function () { if (!units) collect(); return units; }, lang: function () { return cur; } };
+  var pw = null, open0 = window.open;
+  window.open = function (u, name) { var w = open0.apply(window, arguments); if (name === 'html-ppt-presenter') pw = w; return w; };
+  function set(lang, reopen) {
+    cur = lang; apply(lang);
+    try { localStorage.setItem(KEY, lang); } catch (e) {}
+    /* the presenter window snapshots notes when it opens: reopen it so the script follows */
+    if (reopen && pw && !pw.closed) {
+      pw.close(); pw = null;
+      setTimeout(function () { document.dispatchEvent(new KeyboardEvent('keydown', { key: 's', bubbles: true })); }, 120);
+    }
+  }
+  document.addEventListener('keydown', function (e) {
+    if (e.ctrlKey || e.metaKey || e.altKey || (e.key !== 'l' && e.key !== 'L')) return;
+    set(cur === 'en' ? 'zh' : 'en', true); e.preventDefault();
+  });
+  /* presenter previews (same deck in iframes) follow the audience window */
+  window.addEventListener('storage', function (e) { if (e.key === KEY && e.newValue && e.newValue !== cur && !q) set(e.newValue, false); });
+})();
+</script>
+<!-- /i18n -->
+<script src="assets/runtime.js"></script>
+</body>
+</html>
