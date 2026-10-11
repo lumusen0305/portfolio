@@ -189,8 +189,7 @@
   <div class="pg">05 / 14</div>
   <p class="kicker"><span class="pn">3 / 4</span>NVIDIA · In-house Agent × Skills</p>
   <h2 class="t2">In-house agent 照 skills 修，人來放行</h2>
-  <p class="sub" style="margin-bottom:10px">每個 partition 一個 Claude Agent SDK agent：agent 判斷，指令經 WebSocket hub 送到 live session，由 ECO 工具執行</p>
-  <p class="take" style="margin-bottom:22px"><b>帶到團隊</b>每個固定步驟寫成一個 skill，可以單獨重跑、結果可以檢查</p>
+  <p class="sub" style="margin-bottom:30px">每個 partition 一個 Claude Agent SDK agent：agent 判斷，指令經 WebSocket hub 送到 live session，由 ECO 工具執行</p>
   <svg class="arch" viewBox="0 0 1700 412" role="img" aria-label="自動 ECO 架構示意圖：agent 技能、socket hub、LSF 上的 live session 與人工核准">
       <rect class="pnl" x="1" y="1" width="998" height="378" rx="12"/>
       <text class="ttl o" x="26" y="42">IN-HOUSE AGENT</text>
@@ -225,7 +224,7 @@
       <rect class="bx" x="1450" y="104" width="230" height="62" rx="7"/><rect class="stx st-ch st5-sea" x="1450" y="104" width="230" height="62" rx="7"/><text class="lb r" x="1468" y="130">■ SESSION A</text><text class="tiny" x="1468" y="152">timing tool executor</text><rect class="bx  " x="1450" y="196" width="230" height="62" rx="7"/><text class="lb b" x="1468" y="222">■ SESSION B</text><text class="tiny" x="1468" y="244">timing tool executor</text><rect class="bx  " x="1450" y="288" width="230" height="62" rx="7"/><text class="lb p" x="1468" y="314">■ SESSION C</text><text class="tiny" x="1468" y="336">timing tool executor</text>
       <text class="tiny mid" x="1565" y="366" style="letter-spacing:.16em">NO INBOUND</text><circle class="stx st-adot st5-adot" cx="810" cy="382" r="7"/><rect class="apr-hit" data-approve="1" x="556" y="352" width="258" height="60" rx="8"/>
     </svg>
-  <div class="term walk" style="margin-top:6px">
+  <div class="term walk" style="margin-top:22px">
     <div class="bar"><span>• • •</span><span>一筆 hold violation 怎麼被修 · illustrative</span><span>示意圖</span></div>
     <div class="ln"><span class="tag" style="color:var(--text-1)">preflight</span>corner、資料與權限齊全才開工</div>
     <div class="ln"><span class="tag b">triage</span>#042 hold −3.0 ps → 走 hold 的修法階梯</div>
@@ -240,7 +239,6 @@
     <p>分工是：<strong>agent 只做判斷</strong>，真正的改動透過 skill 叫 in-house ECO 工具，經剛剛那個 <strong>WebSocket hub</strong> 送到 <strong>LSF 上的 live session</strong> 執行；session 只往外連、不開 inbound。</p>
     <p>三個原則：每次工具呼叫都是一個 skill、可以單獨重跑；<strong>讀回通過才算數</strong>，沒證據就是 pending；修不了的標 needs human。</p>
     <p>底下是<strong>一筆 hold violation 實際走過的路</strong>：分類、擬最小改動並先算 setup 代價、派到 session、讀回、最後人來核准。</p>
-    <p>帶到團隊的做法：<strong>每個固定步驟寫成一個 skill</strong>，可以單獨重跑、結果可以檢查，出錯好追。</p>
     <p>（動畫：逗號／句號一步一步走，最後點 HUMAN APPROVAL 放行）</p>
     <p>session 一多，top agent 下指令用的派送本身就成了瓶頸。</p>
   </aside>
@@ -251,8 +249,7 @@
   <div class="pg">06 / 14</div>
   <p class="kicker"><span class="pn">4 / 4</span>NVIDIA · LSF Farm 派送 × ECO 平台</p>
   <h2 class="t2">讓派送工具，不只是派送工具</h2>
-  <p class="sub" style="margin-bottom:10px">先重寫公司 LSF farm 的派送機制，再把它變成看得見每一筆 ECO 的平台</p>
-  <p class="take" style="margin-bottom:22px"><b>帶到團隊</b>跑 job、收結果、看狀態這些重複的事，可以自動化</p>
+  <p class="sub" style="margin-bottom:30px">先重寫公司 LSF farm 的派送機制，再把它變成看得見每一筆 ECO 的平台</p>
   <div class="two">
     <div class="box glow-b pt2">
       <div class="hd"><span class="num b">01</span><div><div class="lbl" style="color:var(--blue)">重寫 LSF farm 派送</div><div class="sm">更快、而且絕不重複派送</div></div></div>
@@ -293,7 +290,6 @@
     <p>最後一個，我想講的是<strong>讓派送工具不只是派送工具</strong>，分兩個重點。</p>
     <p><strong>第一，派送本身</strong>：top agent 就是透過它下指令。我重寫了公司派送 LSF 的 farm 機制。原本 job 送上 farm 就是黑盒子，只能一直輪詢；改寫後 session 主動回報。原型壓測對照原本的系統：<strong>吞吐量 3.2 倍、輪詢快 150 倍</strong>，而且 <strong>32 路並行下零重複派送</strong>——同一筆 ECO 改兩次就壞了，所以這點我最在意。</p>
     <p><strong>第二，不只是派送</strong>：因為每個 session 都會回報，派送工具就變成一個 <strong>ECO 平台</strong>。每一筆修正的狀態、歷史、agent 的提案都即時看得見，需要人的排最前面，剛剛跨 partition 的共享案件也是在這裡看，網頁讀取也快了 12 倍。</p>
-    <p>帶到團隊：<strong>跑 job、收結果、看狀態這些重複的事可以自動化</strong>，每一筆的狀態都看得到。</p>
     <p>NVIDIA 的部分到這裡，接下來講前端。</p>
   </aside>
 </section>

@@ -82,7 +82,6 @@ window.I18N_EN = {
   // ---- 05 Auto ECO architecture
   "In-house agent 照 skills 修，人來放行": "In-house Agent: Skills Fix, Human Releases",
   "每個 partition 一個 Claude Agent SDK agent：agent 判斷，指令經 WebSocket hub 送到 live session，由 ECO 工具執行": "One Claude Agent SDK agent per partition decides; commands reach the live session's ECO tool over the WebSocket hub",
-  "帶到團隊每個固定步驟寫成一個 skill，可以單獨重跑、結果可以檢查": "<b>For your team</b>each fixed step becomes a skill that reruns on its own, with checkable results",
   "每個 partition 一個 · Claude Agent SDK · 人核准才放行": "one per partition · Claude Agent SDK · release needs human approval",
   "每個 partition 一個 channel": "one channel per partition",
   "LSF 運算節點": "LSF NODES",
@@ -103,14 +102,12 @@ window.I18N_EN = {
   "分工是：agent 只做判斷，真正的改動透過 skill 叫 in-house ECO 工具，經剛剛那個 WebSocket hub 送到 LSF 上的 live session 執行；session 只往外連、不開 inbound。": "The split: <strong>the agent only makes decisions</strong>; the actual changes go through skills that call the in-house ECO tool, sent over that same <strong>WebSocket hub</strong> to execute in <strong>a live session on LSF</strong>. Sessions only connect outward and never open an inbound port.",
   "三個原則：每次工具呼叫都是一個 skill、可以單獨重跑；讀回通過才算數，沒證據就是 pending；修不了的標 needs human。": "Three principles: every tool call is a skill and can be rerun on its own; <strong>only a passing readback counts</strong>, and without evidence it stays pending; whatever can't be fixed is marked needs human.",
   "底下是一筆 hold violation 實際走過的路：分類、擬最小改動並先算 setup 代價、派到 session、讀回、最後人來核准。": "Below is <strong>the path one hold violation actually takes</strong>: triage, a minimal fix with its setup cost checked first, dispatch to a session, readback, and finally human approval.",
-  "帶到團隊的做法：每個固定步驟寫成一個 skill，可以單獨重跑、結果可以檢查，出錯好追。": "The practice I'd bring to the team: <strong>each fixed step written as a skill</strong>, rerunnable on its own, with checkable results, so mistakes are easy to trace.",
   "（動畫：逗號／句號一步一步走，最後點 HUMAN APPROVAL 放行）": "(Animation: comma / period step through; click HUMAN APPROVAL at the end to release.)",
   "session 一多，top agent 下指令用的派送本身就成了瓶頸。": "Once there are many sessions, the dispatch the top agent uses for its commands becomes the bottleneck.",
   // ---- 06 Session platform
   "4 / 4NVIDIA · LSF Farm 派送 × ECO 平台": "<span class=\"pn\">4 / 4</span>NVIDIA · LSF Farm Dispatch × ECO Platform",
   "讓派送工具，不只是派送工具": "More Than a Dispatcher",
   "先重寫公司 LSF farm 的派送機制，再把它變成看得見每一筆 ECO 的平台": "First I rewrote the company's LSF farm dispatch, then turned it into a platform where every ECO is visible",
-  "帶到團隊跑 job、收結果、看狀態這些重複的事，可以自動化": "<b>For your team</b>repetitive work like running jobs, collecting results and checking status can be automated",
   "重寫 LSF farm 派送": "Rewrite LSF farm dispatch",
   "更快、而且絕不重複派送": "faster, and never dispatches twice",
   "派送吞吐量": "dispatch throughput",
@@ -131,7 +128,6 @@ window.I18N_EN = {
   "最後一個，我想講的是讓派送工具不只是派送工具，分兩個重點。": "The last piece is about <strong>making the dispatcher more than a dispatcher</strong>, in two parts.",
   "第一，派送本身：top agent 就是透過它下指令。我重寫了公司派送 LSF 的 farm 機制。原本 job 送上 farm 就是黑盒子，只能一直輪詢；改寫後 session 主動回報。原型壓測對照原本的系統：吞吐量 3.2 倍、輪詢快 150 倍，而且 32 路並行下零重複派送——同一筆 ECO 改兩次就壞了，所以這點我最在意。": "<strong>First, dispatch itself</strong>: this is how the top agent sends its commands. I rewrote the company's LSF farm dispatch. Before, a job on the farm was a black box and you could only keep polling; after the rewrite, sessions report back on their own. In a prototype load test against the original system: <strong>3.2× throughput, 150× faster polling</strong>, and <strong>zero duplicate dispatches at 32-way parallelism</strong>. Applying the same ECO twice breaks things, so that last point matters most to me.",
   "第二，不只是派送：因為每個 session 都會回報，派送工具就變成一個 ECO 平台。每一筆修正的狀態、歷史、agent 的提案都即時看得見，需要人的排最前面，剛剛跨 partition 的共享案件也是在這裡看，網頁讀取也快了 12 倍。": "<strong>Second, beyond dispatch</strong>: because every session reports back, the dispatcher becomes an <strong>ECO platform</strong>. The status, history and agent proposals for every fix are visible live, items that need a human go to the top, the cross-partition shared cases from earlier are viewed here, and web reads got 12× faster.",
-  "帶到團隊：跑 job、收結果、看狀態這些重複的事可以自動化，每一筆的狀態都看得到。": "For the team: <strong>repetitive work like running jobs, collecting results and checking status can be automated</strong>, with every item's status visible.",
   "NVIDIA 的部分到這裡，接下來講前端。": "That's the NVIDIA part. Next, front-end design.",
   // ---- 07 TSMC ADPLL
   "1 / 3Front-end · TSMC 數位設計實習": "<span class=\"pn\">1 / 3</span>Front-end · TSMC Digital Design Internship",
