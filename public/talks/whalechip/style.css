@@ -772,3 +772,8 @@ body.tpl-wc { --cyan: #3cc8d8; }
 .tpl-wc .stp i.on::after { content: ""; position: absolute; right: 0; bottom: -10px; height: 2px; background: var(--amber); width: calc(100% - .14em); }
 .tpl-wc .stp i.on:not(:first-child)::after { width: calc(100% - 54px - .14em); }
 /* ---------- /footer progress ---------- */
+
+/* ---------- takeaway line ---------- */
+.tpl-wc .take { display: flex; align-items: center; gap: 14px; margin: 0; font: 400 22px/1.4 var(--font-sans); color: var(--text-2); }
+.tpl-wc .take b { flex: none; font: 700 13px/1 var(--font-mono); letter-spacing: .14em; color: var(--amber); border: 1.4px solid var(--amber); border-radius: 5px; padding: 6px 9px; }
+/* ---------- /takeaway line ---------- */
