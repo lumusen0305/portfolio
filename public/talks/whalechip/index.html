@@ -643,5 +643,27 @@
 </script>
 <!-- /i18n -->
 <script src="assets/runtime.js"></script>
+<!-- touchbar: tablets and phones have no S / N / O keys; these buttons send the same keys -->
+<div class="touchbar" data-no-swipe aria-label="觸控操作">
+  <button type="button" data-k="ArrowLeft" aria-label="上一頁">‹</button>
+  <button type="button" data-k="n" aria-label="講稿">講稿</button>
+  <button type="button" data-k="o" aria-label="總覽">總覽</button>
+  <a class="tb-link" href="notes.html" target="_blank" rel="noopener" aria-label="講稿頁（給另一台裝置）">講稿頁</a>
+  <button type="button" data-k="l" class="tb-lang" aria-label="切換中文或英文">中/EN</button>
+  <button type="button" data-k="ArrowRight" aria-label="下一頁">›</button>
+</div>
+<script>
+(function () {
+  var bar = document.querySelector('.touchbar');
+  if (!bar) return;
+  if (/[?&]touch=1\b/.test(location.search)) document.documentElement.classList.add('force-touchbar');
+  bar.addEventListener('click', function (e) {
+    var b = e.target.closest('button[data-k]');
+    if (!b) return;
+    document.dispatchEvent(new KeyboardEvent('keydown', { key: b.getAttribute('data-k'), bubbles: true }));
+    b.blur();
+  });
+})();
+</script>
 </body>
 </html>

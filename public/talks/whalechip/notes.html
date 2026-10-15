@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="zh-Hant"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>講稿 · 鯨鏈面談</title>
+<style>
+/* one reading column, big type for a phone held at arm's length; slide chips stick to the top */
+:root { --bg:#0b1018; --card:#121a28; --fg:#eef2f7; --muted:#93a1b5; --line:#24324a; --accent:#f0a73a; --blue:#5aa9ff;
+  --sans:"Noto Sans TC","PingFang TC","Microsoft JhengHei",system-ui,sans-serif; color-scheme: dark; }
+@media (prefers-color-scheme: light) { :root { --bg:#f5f6f8; --card:#ffffff; --fg:#141a22; --muted:#5b6778; --line:#dde3ea;
+  --accent:#b8650f; --blue:#1f6fd1; color-scheme: light; } }
+* { box-sizing: border-box; }
+html, body { margin: 0; background: var(--bg); color: var(--fg); font-family: var(--sans); }
+body { padding-inline: 16px; padding-block: 0 48px; font-size: 19px; line-height: 1.75; }
+nav { position: sticky; top: 0; z-index: 2; background: var(--bg); padding: calc(env(safe-area-inset-top,0px) + 10px) 0 10px;
+  display: flex; gap: 6px; overflow-x: auto; border-bottom: 1px solid var(--line); }
+.chip { flex: 0 0 auto; min-width: 40px; height: 40px; line-height: 38px; text-align: center; border-radius: 10px;
+  border: 1px solid var(--line); color: var(--fg); text-decoration: none; font-weight: 600; font-size: 16px; }
+.chip:active, .chip:focus-visible { background: var(--accent); color: #0b1018; outline: none; }
+main { max-width: 46rem; margin: 0 auto; display: grid; gap: 18px; padding-top: 16px; }
+h1 { font-size: 15px; letter-spacing: .08em; color: var(--muted); font-weight: 600; margin: 8px 0 0; }
+.card { background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 16px 18px; scroll-margin-top: 72px; }
+.card header { display: flex; gap: 12px; align-items: baseline; border-bottom: 1px solid var(--line); padding-bottom: 8px; margin-bottom: 8px; }
+.num { font-weight: 800; font-size: 26px; color: var(--accent); font-variant-numeric: tabular-nums; }
+.kick { font-size: 13px; color: var(--muted); letter-spacing: .04em; }
+h2 { margin: 0; font-size: 20px; line-height: 1.35; text-wrap: balance; }
+.script p { margin: .55em 0; max-width: 65ch; }
+.script strong { color: var(--accent); }
+.script em { color: var(--blue); font-style: normal; }
+.empty { color: var(--muted); }
+</style></head><body>
+<nav aria-label="投影片"><a href="#s1" class="chip">1</a><a href="#s2" class="chip">2</a><a href="#s3" class="chip">3</a><a href="#s4" class="chip">4</a><a href="#s5" class="chip">5</a><a href="#s6" class="chip">6</a><a href="#s7" class="chip">7</a><a href="#s8" class="chip">8</a><a href="#s9" class="chip">9</a><a href="#s10" class="chip">10</a><a href="#s11" class="chip">11</a><a href="#s12" class="chip">12</a><a href="#s13" class="chip">13</a><a href="#s14" class="chip">14</a><a href="#s15" class="chip">15</a></nav>
+<main><h1>講稿 · 鯨鏈科技 ASIC Team 面談 · 共 15 頁</h1>
+<section id="s1" class="card"><header><span class="num">01</span><div><div class="kick">Interview · ASIC Team · 數位 IC 設計工程師</div><h2>Chien-Hsien Wu</h2></div></header><div class="script"><p>主管好，我是<strong>吳建賢</strong>，英文名 Chien-Hsien。目前在 <strong>NVIDIA 做 ASIC physical design</strong>，已經轉正職。右邊是我的簡介，等一下會一項一項展開。</p>
+    <p>今天大概十五到二十分鐘：先快速講經歷，再用四頁講我在 NVIDIA 做的 ECO 自動化：先看<strong>整體架構</strong>，再拆成三塊：讓 agent 跟 top agent 溝通的 <strong>WebSocket hub</strong>、每個 partition 的 <strong>in-house agent 和它的 skills</strong>，以及我重寫的 <strong>LSF farm 派送機制</strong>；接著是前端的三個專案和碩士研究 CHROMA，最後快速帶過其他作品、量化投資和修課獲獎。</p>
+    <p>先說明：<strong>圖都是重畫的示意圖</strong>，沒有放任何公司內部的資料。</p></div></section><section id="s2" class="card"><header><span class="num">02</span><div><div class="kick">About · Timeline</div><h2>經歷</h2></div></header><div class="script"><p>快速帶過經歷。<strong>大學中興電機</strong>，系排第一畢業；<strong>碩士台大重點科技研究學院</strong>，做 IC 設計與自動化，研究是 GPU 平行運算，CHROMA 是共同第一作者。</p>
+    <p>碩班期間 2024 夏天在 <strong>TSMC 實習</strong>，做 N7 ADPLL 的數位區塊，功耗降 16%、面積降 21%。</p>
+    <p>2025 年 10 月進 <strong>NVIDIA 做 ASIC PD</strong>，主要是 GPU 的 timing signoff 和 ECO，也做了團隊用的 ECO 自動化工具——接下來四頁就講這些。</p></div></section><section id="s3" class="card"><header><span class="num">03</span><div><div class="kick">1 / 4 NVIDIA · ECO 自動化架構</div><h2>一個 top agent 指揮，每個 partition 一個 agent 修</h2></div></header><div class="script"><p>在 NVIDIA 我負責 <strong>GPU chip 的 timing ECO closure</strong>。每個 spin 都有大量 violation，<strong>分類、修、驗證、放行</strong>原本全靠人工，所以我做了一套自動化系統。先看全貌，接下來三頁再拆開講。</p>
+    <p>最上層是一個 <strong>top agent</strong>，用 LangChain 寫，透過我重寫的 <strong>LSF 派送</strong>開 session、對各 partition 下指令。</p>
+    <p>每個 partition 底下有一個 <strong>in-house agent</strong>，用 Claude Agent SDK 寫，照一套 <strong>skills</strong> 在 live session 裡修；它跟 top agent 透過我寫的 <strong>WebSocket hub</strong> 溝通，跨 partition 的問題也走 hub。最後一定是<strong>人審核才放行</strong>。</p>
+    <p>結果是<strong>一輪自動修正處理掉約 23 萬筆裡的 97%</strong>，setup TNS 從 −250 ns 收到大約 0；這套流程也跟同事一起在 <strong>NTECH China 2026</strong> 發表。</p>
+    <p>這套做法可以帶到團隊：<strong>重複、固定的 flow 寫成 skill 和自動化流程</strong>，人只看判斷和放行。</p>
+    <p>（動畫：P 暫停、逗號／句號一步一步走）</p>
+    <p>接下來一塊一塊講，先從 hub 開始。</p></div></section><section id="s4" class="card"><header><span class="num">04</span><div><div class="kick">2 / 4 NVIDIA · WebSocket Hub × Cross-Partition ECO</div><h2>一個 WebSocket hub，讓 ECO 可以跨 partition</h2></div></header><div class="script"><p>這是我寫的 <strong>WebSocket hub</strong>，in-house agent 跟 top agent 就是在這裡溝通。它可以接 <strong>PrimeTime、VC</strong> 這些工具的 session，再串我們 <strong>in-house 的 ECO 工具</strong>，每個 partition 一個 room。</p>
+    <p>有了它就能做<strong>跨 partition 的 ECO</strong>。舉例：A 的邊界有 skew，需要 B 那邊吸收幾個 ps。以前要找對方 owner、等回覆；現在 A 的 agent 把任務送進 B 的 room，<strong>B 的 agent 做一次核准過的本地試修</strong>，改完兩邊<strong>重新讀回</strong>，兩側都收斂才 keep。</p>
+    <p>右邊這個<strong>共享案件的畫面</strong>，是最後要介紹的平台；最後還是<strong>人審核才放行</strong>。這裡的元件都已經做好，<strong>整合流程還在 pilot 驗證</strong>。</p>
+    <p>可以帶到團隊的是：<strong>PT、VC 這類要培訓才會用的工具，包成 Claude Code 能直接連的介面</strong>，新人不用先把工具學熟就能開始查問題。</p>
+    <p>有了 hub，再來看每個 partition 的 in-house agent 怎麼修。</p></div></section><section id="s5" class="card"><header><span class="num">05</span><div><div class="kick">3 / 4 NVIDIA · In-house Agent × Skills</div><h2>In-house agent 照 skills 修，人來放行</h2></div></header><div class="script"><p>每個 partition 的 <strong>in-house agent</strong> 用 <strong>Claude Agent SDK</strong> 寫，照左邊這排 <strong>skills</strong> 一步步修：前檢、自動修、分類，再依 violation 類型分成 setup、hold、tran/cap、SI 各自的修法，讀回、出口檢查之後才放行。</p>
+    <p>分工是：<strong>agent 只做判斷</strong>，真正的改動透過 skill 叫 in-house ECO 工具，經剛剛那個 <strong>WebSocket hub</strong> 送到 <strong>LSF 上的 live session</strong> 執行；session 只往外連、不開 inbound。</p>
+    <p>三個原則：每次工具呼叫都是一個 skill、可以單獨重跑；<strong>讀回通過才算數</strong>，沒證據就是 pending；修不了的標 needs human。</p>
+    <p>底下是<strong>一筆 hold violation 實際走過的路</strong>：分類、擬最小改動並先算 setup 代價、派到 session、讀回、最後人來核准。</p>
+    <p>（動畫：逗號／句號一步一步走，最後點 HUMAN APPROVAL 放行）</p>
+    <p>session 一多，top agent 下指令用的派送本身就成了瓶頸。</p></div></section><section id="s6" class="card"><header><span class="num">06</span><div><div class="kick">4 / 4 NVIDIA · LSF Farm 派送 × ECO 平台</div><h2>讓派送工具，不只是派送工具</h2></div></header><div class="script"><p>最後一個，我想講的是<strong>讓派送工具不只是派送工具</strong>，分兩個重點。</p>
+    <p><strong>第一，派送本身</strong>：top agent 就是透過它下指令。我重寫了公司派送 LSF 的 farm 機制。原本 job 送上 farm 就是黑盒子，只能一直輪詢；改寫後 session 主動回報。原型壓測對照原本的系統：<strong>吞吐量 3.2 倍、輪詢快 150 倍</strong>，而且 <strong>32 路並行下零重複派送</strong>——同一筆 ECO 改兩次就壞了，所以這點我最在意。</p>
+    <p><strong>第二，不只是派送</strong>：因為每個 session 都會回報，派送工具就變成一個 <strong>ECO 平台</strong>。每一筆修正的狀態、歷史、agent 的提案都即時看得見，需要人的排最前面，剛剛跨 partition 的共享案件也是在這裡看，網頁讀取也快了 12 倍。</p>
+    <p>NVIDIA 的部分到這裡，接下來講前端。</p></div></section><section id="s7" class="card"><header><span class="num">07</span><div><div class="kick">1 / 3 Front-end · TSMC 數位設計實習</div><h2>N7 ADPLL 數位區塊：運算單元共用</h2></div></header><div class="script"><p>前端先講 <strong>TSMC 實習</strong>。2024 暑假參加 DTP，負責優化 <strong>N7 ADPLL 的數位電路</strong>。</p>
+    <p>做法是<strong>運算單元共用</strong>：原本三組運算各有一顆乘法器，算完才用 MUX 選其中一個結果，但同一時間只會用到一組。所以我把 MUX 移到乘法器前面，<strong>先選運算元、再乘</strong>，三組共用一顆乘法器；位寬不同的運算元先做 bit extension 對齊。</p>
+    <p>結果是 ADPLL 數位區塊<strong>功耗降 16%、面積降 21%</strong>，優化後續也被設計採用。</p>
+    <p>另外用 Verdi 把內部狀態機可視化來追行為，用 VC_STATIC 做 CDC、DFT 分析，也用 JasperGold 做形式驗證。</p></div></section><section id="s8" class="card"><header><span class="num">08</span><div><div class="kick">2 / 3 Front-end · MIMO Sphere Decoder · 8-PSK · K = 4</div><h2>4×4 MIMO K-best sphere decoder</h2></div></header><div class="script"><p>第二個是 <strong>4×4 MIMO 的 K-best sphere decoder</strong>，8-PSK、K = 4。上面是整體架構：先用 4 拍載入 QR 分解後的 R，之後 <strong>每拍進一筆 ŷ</strong>；四層各有 PDE 跟 SORT，<strong>每層兩級 pipeline、共 8 級</strong>，ŷ 每層延遲兩拍對齊。</p>
+    <p>左下是 PDE 的電路：每條候選算 ŷ 減掉 R 乘符號，取 <strong>|Re|+|Im|</strong> 當距離，再加上一層留下來的 PDE。乘符號的部分<strong>沒有用乘法器</strong>：8-PSK 的 ±1、±j 只是正負號或實虛部交換，對角點用 0.75 = 兩個移位相加代替 0.707（golden 的星座點也用 0.75）；8 個乘積每層只算一次，再用 path 的 3-bit symbol index 透過 8 選 1 MUX 分給各條候選。</p>
+    <p>右下是排序網路：32 筆分 4 組做 MERGE8，再兩兩 MERGE16 各留 4 筆，最後 8 取 4；比的是 12-bit 的 PDE，整筆 24-bit 紀錄一起交換。第 4 層取最小的那條，path 轉回符號輸出。</p>
+    <p>（被問到是不是完整排序時）最小值一定正確，所以最後的最佳路徑沒問題；第 1 層因為 8-PSK 的距離照角度排是 bitonic，8 取 4 也是準的（8 個數字所有繞圈單峰的排列 512 種全試過）。但第 2、3 層留下的 4 條不保證是真正的前 4 名，這套網路比完整排序少了幾級比較，等於近似、K 打了折；golden 用的是同一套網路，所以 bit-exact 一致。</p>
+    <p>（動畫：每層的 PDE 畫成疊起來的卡片，<strong>×8、×32 就是並排的硬體套數</strong>，每一套算一條候選的距離；PDE 那一步整疊一起亮，表示同一拍並行算完。SORT 那一步排序網路亮、出來 4 個橘點是留下的 4 條，右上框的 path 多長 3 bit。四層各自一套硬體、完全展開不共用：PDE 電路共 104 套、比較器共 280 個，所以每拍能吃一筆 ŷ。下面兩個面板跟著當下那一級亮。path 用的是 testbench 第 1 筆 ŷ 的真實結果。）</p>
+    <p>合成用 <strong>N16 標準元件</strong>：cycle time 0.71 ns、面積約 42,337 µm²；VCS 跟 MATLAB 定點 golden 比對，1,056 bits 全部一致。</p></div></section><section id="s9" class="card"><header><span class="num">09</span><div><div class="kick">3 / 3 Front-end · Quantized CNN · 手勢辨識 20 類</div><h2>QAT INT8 CNN：從量化訓練到 APR</h2></div></header><div class="script"><p>第三個是 <strong>QAT 量化的 INT8 CNN</strong>，做手勢辨識、20 類。</p>
+    <p>精度是分三步轉的：先在 FP32 模型插 <strong>fake-quant</strong> 做 QAT，用 fbgemm 的設定訓練 20 個 epoch；再用 <strong>convert()</strong> 轉成真正的 INT8 模型，權重 INT8、per-channel，activation UINT8；最後匯出給 RTL：bias 換算成 INT32，每通道的 scale 換成 <strong>Q31 乘數加 shift</strong>。</p>
+    <p>硬體上 MAC 累加是 INT32，每一層輸出都要 requant：acc 乘上每通道的 Q31 乘數再右移、加 zero point、clamp 到 0–255。這個乘法很寬，我把它拆成 <strong>7 級 pipeline</strong>：乘法拆兩段、再合併、64-bit 捨入加法分兩拍、移位，最後加 zp 並 clamp。</p>
+    <p>資料流一拍進一個像素：兩條 line buffer 依欄定址存前兩列，每列再接 3 級 shift 組出 3×3 視窗，新像素從右邊進來。conv1 是 4 個 PE、conv2 用時間多工跑 6 個通道，總共 <strong>84 個 MAC 乘法器</strong>，requant 另外 7 組。</p>
+    <p>實作：DC 合成在 TSMC 0.13、100 MHz，面積約 88 萬 µm²；Innovus APR 完 post-route setup WNS +1.30 ns、setup 沒有違規；hold 還有 2 條、差不到 0.001 ns，另有少量 max cap / tran / fanout 要收。</p>
+    <p>這部分可以延伸到團隊：<strong>波形也可以做成 Claude Code 看得懂的工具</strong>，幫忙 debug；這個我還沒做過，但做法跟接 PT、VC 一樣。</p>
+    <p>（被問到準確率）50×50 版 INT8 98.38%、10×10 完整版 97.75%；合成的是 10×10 縮小版（4/6/6 通道），那版的準確率沒有留紀錄；選 epoch 用的也是 test set，數字偏樂觀。</p>
+    <p>（被問到驗證）golden 從 PyTorch INT8 模型逐層抓，testbench 逐拍比 20 個輸出；最後一次留下紀錄的比對（4 月）還差 1–2 LSB，原因是 golden 跟匯出的參數來自不同 checkpoint、加上累加器先截 8 bit；之後 RTL 跟 golden 都改過，目前狀態要重跑確認。</p>
+    <p>（動畫：P 暫停、逗號／句號逐拍）</p>
+    <p>前端到這裡。</p></div></section><section id="s10" class="card"><header><span class="num">10</span><div><div class="kick">Research · 台大碩士研究 · GrAPL @ IPDPS 2026</div><h2>CHROMA：高品質圖著色搬上多 GPU</h2></div></header><div class="script"><p>再來是碩士研究 <strong>CHROMA</strong>，多 GPU 的圖著色框架，發表在 <strong>IPDPS 2026 的 GrAPL workshop</strong>。</p>
+    <p>背景是：品質好的平行圖著色跑得慢，快的方法上色品質又差。品質好的 smallest-last 排序是循序的，<strong>priority allocation 在 CPU 上可以比上色本身慢 100 倍</strong>。</p>
+    <p>左邊是架構：每張 GPU 先做 priority allocation，我們的 cuSL 把它平行化，再加三個優化：ELS 提高掃描效率、EGC 用 θ 控制每輪的粒度、SDC 校正最小度數保住品質；上色沿用 ECL-GC 的 kernel。多 GPU 時用 RGP 切圖，邊界先上色、子圖帶 ghost vertex。</p>
+    <p>右邊是 JP 上色的過程：比自己優先的鄰居都上完色，就挑最小的可用顏色；<strong>同一輪可以很多點一起上色</strong>，所以適合 GPU。</p>
+    <p>結果在單張 RTX 4090 上，<strong>顏色數不變、幾何平均快 7 倍</strong>；比 192 執行緒的 CPU 版快 17 倍。</p>
+    <p>CHROMA 的程式基本上都是我寫的：<strong>GPU 上的 priority allocation、多 GPU 的 RGP 模組和 CPU baseline</strong>。這跟硬體設計的思路很像：找出循序的瓶頸、拆成能平行的結構、再處理同步。</p>
+    <p>（動畫：P 暫停、逗號／句號一次前進一輪）</p>
+    <p>（被問到履歷上的 14× 時）那是只開 ELS 的最快設定，顏色數會多三成多；<strong>顏色數不變的是 7.14 倍</strong>，所以簡報用這個數字。</p>
+    <p>專案就介紹到這裡，接著快速看一下其他作品。</p></div></section><section id="s11" class="card"><header><span class="num">11</span><div><div class="kick">Other Work · 硬體 × 軟體</div><h2>其他作品</h2></div></header><div class="script"><p>這頁每個作品都有留下紀錄。</p>
+    <p>硬體的部分：<strong>QR 分解</strong>是 CVSD 的期末專案，CORDIC 做 QR，從 RTL、DC 合成一路走到 Innovus APR，這張是 layout。<strong>RTL 旁通道評估</strong>是碩士研究，用 VCS 模擬產生 SAIF、算 toggle 的 KL divergence，評估 20 種加密電路、用階層樹定位危險模組。<strong>Style Filter</strong> 是高階 SoC 設計的團隊專案，用 Catapult HLS 做濾鏡 IP，整合進 SoC 跑 FPGA。<strong>CIC 2025</strong> 進了決賽，題目是凸包的硬體。</p>
+    <p>軟體的部分：網站前後端、爬蟲、遊戲、量化回測都自己寫過，在 NVIDIA 能自己把平台做起來也是靠這些。</p>
+    <p>再來是我自己在跑的量化投資系統。</p></div></section><section id="s12" class="card"><header><span class="num">12</span><div><div class="kick">Side Projects · 面試前兩週</div><h2>兩個練習：Async FIFO 與 DRAM command scheduler</h2></div></header><div class="script"><p>這一頁是我知道要面這個 team 之後，這兩週自己做的兩個練習，針對 JD 上的 CDC 和 memory controller。</p>
+    <p><strong>Async FIFO</strong>：Cummings FIFO1 的結構，Gray 指標過兩級同步器。重點不在寫出來，而是驗證和約束：SVA 在 testbench 裡同時看兩邊的二進位指標，證明 full 和 empty 只會保守不會錯；DC 跑了兩套 SDC，一套 clock groups、一套 -allow_paths 加 max_delay 壓 Gray 匯流排，PT 最後故意把 clock groups 拿掉，看到 STA 拿兩個週期的公因數 0.1 ns 當要求。另外做了 jitter 注入：同步器第一級隨機晚一拍，Gray 版全過，二進位指標的對照版同步後會出現從未存在的值。</p>
+    <p><strong>DRAM scheduler</strong>：controller 三層裡的中間那層。8 個 bank 各自的狀態機和計數器、rank 層的 tRRD、tFAW、tCCD、tWTR、tRFC，排程是 open-page 加 FR-FCFS，refresh 欠到 8 次才強制，輸出是 DFI 風格的命令腳位。驗證是 Python 寫的 PHY 加 DRAM 模型，隨機讀寫兩千九百筆全對；每條 JEDEC 時序各一條 assertion，把 tRCD 偷改短兩拍馬上被抓到。SMIC 0.13 合成 200 MHz 剛好過，關鍵路徑在排程器的優先順序鏈。</p>
+    <p>後來又補了：讀寫優先權加 write drain 加年齡上限、CKE 的 power-down 和 self-refresh、APB 可程式時序和效能計數器、DDR4 bank group 的 L/S 時序、(72,64) SECDED ECC、一個最小的 UVM 環境加 covergroup、DC 自動 clock gating 加 UPF 把排程核心做成 self-refresh 時可以斷電的電源域，GLS 和 Formality 確認 netlist。最後把另外兩層也做了：前端兩個 AXI port 拆 burst、ROB、HPR/LPR 仲裁加限流、RBC/BRC/XOR 位址對應；後端 DFI 1:2、PHY 的數位部分、上電初始化、MRS、ZQ、write leveling、read gate training、DFI sideband，測試台到 pin-level 的 DDR3 模型，三個時脈用 generated clock 合成。沒做的我也清楚：PHY 的類比部分、DFI 1:4、per-bank refresh、DFT。被問到可以講加在哪裡。</p></div></section><section id="s13" class="card"><header><span class="num">13</span><div><div class="kick">Side Project · 量化投資 · 自有資金實盤</div><h2>量化投資系統</h2></div></header><div class="script"><p>這套是用自己的錢在<strong>實盤</strong>跑的。</p>
+    <p>上面是實盤流程，每個交易日美東 10:05 由 systemd 自動跑：抓資料、算 12-1 動能取前 10 檔，中間有<strong>三道閘門</strong>：新聞否決、下單前檢查、最後對帳。任何一關不過就 <strong>fail-closed</strong>，不下單或直接中止；抓不到新聞也算不過。</p>
+    <p>離目標 ±20% 以內不動，這個帶寬在回測裡把手續費降了 81%。訂單是六狀態的狀態機，cid 用 hash 產生，重送也不會重複下單。</p>
+    <p>下面三個是共用模組：Rust 的部位計算核心，研究跟實盤共用同一份；斷路器 −35% 停買、−40% 出清；看門狗只讀不寫，有異常就發 Telegram。也做過一次 fail-closed 稽核，補上 3 個 critical、4 個 high 的漏洞。</p>
+    <p>研究端是我用 Rust 寫的因子引擎，一條公式從 10 秒變 63 毫秒；用 golden 案例驗證，故意注入 41 個 bug 抓到 38 個。</p>
+    <p>結果我照實說：右下這張是用現在的規則、含已下市股票的資料，回測 2010 到 2026 年。長期年化 18.6%，QQQ 是 19.7%，差不多；但最大回撤 −45%，比 QQQ 的 −35% 深，而且輸贏是一段一段的：2016 到 21 年每年落後 20 點，2022 年之後每年領先 22 點。這張回測的參數用過這段資料，不算樣本外；更早的 v3 參數只用 2022 年之後的資料挑，拿 2016 到 21 年當樣本外驗證，也是年化 8.6% 對 QQQ 25%。因子搜尋試了 696 條公式，也沒有一條過多重檢定門檻，所以<strong>我不宣稱有 alpha</strong>，也就是不宣稱有超額報酬。這套系統練的是驗證跟 fail-closed 的習慣，跟做晶片驗證的思路一樣。</p>
+    <p>（動畫：P 暫停、逗號／句號一步一步走）</p>
+    <p>接著快速補充修課跟獲獎。</p></div></section><section id="s14" class="card"><header><span class="num">14</span><div><div class="kick">Education · 修課 · 獲獎 · 訓練</div><h2>修課與獲獎</h2></div></header><div class="script"><p>獲獎跟發表：今年有兩篇論文，一篇是 <strong>NVIDIA NTECH China 2026</strong> 的共同發表，一篇是 <strong>GrAPL @ IPDPS 2026</strong> 的 CHROMA；2025 年 <strong>CIC 競賽進決賽</strong>；碩士拿台大精英碩士獎學金，大學是中興電機優秀畢業生、系排第一，菁英獎跟兩次書卷獎。</p>
+    <p>修課跟這個職缺最相關的是<strong>積體電路系統測試、系統晶片驗證</strong>，加上高階系統晶片設計、DSP 架構設計、通信數位 IC 設計；也上過 DC 合成、ICC2 實體設計、Full-Custom 的訓練課程。</p>
+    <p>我的部分到這裡。</p></div></section><section id="s15" class="card"><header><span class="num">15</span><div><div class="kick">Q &amp; A</div><h2>謝謝， 歡迎提問</h2></div></header><div class="script"><p>以上是我的分享，謝謝主管。</p>
+    <p>補充一點：我目前是<strong>研發替代役</strong>，最快 <strong>2027 年 2 月 23 日之後</strong>可以到職。</p>
+    <p>有任何問題都歡迎問。</p></div></section>
+</main></body></html>

@@ -848,3 +848,15 @@ body.tpl-wc { --cyan: #3cc8d8; }
 .tpl-wc .slide.is-active .fe .qa-sd-m8 { animation: wc-st8m8 8.1s linear infinite; }
 .tpl-wc .slide.is-active .fe .qa-sd-m16 { animation: wc-st8m16 8.1s linear infinite; }
 .tpl-wc .slide.is-active .fe .qa-sd-sel { animation: wc-st8sel 8.1s linear infinite; }
+
+/* touchbar: only on touch screens (or ?touch=1); quiet until touched so it does not distract on a mirrored screen */
+.touchbar { display: none; position: fixed; right: calc(env(safe-area-inset-right, 0px) + 14px); bottom: calc(env(safe-area-inset-bottom, 0px) + 14px);
+  z-index: 60; gap: 6px; padding: 6px; border-radius: 14px; background: rgba(15,22,36,.72); border: 1px solid var(--border-2);
+  backdrop-filter: blur(8px); opacity: .45; transition: opacity .2s; }
+.touchbar:hover, .touchbar:active, .touchbar:focus-within { opacity: 1; }
+.touchbar button, .touchbar .tb-link { min-width: 48px; height: 44px; padding: 0 12px; border-radius: 10px; border: 1px solid var(--border-2);
+  background: var(--surface); color: var(--text-1); font: 600 15px/42px var(--font-sans, system-ui); text-decoration: none; text-align: center; cursor: pointer; }
+.touchbar button:active, .touchbar .tb-link:active { background: var(--amber); color: #0f1624; }
+@media (hover: none) and (pointer: coarse) { .touchbar { display: flex; } }
+.force-touchbar .touchbar { display: flex; }
+@media print { .touchbar { display: none !important; } }
