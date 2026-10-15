@@ -763,6 +763,11 @@ body.tpl-wc { --cyan: #3cc8d8; }
 .tpl-wc .slide svg.fe { cursor: pointer; }
 @media (prefers-reduced-motion: reduce) { .tpl-wc .slide.is-active .fe * { animation: none !important; } .tpl-wc .fe .jr { opacity: 1; } }
 
+/* ---------- takeaway line ---------- */
+.tpl-wc .take { display: flex; align-items: center; gap: 14px; margin: 0; font: 400 22px/1.4 var(--font-sans); color: var(--text-2); }
+.tpl-wc .take b { flex: none; font: 700 13px/1 var(--font-mono); letter-spacing: .14em; color: var(--amber); border: 1.4px solid var(--amber); border-radius: 5px; padding: 6px 9px; }
+/* ---------- /takeaway line ---------- */
+
 /* ---------- footer progress ---------- */
 .tpl-wc .foot .stp { display: flex; align-items: center; letter-spacing: .14em; }
 .tpl-wc .stp i { position: relative; font: 600 16px/1 var(--font-mono); font-style: normal; color: var(--text-3); }
@@ -773,7 +778,27 @@ body.tpl-wc { --cyan: #3cc8d8; }
 .tpl-wc .stp i.on:not(:first-child)::after { width: calc(100% - 54px - .14em); }
 /* ---------- /footer progress ---------- */
 
-/* ---------- takeaway line ---------- */
-.tpl-wc .take { display: flex; align-items: center; gap: 14px; margin: 0; font: 400 22px/1.4 var(--font-sans); color: var(--text-2); }
-.tpl-wc .take b { flex: none; font: 700 13px/1 var(--font-mono); letter-spacing: .14em; color: var(--amber); border: 1.4px solid var(--amber); border-radius: 5px; padding: 6px 9px; }
-/* ---------- /takeaway line ---------- */
+/* slide 08 · sphere decoder step-through: one ŷ walks the 8 pipeline registers, the stage it just left lights up */
+@keyframes wc-st8tok { 0.000% { transform: translateX(140px); } 11.111% { transform: translateX(276px); } 22.222% { transform: translateX(466px); } 33.333% { transform: translateX(602px); } 44.444% { transform: translateX(792px); } 55.556% { transform: translateX(928px); } 66.667% { transform: translateX(1118px); } 77.778% { transform: translateX(1254px); } 88.889% { transform: translateX(1300px); } 100% { transform: translateX(1300px); } }
+@keyframes wc-st8k0 { 0% { opacity: 0; } 0.000% { opacity: .55; } 10.889% { opacity: .55; } 11.111% { opacity: .18; } 100% { opacity: .18; } }
+@keyframes wc-st8k1 { 0% { opacity: 0; } 10.889% { opacity: 0; } 11.111% { opacity: .55; } 22.000% { opacity: .55; } 22.222% { opacity: .18; } 100% { opacity: .18; } }
+@keyframes wc-st8k2 { 0% { opacity: 0; } 22.000% { opacity: 0; } 22.222% { opacity: .55; } 33.111% { opacity: .55; } 33.333% { opacity: .18; } 100% { opacity: .18; } }
+@keyframes wc-st8k3 { 0% { opacity: 0; } 33.111% { opacity: 0; } 33.333% { opacity: .55; } 44.222% { opacity: .55; } 44.444% { opacity: .18; } 100% { opacity: .18; } }
+@keyframes wc-st8k4 { 0% { opacity: 0; } 44.222% { opacity: 0; } 44.444% { opacity: .55; } 55.333% { opacity: .55; } 55.556% { opacity: .18; } 100% { opacity: .18; } }
+@keyframes wc-st8k5 { 0% { opacity: 0; } 55.333% { opacity: 0; } 55.556% { opacity: .55; } 66.444% { opacity: .55; } 66.667% { opacity: .18; } 100% { opacity: .18; } }
+@keyframes wc-st8k6 { 0% { opacity: 0; } 66.444% { opacity: 0; } 66.667% { opacity: .55; } 77.556% { opacity: .55; } 77.778% { opacity: .18; } 100% { opacity: .18; } }
+@keyframes wc-st8k7 { 0% { opacity: 0; } 77.556% { opacity: 0; } 77.778% { opacity: .55; } 88.667% { opacity: .55; } 88.889% { opacity: .18; } 100% { opacity: .18; } }
+@keyframes wc-st8k8 { 0% { opacity: 0; } 88.667% { opacity: 0; } 88.889% { opacity: .55; } 100% { opacity: .55; } }
+.tpl-wc .arch .sdlit { fill: var(--blue); opacity: 0; pointer-events: none; }
+.tpl-wc .arch .sdtok { fill: var(--blue); stroke: rgba(255,255,255,.55); stroke-width: 1.5; }
+.tpl-wc .arch .sdtokt { fill: #0f1624; font-weight: 700; font-size: 14px; }
+.tpl-wc .slide.is-active .fe .qa-sd-tok { animation: wc-st8tok 8.1s step-end infinite; }
+.tpl-wc .slide.is-active .fe .qa-sd-k0 { animation: wc-st8k0 8.1s linear infinite; }
+.tpl-wc .slide.is-active .fe .qa-sd-k1 { animation: wc-st8k1 8.1s linear infinite; }
+.tpl-wc .slide.is-active .fe .qa-sd-k2 { animation: wc-st8k2 8.1s linear infinite; }
+.tpl-wc .slide.is-active .fe .qa-sd-k3 { animation: wc-st8k3 8.1s linear infinite; }
+.tpl-wc .slide.is-active .fe .qa-sd-k4 { animation: wc-st8k4 8.1s linear infinite; }
+.tpl-wc .slide.is-active .fe .qa-sd-k5 { animation: wc-st8k5 8.1s linear infinite; }
+.tpl-wc .slide.is-active .fe .qa-sd-k6 { animation: wc-st8k6 8.1s linear infinite; }
+.tpl-wc .slide.is-active .fe .qa-sd-k7 { animation: wc-st8k7 8.1s linear infinite; }
+.tpl-wc .slide.is-active .fe .qa-sd-k8 { animation: wc-st8k8 8.1s linear infinite; }
