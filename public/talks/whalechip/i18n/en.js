@@ -150,8 +150,6 @@ window.I18N_EN = {
   // ---- 08 Sphere decoder
   "R：先載入 4 拍": "R: 4 cycles",
   "ŷ：每拍 1 筆": "ŷ: 1/cycle",
-  "8 條": "8 paths",
-  "32 條": "32 paths",
   "ŷ 每層延遲 2 拍，跟 pipeline 對齊": "ŷ is delayed 2 cycles per layer to align with the pipeline",
   "PDE 電路 · 每條候選": "PDE CIRCUIT · PER CANDIDATE",
   "每層 32 條並行（4 survivor × 8）": "32 in parallel per layer (4 survivors × 8)",
@@ -377,7 +375,6 @@ window.I18N_EN = {
   // ---- 07 TSMC ADPLL
   "乘法器共用：優化前後對照": "Multiplier sharing: before and after",
   // ---- 08 Sphere decoder
-  "K-best sphere decoder 四層八級 pipeline": "K-best sphere decoder: four layers, eight pipeline stages",
   "PDE 電路與排序網路細節": "PDE circuit and sorting network details",
   // ---- 09 CNN accelerator
   "QAT INT8 CNN 硬體架構": "QAT INT8 CNN hardware architecture",
@@ -426,6 +423,15 @@ window.I18N_EN = {
   "從模擬 trace 畫的 DFI 匯流排": "DFI bus drawn from the simulation trace",
   // ---- 00 document
   "吳建賢 · 鯨鏈科技 ASIC Team 面談": "Chien-Hsien Wu · WhaleChip ASIC Team Interview",
-  "path 由下往上長，一層 3 bit": "path grows bottom-up, 3 bits per layer",
-  "（動畫：每層 PDE 那一步框裡冒出候選點，8 條或 4 × 8 = 32 條；SORT 那一步留下的 4 個變橘色，右上框的 path 多長 3 bit；下面兩個面板跟著當下那一級亮。用的是 testbench 第 1 筆 ŷ 的真實結果。）": "(Animation: in each PDE step the box fills with candidate dots, 8 or 4 × 8 = 32; in the SORT step the 4 survivors turn orange and the path in the top-right box grows by 3 bits; the two detail panels light with the stage being executed. The data is the real result for the testbench's first ŷ.)",
+  "一條候選": "one candidate",
+  "的距離電路": "distance",
+  "8 套並行": "8 in parallel",
+  "32 套 = 4 × 8": "32 = 4 × 8",
+  "16 個比較器": "16 cmp-swap",
+  "88 個比較器": "88 cmp-swap",
+  "path 一層長 3 bit": "+3 bits per layer",
+  "查表 → 4 個 8-PSK 符號": "lookup → 4 symbols",
+  "四層各一套硬體、完全展開不共用：PDE 電路 8 + 32 + 32 + 32 = 104 套 · 比較器 16 + 88 × 3 = 280 個": "One set of hardware per layer, nothing shared: 104 PDE circuits (8+32+32+32) · 280 comparators (16+88×3)",
+  "K-best sphere decoder：四層各一套硬體、八級 pipeline": "K-best sphere decoder: one set of hardware per layer, 8-stage pipeline",
+  "（動畫：每層的 PDE 畫成疊起來的卡片，×8、×32 就是並排的硬體套數，每一套算一條候選的距離；PDE 那一步整疊一起亮，表示同一拍並行算完。SORT 那一步排序網路亮、出來 4 個橘點是留下的 4 條，右上框的 path 多長 3 bit。四層各自一套硬體、完全展開不共用：PDE 電路共 104 套、比較器共 280 個，所以每拍能吃一筆 ŷ。下面兩個面板跟著當下那一級亮。path 用的是 testbench 第 1 筆 ŷ 的真實結果。）": "(Animation: each layer’s PDE is drawn as a stack of cards; <strong>×8 and ×32 are the number of hardware copies side by side</strong>, each computing one candidate’s distance. In the PDE step the whole stack lights at once: all candidates finish in the same cycle. In the SORT step the network lights and the 4 amber dots are the 4 survivors, and the path in the top-right box grows by 3 bits. Every layer has its own hardware, fully unrolled with nothing shared: 104 PDE circuits and 280 comparators in total, which is why it can take one ŷ per cycle. The two detail panels light with the stage being executed. The path is the real result for the testbench’s first ŷ.)",
 }

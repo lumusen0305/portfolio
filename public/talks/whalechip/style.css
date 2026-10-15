@@ -777,31 +777,24 @@ body.tpl-wc { --cyan: #3cc8d8; }
 .tpl-wc .stp i.on::after { content: ""; position: absolute; right: 0; bottom: -10px; height: 2px; background: var(--amber); width: calc(100% - .14em); }
 .tpl-wc .stp i.on:not(:first-child)::after { width: calc(100% - 54px - .14em); }
 /* ---------- /footer progress ---------- */
-/* slide 08 · sphere decoder step-through (v2): candidates appear in each PDE step, 4 survive in each SORT step,
-   the path grows one symbol per layer, and the two detail panels light with the stage being executed */
-@keyframes wc-st8k0 { 0% { opacity: 0; } -0.222% { opacity: 0; } 0.000% { opacity: 0.55; } 10.889% { opacity: 0.55; } 11.111% { opacity: 0.18; } 100% { opacity: 0.18; } }
-@keyframes wc-st8k1 { 0% { opacity: 0; } 10.889% { opacity: 0; } 11.111% { opacity: 0.55; } 22.000% { opacity: 0.55; } 22.222% { opacity: 0.18; } 100% { opacity: 0.18; } }
-@keyframes wc-st8k2 { 0% { opacity: 0; } 22.000% { opacity: 0; } 22.222% { opacity: 0.55; } 33.111% { opacity: 0.55; } 33.333% { opacity: 0.18; } 100% { opacity: 0.18; } }
-@keyframes wc-st8k3 { 0% { opacity: 0; } 33.111% { opacity: 0; } 33.333% { opacity: 0.55; } 44.222% { opacity: 0.55; } 44.444% { opacity: 0.18; } 100% { opacity: 0.18; } }
-@keyframes wc-st8k4 { 0% { opacity: 0; } 44.222% { opacity: 0; } 44.444% { opacity: 0.55; } 55.333% { opacity: 0.55; } 55.556% { opacity: 0.18; } 100% { opacity: 0.18; } }
-@keyframes wc-st8k5 { 0% { opacity: 0; } 55.333% { opacity: 0; } 55.556% { opacity: 0.55; } 66.444% { opacity: 0.55; } 66.667% { opacity: 0.18; } 100% { opacity: 0.18; } }
-@keyframes wc-st8k6 { 0% { opacity: 0; } 66.444% { opacity: 0; } 66.667% { opacity: 0.55; } 77.556% { opacity: 0.55; } 77.778% { opacity: 0.18; } 100% { opacity: 0.18; } }
-@keyframes wc-st8k7 { 0% { opacity: 0; } 77.556% { opacity: 0; } 77.778% { opacity: 0.55; } 88.667% { opacity: 0.55; } 88.889% { opacity: 0.18; } 100% { opacity: 0.18; } }
+/* slide 08 · sphere decoder step-through (v3): PDE drawn as stacked hardware copies (×8 / ×32), SORT ×1;
+   each PDE step lights the whole stack, each SORT step lights the network and shows the 4 survivors;
+   the path grows one symbol per layer; the two detail panels light with the stage being executed */
+@keyframes wc-st8k0 { 0% { opacity: 0; } -0.222% { opacity: 0; } 0.000% { opacity: 0.55; } 10.889% { opacity: 0.55; } 11.111% { opacity: 0.16; } 100% { opacity: 0.16; } }
+@keyframes wc-st8k1 { 0% { opacity: 0; } 10.889% { opacity: 0; } 11.111% { opacity: 0.55; } 22.000% { opacity: 0.55; } 22.222% { opacity: 0.16; } 100% { opacity: 0.16; } }
+@keyframes wc-st8k2 { 0% { opacity: 0; } 22.000% { opacity: 0; } 22.222% { opacity: 0.55; } 33.111% { opacity: 0.55; } 33.333% { opacity: 0.16; } 100% { opacity: 0.16; } }
+@keyframes wc-st8k3 { 0% { opacity: 0; } 33.111% { opacity: 0; } 33.333% { opacity: 0.55; } 44.222% { opacity: 0.55; } 44.444% { opacity: 0.16; } 100% { opacity: 0.16; } }
+@keyframes wc-st8k4 { 0% { opacity: 0; } 44.222% { opacity: 0; } 44.444% { opacity: 0.55; } 55.333% { opacity: 0.55; } 55.556% { opacity: 0.16; } 100% { opacity: 0.16; } }
+@keyframes wc-st8k5 { 0% { opacity: 0; } 55.333% { opacity: 0; } 55.556% { opacity: 0.55; } 66.444% { opacity: 0.55; } 66.667% { opacity: 0.16; } 100% { opacity: 0.16; } }
+@keyframes wc-st8k6 { 0% { opacity: 0; } 66.444% { opacity: 0; } 66.667% { opacity: 0.55; } 77.556% { opacity: 0.55; } 77.778% { opacity: 0.16; } 100% { opacity: 0.16; } }
+@keyframes wc-st8k7 { 0% { opacity: 0; } 77.556% { opacity: 0; } 77.778% { opacity: 0.55; } 88.667% { opacity: 0.55; } 88.889% { opacity: 0.16; } 100% { opacity: 0.16; } }
 @keyframes wc-st8k8 { 0% { opacity: 0; } 88.667% { opacity: 0; } 88.889% { opacity: 0.55; } 100% { opacity: 0.55; } }
-@keyframes wc-st8dp0 { 0% { opacity: 0; } -0.222% { opacity: 0; } 0.000% { opacity: 1; } 10.889% { opacity: 1; } 11.111% { opacity: 0.28; } 100% { opacity: 0.28; } }
-@keyframes wc-st8dk0 { 0% { opacity: 0; } 10.889% { opacity: 0; } 11.111% { opacity: 1; } 100% { opacity: 1; } }
 @keyframes wc-st8sk0 { 0% { opacity: 0; } 10.889% { opacity: 0; } 11.111% { opacity: 1; } 100% { opacity: 1; } }
 @keyframes wc-st8p0 { 0% { opacity: 0; } 10.889% { opacity: 0; } 11.111% { opacity: 1; } 100% { opacity: 1; } }
-@keyframes wc-st8dp1 { 0% { opacity: 0; } 22.000% { opacity: 0; } 22.222% { opacity: 1; } 33.111% { opacity: 1; } 33.333% { opacity: 0.28; } 100% { opacity: 0.28; } }
-@keyframes wc-st8dk1 { 0% { opacity: 0; } 33.111% { opacity: 0; } 33.333% { opacity: 1; } 100% { opacity: 1; } }
 @keyframes wc-st8sk1 { 0% { opacity: 0; } 33.111% { opacity: 0; } 33.333% { opacity: 1; } 100% { opacity: 1; } }
 @keyframes wc-st8p1 { 0% { opacity: 0; } 33.111% { opacity: 0; } 33.333% { opacity: 1; } 100% { opacity: 1; } }
-@keyframes wc-st8dp2 { 0% { opacity: 0; } 44.222% { opacity: 0; } 44.444% { opacity: 1; } 55.333% { opacity: 1; } 55.556% { opacity: 0.28; } 100% { opacity: 0.28; } }
-@keyframes wc-st8dk2 { 0% { opacity: 0; } 55.333% { opacity: 0; } 55.556% { opacity: 1; } 100% { opacity: 1; } }
 @keyframes wc-st8sk2 { 0% { opacity: 0; } 55.333% { opacity: 0; } 55.556% { opacity: 1; } 100% { opacity: 1; } }
 @keyframes wc-st8p2 { 0% { opacity: 0; } 55.333% { opacity: 0; } 55.556% { opacity: 1; } 100% { opacity: 1; } }
-@keyframes wc-st8dp3 { 0% { opacity: 0; } 66.444% { opacity: 0; } 66.667% { opacity: 1; } 77.556% { opacity: 1; } 77.778% { opacity: 0.28; } 100% { opacity: 0.28; } }
-@keyframes wc-st8dk3 { 0% { opacity: 0; } 77.556% { opacity: 0; } 77.778% { opacity: 1; } 100% { opacity: 1; } }
 @keyframes wc-st8sk3 { 0% { opacity: 0; } 77.556% { opacity: 0; } 77.778% { opacity: 1; } 100% { opacity: 1; } }
 @keyframes wc-st8p3 { 0% { opacity: 0; } 77.556% { opacity: 0; } 77.778% { opacity: 1; } 100% { opacity: 1; } }
 @keyframes wc-st8out { 0% { opacity: 0; } 88.667% { opacity: 0; } 88.889% { opacity: 1; } 100% { opacity: 1; } }
@@ -817,11 +810,16 @@ body.tpl-wc { --cyan: #3cc8d8; }
 @keyframes wc-st8sel { 0% { opacity: 0; } 18.407% { opacity: 0; } 18.519% { opacity: 0.55; } 22.111% { opacity: 0.55; } 22.222% { opacity: 0; } 40.630% { opacity: 0; } 40.741% { opacity: 0.55; } 44.333% { opacity: 0.55; } 44.444% { opacity: 0; } 62.852% { opacity: 0; } 62.963% { opacity: 0.55; } 66.556% { opacity: 0.55; } 66.667% { opacity: 0; } 85.074% { opacity: 0; } 85.185% { opacity: 0.55; } 88.778% { opacity: 0.55; } 88.889% { opacity: 0; } 100% { opacity: 0; } }
 .tpl-wc .arch .sdlit { fill: var(--blue); opacity: 0; pointer-events: none; }
 .tpl-wc .arch .sdpan { fill: var(--blue); opacity: 0; pointer-events: none; }
-.tpl-wc .arch .sdlab { font-size: 12px; letter-spacing: .04em; }
-.tpl-wc .arch .sdd { fill: var(--blue); }
+.tpl-wc .arch .sdstk { opacity: .78; }
+.tpl-wc .arch .sdbadge { fill: var(--amber); }
+.tpl-wc .arch .sdbadget { fill: #0f1624; font-weight: 700; font-size: 15px; }
+.tpl-wc .arch .sdbadge2 { fill: var(--surface); stroke: var(--amber); stroke-width: 1.5; }
+.tpl-wc .arch .sdbadget2 { fill: var(--amber); font-weight: 700; font-size: 13px; }
 .tpl-wc .arch .sdk { fill: var(--amber); stroke: rgba(0,0,0,.35); stroke-width: 1; }
 .tpl-wc .arch .sdp { fill: var(--amber); font-weight: 600; }
-.tpl-wc .fe [class*="qa-sd-dk"], .tpl-wc .fe [class*="qa-sd-sk"], .tpl-wc .fe [class*="qa-sd-p"], .tpl-wc .fe .qa-sd-out { opacity: 0; }
+.tpl-wc .arch .sdsum { fill: var(--amber); font-weight: 600; }
+.tpl-wc .fe [class*="qa-sd-sk"], .tpl-wc .fe [class*="qa-sd-p"], .tpl-wc .fe .qa-sd-out { opacity: 0; }
+@media (prefers-reduced-motion: reduce) { .tpl-wc .slide.is-active .fe [class*="qa-sd"] { animation: none !important; } .tpl-wc .fe [class*="qa-sd-sk"], .tpl-wc .fe [class*="qa-sd-p"], .tpl-wc .fe .qa-sd-out { opacity: 1; } }
 .tpl-wc .slide.is-active .fe .qa-sd-k0 { animation: wc-st8k0 8.1s linear infinite; }
 .tpl-wc .slide.is-active .fe .qa-sd-k1 { animation: wc-st8k1 8.1s linear infinite; }
 .tpl-wc .slide.is-active .fe .qa-sd-k2 { animation: wc-st8k2 8.1s linear infinite; }
@@ -831,20 +829,12 @@ body.tpl-wc { --cyan: #3cc8d8; }
 .tpl-wc .slide.is-active .fe .qa-sd-k6 { animation: wc-st8k6 8.1s linear infinite; }
 .tpl-wc .slide.is-active .fe .qa-sd-k7 { animation: wc-st8k7 8.1s linear infinite; }
 .tpl-wc .slide.is-active .fe .qa-sd-k8 { animation: wc-st8k8 8.1s linear infinite; }
-.tpl-wc .slide.is-active .fe .qa-sd-dp0 { animation: wc-st8dp0 8.1s linear infinite; }
-.tpl-wc .slide.is-active .fe .qa-sd-dk0 { animation: wc-st8dk0 8.1s linear infinite; }
 .tpl-wc .slide.is-active .fe .qa-sd-sk0 { animation: wc-st8sk0 8.1s linear infinite; }
 .tpl-wc .slide.is-active .fe .qa-sd-p0 { animation: wc-st8p0 8.1s linear infinite; }
-.tpl-wc .slide.is-active .fe .qa-sd-dp1 { animation: wc-st8dp1 8.1s linear infinite; }
-.tpl-wc .slide.is-active .fe .qa-sd-dk1 { animation: wc-st8dk1 8.1s linear infinite; }
 .tpl-wc .slide.is-active .fe .qa-sd-sk1 { animation: wc-st8sk1 8.1s linear infinite; }
 .tpl-wc .slide.is-active .fe .qa-sd-p1 { animation: wc-st8p1 8.1s linear infinite; }
-.tpl-wc .slide.is-active .fe .qa-sd-dp2 { animation: wc-st8dp2 8.1s linear infinite; }
-.tpl-wc .slide.is-active .fe .qa-sd-dk2 { animation: wc-st8dk2 8.1s linear infinite; }
 .tpl-wc .slide.is-active .fe .qa-sd-sk2 { animation: wc-st8sk2 8.1s linear infinite; }
 .tpl-wc .slide.is-active .fe .qa-sd-p2 { animation: wc-st8p2 8.1s linear infinite; }
-.tpl-wc .slide.is-active .fe .qa-sd-dp3 { animation: wc-st8dp3 8.1s linear infinite; }
-.tpl-wc .slide.is-active .fe .qa-sd-dk3 { animation: wc-st8dk3 8.1s linear infinite; }
 .tpl-wc .slide.is-active .fe .qa-sd-sk3 { animation: wc-st8sk3 8.1s linear infinite; }
 .tpl-wc .slide.is-active .fe .qa-sd-p3 { animation: wc-st8p3 8.1s linear infinite; }
 .tpl-wc .slide.is-active .fe .qa-sd-out { animation: wc-st8out 8.1s linear infinite; }
