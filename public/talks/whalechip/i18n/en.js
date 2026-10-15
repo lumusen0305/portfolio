@@ -153,9 +153,6 @@ window.I18N_EN = {
   "8 條": "8 paths",
   "32 條": "32 paths",
   "ŷ 每層延遲 2 拍，跟 pipeline 對齊": "ŷ is delayed 2 cycles per layer to align with the pipeline",
-  "最佳 path（12 bit）": "best path (12 bit)",
-  "→ 4 個 8-PSK 符號": "→ four 8-PSK symbols",
-  "x̂ 輸出": "x̂ out",
   "PDE 電路 · 每條候選": "PDE CIRCUIT · PER CANDIDATE",
   "每層 32 條並行（4 survivor × 8）": "32 in parallel per layer (4 survivors × 8)",
   "上層 PDE": "parent PDE",
@@ -429,4 +426,6 @@ window.I18N_EN = {
   "從模擬 trace 畫的 DFI 匯流排": "DFI bus drawn from the simulation trace",
   // ---- 00 document
   "吳建賢 · 鯨鏈科技 ASIC Team 面談": "Chien-Hsien Wu · WhaleChip ASIC Team Interview",
-};
+  "path 由下往上長，一層 3 bit": "path grows bottom-up, 3 bits per layer",
+  "（動畫：每層 PDE 那一步框裡冒出候選點，8 條或 4 × 8 = 32 條；SORT 那一步留下的 4 個變橘色，右上框的 path 多長 3 bit；下面兩個面板跟著當下那一級亮。用的是 testbench 第 1 筆 ŷ 的真實結果。）": "(Animation: in each PDE step the box fills with candidate dots, 8 or 4 × 8 = 32; in the SORT step the 4 survivors turn orange and the path in the top-right box grows by 3 bits; the two detail panels light with the stage being executed. The data is the real result for the testbench's first ŷ.)",
+}
