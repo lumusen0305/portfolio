@@ -860,3 +860,40 @@ body.tpl-wc { --cyan: #3cc8d8; }
 @media (hover: none) and (pointer: coarse) { .touchbar { display: flex; } }
 .force-touchbar .touchbar { display: flex; }
 @media print { .touchbar { display: none !important; } }
+
+/* ---------- slide 08 · sphere principle ---------- */
+/* the K-best tree grows one layer per step: PDE expands (8, then 4×8), SORT keeps 4 (amber); 8 steps, the last one holds */
+.tpl-wc .fe .spn { fill: var(--surface); stroke: var(--text-3); stroke-width: 1.5; }
+.tpl-wc .fe .spk { fill: var(--amber); stroke: rgba(0,0,0,.35); stroke-width: 1; }
+.tpl-wc .fe .spw { fill: none; stroke: var(--amber); stroke-width: 1.5; opacity: .75; }
+.tpl-wc .fe .spf { fill: none; stroke: var(--text-3); stroke-width: 1; opacity: .4; }
+.tpl-wc .fe .spl { font-size: 13px; fill: var(--text-2); paint-order: stroke; stroke: #0f1624; stroke-width: 3px; stroke-linejoin: round; }
+.tpl-wc .fe .spl2 { font-size: 11px; font-weight: 700; fill: var(--text-1); }
+.tpl-wc .fe .spl2.d { fill: #0f1624; }
+.tpl-wc .fe .spl.o { fill: var(--amber); font-weight: 700; }
+.tpl-wc .fe .spring { fill: none; stroke: var(--green); stroke-width: 2.5; filter: drop-shadow(0 0 6px rgba(63,208,122,.6)); }
+.tpl-wc .fe .tiny.o { fill: var(--amber); }
+.tpl-wc .fe .big.r { fill: var(--red); }
+.tpl-wc .fe .mtx0 { font-size: 17px; fill: var(--text-3); }
+.tpl-wc .fe .ahd.o { fill: var(--amber); }
+.tpl-wc .fe [class*="qa-sp-"] { opacity: 0; }
+@media (prefers-reduced-motion: reduce) { .tpl-wc .slide.is-active .fe [class*="qa-sp-"] { animation: none !important; } .tpl-wc .fe [class*="qa-sp-"] { opacity: 1; } }
+@keyframes wc-stpc0 { 0.000% { opacity: 1; } 11.061% { opacity: 1; } 11.111% { opacity: 0.3; } 100.000% { opacity: 0.3; } }
+@keyframes wc-stpk0 { 0.000% { opacity: 0; } 11.061% { opacity: 0; } 11.111% { opacity: 1; } 100.000% { opacity: 1; } }
+@keyframes wc-stpc1 { 0.000% { opacity: 0; } 22.172% { opacity: 0; } 22.222% { opacity: 1; } 33.283% { opacity: 1; } 33.333% { opacity: 0.3; } 100.000% { opacity: 0.3; } }
+@keyframes wc-stpk1 { 0.000% { opacity: 0; } 33.283% { opacity: 0; } 33.333% { opacity: 1; } 100.000% { opacity: 1; } }
+@keyframes wc-stpc2 { 0.000% { opacity: 0; } 44.394% { opacity: 0; } 44.444% { opacity: 1; } 55.506% { opacity: 1; } 55.556% { opacity: 0.3; } 100.000% { opacity: 0.3; } }
+@keyframes wc-stpk2 { 0.000% { opacity: 0; } 55.506% { opacity: 0; } 55.556% { opacity: 1; } 100.000% { opacity: 1; } }
+@keyframes wc-stpc3 { 0.000% { opacity: 0; } 66.617% { opacity: 0; } 66.667% { opacity: 1; } 77.728% { opacity: 1; } 77.778% { opacity: 0.3; } 100.000% { opacity: 0.3; } }
+@keyframes wc-stpk3 { 0.000% { opacity: 0; } 77.728% { opacity: 0; } 77.778% { opacity: 1; } 100.000% { opacity: 1; } }
+@keyframes wc-stpout { 0.000% { opacity: 0; } 77.728% { opacity: 0; } 77.778% { opacity: 1; } 100.000% { opacity: 1; } }
+.tpl-wc .slide.is-active .fe .qa-sp-c0 { animation: wc-stpc0 9s linear infinite; }
+.tpl-wc .slide.is-active .fe .qa-sp-k0 { animation: wc-stpk0 9s linear infinite; }
+.tpl-wc .slide.is-active .fe .qa-sp-c1 { animation: wc-stpc1 9s linear infinite; }
+.tpl-wc .slide.is-active .fe .qa-sp-k1 { animation: wc-stpk1 9s linear infinite; }
+.tpl-wc .slide.is-active .fe .qa-sp-c2 { animation: wc-stpc2 9s linear infinite; }
+.tpl-wc .slide.is-active .fe .qa-sp-k2 { animation: wc-stpk2 9s linear infinite; }
+.tpl-wc .slide.is-active .fe .qa-sp-c3 { animation: wc-stpc3 9s linear infinite; }
+.tpl-wc .slide.is-active .fe .qa-sp-k3 { animation: wc-stpk3 9s linear infinite; }
+.tpl-wc .slide.is-active .fe .qa-sp-out { animation: wc-stpout 9s linear infinite; }
+/* ---------- /slide 08 · sphere principle ---------- */
