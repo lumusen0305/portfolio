@@ -1,0 +1,227 @@
+/* Opening swarm. Kept out of globals.css so the dev compiler always emits it. */
+
+html[data-intro="on"] {
+  overflow: hidden;
+}
+
+html[data-intro="on"] header,
+html[data-intro="on"] main,
+html[data-intro="on"] footer {
+  opacity: 0 !important;
+}
+
+html[data-intro="on"] header *,
+html[data-intro="on"] main * {
+  transform: none !important;
+  animation: none !important;
+  transition: none !important;
+  opacity: 1 !important;
+}
+
+.swarm-intro {
+  position: fixed;
+  inset: 0;
+  z-index: 80;
+  overflow: hidden;
+  background: var(--background);
+  touch-action: none;
+  opacity: 1;
+  transition: opacity 0.55s ease;
+}
+
+.swarm-intro.is-out {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.swarm-stage {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+
+.swarm-mark {
+  position: absolute;
+  left: 50%;
+  top: 46%;
+  width: 58px;
+  height: 50px;
+  transform: translate(-50%, -50%) scale(0.92);
+  opacity: 0;
+  transition:
+    opacity 0.35s ease,
+    transform 0.45s cubic-bezier(0.2, 0.8, 0.2, 1);
+  pointer-events: none;
+}
+
+.swarm-mark.on {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1);
+}
+
+.swarm-mark.gone {
+  opacity: 0;
+  transform: translate(-50%, -50%) scale(0.9);
+}
+
+.swarm-mark span {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: var(--foreground);
+  opacity: 0.62;
+  clip-path: polygon(50% 0, 100% 100%, 0 100%);
+}
+
+.swarm-cursor {
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 4;
+  width: 0;
+  height: 0;
+  pointer-events: none;
+  will-change: transform;
+}
+
+.swarm-cursor svg {
+  position: absolute;
+  left: 0;
+  top: 0;
+  overflow: visible;
+  transform-origin: 0 0;
+  filter: drop-shadow(0 1px 1.5px rgba(0, 0, 0, 0.35));
+}
+
+.swarm-name,
+.swarm-badge {
+  position: absolute;
+  left: 14px;
+  top: 16px;
+  padding: 2px 6px;
+  border-radius: 4px;
+  color: #fff;
+  font: 600 11px/14px var(--font-sans), ui-sans-serif, system-ui, sans-serif;
+  white-space: nowrap;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.28);
+}
+
+.swarm-badge {
+  top: 34px;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.01em;
+}
+
+.swarm-ghost {
+  position: absolute;
+  box-sizing: border-box;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.swarm-ghost-fill {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: color-mix(in oklab, var(--foreground) 12%, var(--background));
+}
+
+/* Selection frame a cursor pulls out: blue stroke, corner handles, size under the box. */
+.swarm-ghost.is-select {
+  overflow: visible;
+  border-radius: 0;
+}
+
+.swarm-ghost.is-select .swarm-ghost-fill {
+  border-radius: 0;
+  background: rgba(13, 153, 255, 0.14);
+  box-shadow: inset 0 0 0 1px #0d99ff;
+}
+
+.swarm-frame {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.swarm-handle {
+  position: absolute;
+  width: 7px;
+  height: 7px;
+  box-sizing: border-box;
+  background: #fff;
+  border: 1px solid #0d99ff;
+}
+
+.swarm-handle-tl { left: 0; top: 0; transform: translate(-50%, -50%); }
+.swarm-handle-tr { right: 0; top: 0; transform: translate(50%, -50%); }
+.swarm-handle-bl { left: 0; bottom: 0; transform: translate(-50%, 50%); }
+.swarm-handle-br { right: 0; bottom: 0; transform: translate(50%, 50%); }
+
+.swarm-frame-badge {
+  position: absolute;
+  left: 50%;
+  top: calc(100% + 6px);
+  transform: translateX(-50%);
+  padding: 2px 6px;
+  border-radius: 4px;
+  background: #0d99ff;
+  color: #fff;
+  font: 600 11px/14px var(--font-sans), ui-sans-serif, system-ui, sans-serif;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.swarm-ghost-body {
+  position: absolute;
+  inset: 0;
+  margin: 0;
+  padding: 0;
+  opacity: 0;
+}
+
+.swarm-ghost-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+}
+
+.swarm-caret {
+  display: inline-block;
+  width: 1.5px;
+  height: 0.9em;
+  margin-left: 1px;
+  vertical-align: text-bottom;
+  background: currentColor;
+}
+
+.accent-text .swarm-caret {
+  background: var(--accent);
+}
+
+.swarm-skip {
+  position: absolute;
+  left: 50%;
+  bottom: 22px;
+  z-index: 5;
+  transform: translateX(-50%);
+  border-radius: 999px;
+  border: 1px solid var(--hairline-strong);
+  background: color-mix(in oklab, var(--background) 72%, transparent);
+  padding: 8px 16px;
+  color: var(--muted);
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  backdrop-filter: blur(10px);
+  cursor: pointer;
+}
+
+.swarm-skip:hover {
+  color: var(--foreground);
+  border-color: var(--foreground);
+}

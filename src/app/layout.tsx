@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Manrope, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
+import "./swarm.css";
 import { Providers } from "@/components/providers";
 
 const manrope = Manrope({
@@ -48,7 +49,16 @@ const noFlashScript = `(function(){try{
   var t=localStorage.getItem("portfolio-theme");
   if(t!=="light"&&t!=="dark"){t=matchMedia("(prefers-color-scheme: light)").matches?"light":"dark";}
   document.documentElement.setAttribute("data-theme",t);
-}catch(e){document.documentElement.setAttribute("data-theme","dark");}})();`;
+}catch(e){document.documentElement.setAttribute("data-theme","dark");}
+try{
+  if(!matchMedia("(prefers-reduced-motion: reduce)").matches){
+    document.documentElement.setAttribute("data-intro","on");
+    setTimeout(function(){
+      if(document.documentElement.getAttribute("data-intro")==="on")
+        document.documentElement.removeAttribute("data-intro");
+    },12000);
+  }
+}catch(e){}})();`;
 
 export default function RootLayout({
   children,

@@ -19,6 +19,7 @@ import {
   useState,
 } from "react";
 import { dict, type Dict, type Lang } from "@/lib/i18n";
+import { SwarmIntro } from "./swarm-intro";
 
 export const THEME_KEY = "portfolio-theme";
 export const LANG_KEY = "portfolio-lang";
@@ -89,7 +90,12 @@ export function Providers({ children }: { children: React.ReactNode }) {
     [lang, setLang, toggleLang, theme, toggleTheme]
   );
 
-  return <AppContext.Provider value={value}>{children}</AppContext.Provider>;
+  return (
+    <AppContext.Provider value={value}>
+      {children}
+      <SwarmIntro />
+    </AppContext.Provider>
+  );
 }
 
 export function useApp(): AppContextValue {

@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { motion, useScroll, useTransform, type Variants } from "motion/react";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { useApp, useReducedMotion } from "../providers";
 import { ArrowDown } from "../icons";
 
@@ -24,8 +24,16 @@ function TypewriterTitle({
   const total = chars1.length + chars2.length;
   const [n, setN] = useState(reduced ? total : 0);
 
+  // Keep the finished line in the DOM before paint. The swarm measures it
+  // and types a copy; reduced-motion visits just see the finished line.
+  useLayoutEffect(() => {
+    setN(total);
+  }, [total]);
+
   useEffect(() => {
     if (reduced) return;
+    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (reduce || document.documentElement.getAttribute("data-intro") === "on") return;
     let i = 0;
     let typer: ReturnType<typeof setInterval> | undefined;
     const starter = setTimeout(() => {
@@ -60,12 +68,12 @@ function TypewriterTitle({
 
   return (
     <>
-      <span>
+      <span data-build="tagline-1">
         {shown1}
         {!line1Done && caret}
       </span>
       <br />
-      <span className="accent-text">
+      <span className="accent-text" data-build="tagline-2">
         {shown2}
         {line1Done && caret}
       </span>
@@ -127,6 +135,7 @@ export function Hero() {
           {/* eyebrow — 2-line wrap on mobile is intentional & clean at this size */}
           <motion.p
             variants={item}
+            data-build="eyebrow"
             className="eyebrow mb-5 text-[0.6rem] leading-[1.6] text-accent sm:text-xs sm:leading-none"
           >
             {t.hero.eyebrow}
@@ -134,6 +143,7 @@ export function Hero() {
 
           <motion.h1
             variants={item}
+            data-build="name"
             className="display whitespace-nowrap text-[clamp(2.2rem,6vw,5rem)] font-extrabold text-foreground"
           >
             {t.hero.name}
@@ -153,21 +163,27 @@ export function Hero() {
 
           <motion.p
             variants={item}
+            data-build="bio"
             className="mt-6 max-w-lg text-base leading-relaxed text-muted sm:mt-7 sm:text-lg"
             style={{ textWrap: "pretty" } as React.CSSProperties}
           >
             {t.hero.bio}
           </motion.p>
 
-          <motion.div variants={item} className="mt-7 flex flex-wrap gap-3 sm:mt-9">
+          <motion.div
+            variants={item}
+            className="mt-7 flex flex-wrap gap-3 sm:mt-9"
+          >
             <a
               href="#contact"
+              data-build="cta-primary"
               className="rounded-full bg-foreground px-6 py-3 text-sm font-semibold text-background transition-transform duration-300 [transition-timing-function:var(--ease-out-quint)] hover:-translate-y-0.5 focus-visible:rounded-full sm:px-7"
             >
               {t.hero.ctaPrimary}
             </a>
             <a
               href="#work"
+              data-build="cta-secondary"
               className="rounded-full border border-hairline px-6 py-3 text-sm font-medium text-foreground transition-[colors,border-color] duration-300 [transition-timing-function:var(--ease-out-quint)] hover:border-hairline-strong hover:bg-surface focus-visible:rounded-full sm:px-7"
             >
               {t.hero.ctaSecondary}
@@ -183,7 +199,10 @@ export function Hero() {
           transition={{ duration: 1.1, ease: EASE, delay: 0.22 }}
           className="relative mx-auto w-full max-w-[220px] sm:max-w-xs md:max-w-none"
         >
-          <div className="relative aspect-square overflow-hidden rounded-[2rem] border border-hairline shadow-2xl">
+          <div
+            data-build="portrait"
+            className="relative aspect-square overflow-hidden rounded-[2rem] border border-hairline shadow-2xl"
+          >
             <Image
               src="/img/avatar.jpg"
               alt="Portrait of ChienHsien Wu"

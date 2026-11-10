@@ -45,6 +45,7 @@ export function Nav() {
         {/* wordmark */}
         <a
           href="#top"
+          data-build="wordmark"
           className="font-mono text-sm font-medium tracking-tight text-foreground transition-opacity hover:opacity-60"
           aria-label="Home"
         >
@@ -57,6 +58,7 @@ export function Nav() {
             <li key={l.id}>
               <a
                 href={`#${l.id}`}
+                data-build={`nav-${l.id}`}
                 className="text-sm text-muted transition-colors hover:text-foreground"
               >
                 {l.label}
@@ -67,6 +69,7 @@ export function Nav() {
           <li>
             <a
               href="#logic"
+              data-build="nav-logic"
               className="font-mono text-xs text-faint transition-colors hover:text-muted"
             >
               Logic
@@ -77,6 +80,7 @@ export function Nav() {
         <div className="flex items-center gap-2">
           <button
             onClick={toggleTheme}
+            data-build="theme"
             className="grid h-9 w-9 place-items-center rounded-full border border-hairline text-foreground transition-colors hover:bg-surface"
             aria-label={theme === "dark" ? t.nav.themeLight : t.nav.themeDark}
           >
@@ -90,6 +94,7 @@ export function Nav() {
           {/* mobile hamburger */}
           <button
             onClick={() => setMenuOpen((v) => !v)}
+            data-build="menu"
             className="grid h-9 w-9 place-items-center rounded-full border border-hairline text-foreground transition-colors hover:bg-surface md:hidden"
             aria-label={t.nav.menu}
             aria-expanded={menuOpen}
