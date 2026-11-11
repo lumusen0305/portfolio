@@ -11,7 +11,7 @@ window.I18N_EN = {
   "台大 M.S. (3.83) · 中興 電機 B.S. (4.24)": "NTU M.S. <span class=\"dim\">(3.83)</span> · NCHU EE B.S. <span class=\"dim\">(4.24)</span>",
   "TSMC · N7 ADPLL 功耗 −16% · 面積 −21%": "TSMC · N7 ADPLL power <span class=\"g\">−16%</span> · area <span class=\"g\">−21%</span>",
   "CHROMA · GrAPL @ IPDPS 2026 · 共同第一作者": "CHROMA · GrAPL @ IPDPS 2026 · co-first author",
-  "鯨鏈科技 · 2026 / 10 / 16": "WhaleChip · 2026 / 10 / 16",
+  "2026 / 10 / 16": "2026 / 10 / 16",
   "主管好，我是吳建賢，英文名 Chien-Hsien。目前在 NVIDIA 做 ASIC physical design，已經轉正職。右邊是我的簡介，等一下會一項一項展開。": "Hello, I'm <strong>Chien-Hsien Wu</strong>. I work on <strong>ASIC physical design at NVIDIA</strong>, now as a full-time engineer. On the right is a short profile; I'll go through each item in a moment.",
   "今天大概十五到二十分鐘：先快速講經歷，再用四頁講我在 NVIDIA 做的 ECO 自動化：先看整體架構，再拆成三塊：讓 agent 跟 top agent 溝通的 WebSocket hub、每個 partition 的 in-house agent 和它的 skills，以及我重寫的 LSF farm 派送機制；接著是前端的三個專案和碩士研究 CHROMA，最後快速帶過其他作品和修課獲獎。": "This takes about fifteen to twenty minutes. First a quick look at my background, then four slides on the ECO automation I built at NVIDIA: the <strong>overall architecture</strong> first, then three parts: the <strong>WebSocket hub</strong> where the agents talk to the top agent, each partition's <strong>in-house agent and its skills</strong>, and the <strong>LSF farm dispatch</strong> I rewrote. After that come three front-end projects and my master's research, CHROMA, and finally a quick pass over other work and coursework and awards.",
   "先說明：圖都是重畫的示意圖，沒有放任何公司內部的資料。": "One note up front: <strong>every diagram is a redrawn illustration</strong>; nothing here contains internal company data.",
@@ -384,7 +384,7 @@ window.I18N_EN = {
   // ---- 10 CHROMA
   "CHROMA 架構與 JP 上色過程": "CHROMA architecture and JP coloring process",
   // ---- 00 document
-  "吳建賢 · 鯨鏈科技 ASIC Team 面談": "Chien-Hsien Wu · WhaleChip ASIC Team Interview",
+  "吳建賢 · 作品簡報": "Chien-Hsien Wu · Portfolio Talk",
   "一條候選": "one candidate",
   "的距離電路": "distance",
   "8 套並行": "8 in parallel",
