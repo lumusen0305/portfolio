@@ -45,11 +45,11 @@ h2 { margin: 0; font-size: 20px; line-height: 1.35; text-wrap: balance; }
     <p>結果是<strong>一輪自動修正處理掉約 23 萬筆裡的 97%</strong>，setup TNS 從 −250 ns 收到大約 0；這套流程也跟同事一起在 <strong>NTECH China 2026</strong> 發表。</p>
     <p>這套做法可以帶到團隊：<strong>重複、固定的 flow 寫成 skill 和自動化流程</strong>，人只看判斷和放行。</p>
     <p>（動畫：P 暫停、逗號／句號一步一步走）</p>
-    <p>接下來一塊一塊講，先從 hub 開始。</p></div></section><section id="s5" class="card"><header><span class="num">05</span><div><div class="kick">3 / 5 NVIDIA · WebSocket Hub × Cross-Partition ECO</div><h2>一個 WebSocket hub，讓 ECO 可以跨 partition</h2></div></header><div class="script"><p>這是我寫的 <strong>WebSocket hub</strong>，in-house agent 跟 top agent 就是在這裡溝通。它可以接 <strong>PrimeTime、VC</strong> 這些工具的 session，再串我們 <strong>in-house 的 ECO 工具</strong>，每個 partition 一個 room。</p>
-    <p>用一個案例把 hub 走一遍。工程師只下一句：<strong>修 A 到 B 的 hold，不能傷到 setup</strong>。</p>
-    <p>top agent 先定原則：對齊邊界和 corner、只選一邊修、兩邊都要驗；然後把同一個案件派給 A、B 兩個 agent。</p>
-    <p>A 的 agent 用 ECO 工具只看得到 launch 這一半；查連線知道另一半在 B，就用 <strong>peer_ask</strong> 經 hub 問 B 要 capture 端的資訊、corner 和 setup 餘量。這一步只是分析，不會改到 B。</p>
-    <p>兩側拼齊之後，<strong>只在 A 側試修</strong>：hold skill 加一顆 delay cell，先算好 setup 代價；改完<strong>兩邊都重新讀回</strong>，hold 過了、setup 還有餘量才算數。</p>
+    <p>接下來一塊一塊講，先從 hub 開始。</p></div></section><section id="s5" class="card"><header><span class="num">05</span><div><div class="kick">3 / 5 NVIDIA · WebSocket Hub × Cross-Partition ECO</div><h2>一個 WebSocket hub，讓 ECO 可以跨 partition</h2></div></header><div class="script"><p>這是我寫的 <strong>WebSocket hub</strong>，agent 都在這裡溝通，<strong>partition 的 agent 之間也可以直接對話</strong>。它可以接 <strong>PrimeTime、VC</strong> 這些工具的 session，再串我們 <strong>in-house 的 ECO 工具</strong>，每個 partition 一個 room。</p>
+    <p>用一個案例把 hub 走一遍。工程師把案件交給 A 的 agent：<strong>修 A 到 B 的 hold，不能傷到 setup</strong>。</p>
+    <p>A 用 ECO 工具只看得到 launch 這一半；查連線知道另一半在 B。它先在自己這側試，但要補 4.2 ps，A 這段的 setup 預算只剩 2 ps，<strong>A 修不掉</strong>。</p>
+    <p>這時 A <strong>主動用 peer_ask 經 hub 問 B：你那邊能不能 cover？</strong>B 看自己這段 setup 還有 35 ps，答應接手。整個過程<strong>沒有 top agent，是兩個 partition agent 直接對話</strong>。</p>
+    <p>B 的 hold skill 在 B/IN 後面加一顆 delay cell，先算好 setup 代價；改完<strong>兩邊都重新讀回</strong>：hold 過了、B 的 setup 還有餘量、A 沒被動到，才算數。</p>
     <p>最後提案送上平台，<strong>工程師審核才放行</strong>。這裡的元件都已經做好，<strong>整合流程還在 pilot 驗證</strong>，數字是示意。</p>
     <p>可以帶到團隊的是：<strong>PT、VC 這類要培訓才會用的工具，包成 Claude Code 能直接連的介面</strong>，新人不用先把工具學熟就能開始查問題。</p>
     <p>（動畫：句號下一步、逗號上一步）</p>
@@ -84,10 +84,14 @@ h2 { margin: 0; font-size: 20px; line-height: 1.35; text-wrap: balance; }
     <p>前端到這裡。</p></div></section><section id="s12" class="card"><header><span class="num">12</span><div><div class="kick">Research · 台大碩士研究 · GrAPL @ IPDPS 2026</div><h2>CHROMA：高品質圖著色搬上多 GPU</h2></div></header><div class="script"><p>再來是碩士研究 <strong>CHROMA</strong>，多 GPU 的圖著色框架，發表在 <strong>IPDPS 2026 的 GrAPL workshop</strong>。</p>
     <p>背景是：品質好的平行圖著色跑得慢，快的方法上色品質又差。品質好的 smallest-last 排序是循序的，<strong>priority allocation 在 CPU 上可以比上色本身慢 100 倍</strong>。</p>
     <p>左邊是架構：每張 GPU 先做 priority allocation，我們的 cuSL 把它平行化，再加三個優化：ELS 提高掃描效率、EGC 用 θ 控制每輪的粒度、SDC 校正最小度數保住品質；上色沿用 ECL-GC 的 kernel。多 GPU 時用 RGP 切圖，邊界先上色、子圖帶 ghost vertex。</p>
-    <p>右邊是 JP 上色的過程：比自己優先的鄰居都上完色，就挑最小的可用顏色；<strong>同一輪可以很多點一起上色</strong>，所以適合 GPU。</p>
+    <p>右邊用一張小圖講優先級怎麼來。<strong>smallest-last</strong>：每一輪把<strong>度數最小</strong>的點剝掉，剝掉之後鄰居的度數跟著減一；<strong>越晚剝掉的越優先</strong>。</p>
+    <p>照著圖走：F 度數 2，第一輪剝；D 第二輪；A 和 E 同一輪一起剝；最後剩 B、C、G 一起剝。圈圈上的數字就是第幾輪剝掉，也就是優先級。同一輪的點可以一起處理，priority allocation 在 GPU 上平行化的就是這一步。</p>
+    <p>有了優先級，每條邊就從優先的點指向後面的點；B、C、G 同一層又互相相鄰，用隨機數決定先後。</p>
+    <p>再來是 JP 上色：一個點等所有比它優先的鄰居都上完色，就挑最小的可用顏色。G 第一輪上 1、B 上 2、C 和 A 同一輪一起上 3，一路到 F；<strong>同一輪可以很多點一起上色</strong>，所以適合 GPU。</p>
+    <p>為什麼這樣排品質好：度數小的點排在最後上色，它的鄰居少，一定還有小的顏色可選，所以總顏色數少。</p>
     <p>結果在單張 RTX 4090 上，<strong>顏色數不變、幾何平均快 7 倍</strong>；比 192 執行緒的 CPU 版快 17 倍。</p>
     <p>CHROMA 的程式基本上都是我寫的：<strong>GPU 上的 priority allocation、多 GPU 的 RGP 模組和 CPU baseline</strong>。這跟硬體設計的思路很像：找出循序的瓶頸、拆成能平行的結構、再處理同步。</p>
-    <p>（動畫：P 暫停、逗號／句號一次前進一輪）</p>
+    <p>（動畫：P 暫停、句號下一步、逗號上一步：1–4 剝點排優先、5 定方向、6–11 每一輪上色）</p>
     <p>（被問到履歷上的 14× 時）那是只開 ELS 的最快設定，顏色數會多三成多；<strong>顏色數不變的是 7.14 倍</strong>，所以簡報用這個數字。</p>
     <p>專案就介紹到這裡，接著快速看一下其他作品。</p></div></section><section id="s13" class="card"><header><span class="num">13</span><div><div class="kick">Other Work · 硬體 × 軟體</div><h2>其他作品</h2></div></header><div class="script"><p>這頁每個作品都有留下紀錄。</p>
     <p>硬體的部分：<strong>QR 分解</strong>是 CVSD 的期末專案，CORDIC 做 QR，從 RTL、DC 合成一路走到 Innovus APR，這張是 layout。<strong>RTL 旁通道評估</strong>是碩士研究，用 VCS 模擬產生 SAIF、算 toggle 的 KL divergence，評估 20 種加密電路、用階層樹定位危險模組。<strong>Style Filter</strong> 是高階 SoC 設計的團隊專案，用 Catapult HLS 做濾鏡 IP，整合進 SoC 跑 FPGA。<strong>CIC 2025</strong> 進了決賽，題目是凸包的硬體。</p>

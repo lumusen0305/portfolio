@@ -661,31 +661,29 @@ function blk(key, label, head, subs, o = {}) {
 }
 const SUB = (s, c = P.fg) => [['⎿ ', P.dim], [s, c]];
 const SUB2 = (s, c = P.fg) => [['  ', P.dim], [s, c]];
-blk('op', 'Operator wrote', [['› ', P.teal], ['Fix the A → B hold path. Protect setup.', '#fff']], [SUB2('Keep one shared case: CP-021.', '#fff')],
-  { typed: true, cap: '工程師只下一句：修 A→B 的 hold，不能傷到 setup。', hold: 2.4 });
-blk('coord', 'Top agent', [['● ', P.teal], ['Match the boundary and corner first.', P.fg]], [SUB2('Choose one repair side, then verify both ends.')],
-  { cap: 'top agent 先定原則：對齊邊界和 corner，只選一邊修，兩邊都要驗。', hold: 3.2 });
-blk('disp', null, [['● ', P.teal], ['top agent · dispatch to partition agents', P.fg]],
-  [SUB('PART_A + PART_B · same user / datecode', P.muted), SUB2('PART_A acknowledged CP-021', P.blue), SUB2('PART_B acknowledged CP-021', P.blue)],
-  { cap: '同一個案件派給 A、B 兩個 partition agent，兩邊都確認收到。', hold: 2.4 });
+// No top agent in this case: agent A owns it, cannot fix it on its own side, and asks agent B
+// directly (peer_ask over the hub) whether B can cover it. Only the two partition agents talk.
+blk('op', 'Operator wrote', [['› ', P.teal], ['Fix the A → B hold path. Protect setup.', '#fff']], [SUB2('Case CP-021 · assigned to agent A.', '#fff')],
+  { typed: true, cap: '工程師把案件交給 A 的 agent：修 A→B 的 hold，不能傷到 setup。', hold: 2.4 });
 blk('eval', null, [['● ', P.green], ['agent A · eco_eval — inspect local context', P.fg]],
-  [SUB('A/OUT · driver + fanout + launch clock', P.amber), SUB2('Inter-partition path requires the other side.', P.teal)],
-  { cap: 'A 用 ECO 工具看自己這側：只看得到 launch 端。', hold: 2.6 });
+  [SUB('A/OUT · driver + fanout + launch clock', P.amber), SUB2('Inter-partition path: capture side is elsewhere.', P.teal)],
+  { cap: 'A 用 ECO 工具看自己這側：只看得到 launch 端。', hold: 2.4 });
 blk('conn', null, [['● ', P.green], ['read · chiplet connectivity', P.fg]],
   [SUB('CP-021  A/OUT → B/IN', P.amber), SUB2('Partner identified: PART_B', P.teal)],
-  { cap: '查 chiplet 連線：A/OUT 接到 B/IN，另一半在 B。', hold: 2.4 });
+  { cap: '查 chiplet 連線：A/OUT 接到 B/IN，另一半在 B。', hold: 2.2 });
+blk('try', null, [['● ', P.green], ['agent A · hold skill — try PART_A side', P.fg]],
+  [SUB('needs +4.2 ps delay · A setup budget only +2 ps', P.amber), SUB2('✗ no safe fix in PART_A', P.red)],
+  { cap: 'A 先在自己這側試：要補 4.2 ps，但 A 這段的 setup 預算只剩 2 ps，修不掉。', hold: 2.6 });
 blk('ask', null, [['● ', P.green], ['agent A · peer_ask("PART_B", …)', P.fg]],
-  [SUB('Ask: capture context, corner and setup margin.'), SUB2('sent via hub · analysis only · one hop', P.blue),
-    { s: SUB2('PART_B replied: B/IN + capture clock + corner', P.amber), d: 1.6 }, SUB2('Matched to A/OUT. The path context is complete.', P.teal)],
-  { cap: 'peer_ask 經 hub 問 B；B 的證據回來，才拼齊同一條路徑。', hold: 2.8 });
-blk('prop', 'Top agent', [['● ', P.teal], ['Propose trial_01 in PART_A only.', P.fg]], [SUB2('PART_B supplies analysis and fresh readback.')],
-  { cap: '綜合兩側：只在 A 側試修，B 負責分析和修完後的回讀。', hold: 3.0 });
-blk('trial', null, [['● ', P.green], ['agent A · hold skill — trial_01', P.fg]],
-  [SUB('+1 delay cell before A/OUT · setup cost checked first', P.amber), SUB2('dispatched via hub → session A', P.blue)],
-  { cap: 'hold skill 挑最小的改動，先算好 setup 代價，才派到 session。', hold: 2.6 });
+  [SUB('Can PART_B cover this hold on B/IN?'), SUB2('sent via hub · agent ↔ agent · one hop', P.blue),
+    { s: SUB2('PART_B: setup margin +35 ps · I can cover it.', P.amber), d: 1.6 }, SUB2('Agreed: fix in PART_B, both ends read back.', P.teal)],
+  { cap: 'A 主動經 hub 問 B 能不能 cover；B 看自己還有 35 ps 餘量，答應接手。', hold: 2.8 });
+blk('trial', null, [['● ', P.green], ['agent B · hold skill — trial_01', P.fg]],
+  [SUB('+1 delay cell after B/IN · setup cost checked first', P.amber), SUB2('dispatched via hub → session B', P.blue)],
+  { cap: 'B 用 hold skill 在自己這側挑最小改動，先算好 setup 代價，才派到 session。', hold: 2.6 });
 blk('rb', null, [['● ', P.green], ['readback · both ends', P.fg]],
-  [SUB('A: hold slack −3.0 → +1.2 ps  ✓', P.green), SUB2('B: setup margin +35 → +29 ps  ✓', P.green)],
-  { cap: '改完兩邊都重新讀回：hold 過了，setup 還有餘量。', hold: 2.8 });
+  [SUB('B: hold −3.0 → +1.2 ps · setup +35 → +29 ps  ✓', P.green), SUB2('A: launch side unchanged · budget kept  ✓', P.green)],
+  { cap: '改完兩邊都重新讀回：hold 過了，B 的 setup 還有餘量，A 沒被動到。', hold: 2.8 });
 blk('plat', null, [['● ', P.orange], ['ECO platform · CP-021 → needs review', P.fg]],
   [SUB('engineer approved → release  ✓', P.green)],
   { cap: '提案送上 ECO 平台，工程師審核後才放行。', hold: 3.4 });
@@ -694,23 +692,29 @@ function p2Panel(t) {
   const x = 1140, y = 120, w = 720, h = 800;
   panelFrame(x, y, w, h);
   txt('CP-021 / connected context', x + 26, y + 34, { size: 19, color: P.muted, fam: MONO });
-  // coordinator box
+  // A ↔ B conversation (no top agent: the two partition agents talk directly through the hub)
   const cx = x + w / 2;
-  rr(cx - 150, y + 66, 300, 52, 10, rgba(P.teal, .08), P.teal, 2);
-  txt('top agent · CP-021', cx, y + 92, { size: 21, weight: 700, color: P.teal, fam: MONO, align: 'center' });
-  const ds = eio(ramp(t, B.disp.subT[0], .6));
-  plPart([[cx, y + 118], [cx, y + 140], [x + 190, y + 140], [x + 190, y + 172]], ds, rgba(P.teal, .7), 2);
-  plPart([[cx, y + 118], [cx, y + 140], [x + 530, y + 140], [x + 530, y + 172]], ds, rgba(P.teal, .7), 2);
-  txt('selected sessions', cx, y + 158, { size: 16, color: P.dim, fam: MONO, align: 'center', alpha: ds });
+  rr(cx - 280, y + 66, 560, 52, 10, rgba(P.violet, .06), rgba(P.violet, .55), 1.5);
+  const MSG = [[B.op.ht, 'agent A · owns CP-021', P.muted], [B.try.subT[1], 'agent A · ✗ no safe fix in PART_A', P.red],
+    [B.ask.subT[0], 'A → B · can you cover it on B/IN?', P.blue], [B.ask.subT[2], 'B → A · yes · setup +35 ps', P.amber],
+    [B.ask.subT[3], 'agreed · fix in PART_B', P.teal], [B.rb.subT[1], 'both ends ✓ · ready for review', P.green]];
+  let mi = -1; MSG.forEach((m, i) => { if (t >= m[0]) mi = i; });
+  if (mi >= 0) {   // crossfade so the box is never empty between two messages
+    const k = ramp(t, MSG[mi][0], .3), say = (m, a) => txt(m[1], cx, y + 92, { size: 20, weight: 700, color: m[2], fam: MONO, align: 'center', alpha: a });
+    if (mi > 0 && k < 1) say(MSG[mi - 1], 1 - k);
+    say(MSG[mi], k);
+  }
+  txt('agent ↔ agent · no top agent', cx, y + 150, { size: 16, color: P.dim, fam: MONO, align: 'center' });
   // two partition cards
   const cy0 = y + 176, ch = 300;
-  const cards = [[x + 24, 'A', B.disp.subT[1]], [x + 366, 'B', B.disp.subT[2]]];
-  const aLit = ramp(t, B.eval.subT[0], .4), bLit = ramp(t, B.ask.subT[2], .4), done = ramp(t, B.rb.subT[0], .4);
-  cards.forEach(([cx0, n, ackT]) => {
-    const lit = n === 'A' ? aLit : bLit;
+  const cards = [[x + 24, 'A', B.op.ht + .4, 'CP-021 · assigned'], [x + 366, 'B', B.ask.subT[2], 'CP-021 · joined']];
+  const aLit = ramp(t, B.eval.subT[0], .4), bLit = ramp(t, B.ask.subT[2], .4);
+  const doneB = ramp(t, B.rb.subT[0], .4), doneA = ramp(t, B.rb.subT[1], .4);
+  cards.forEach(([cx0, n, ackT, ackTxt]) => {
+    const lit = n === 'A' ? aLit : bLit, done = n === 'A' ? doneA : doneB;
     rr(cx0, cy0, 330, ch, 12, done > 0 ? rgba(P.green, .06 * done) : 'rgba(255,255,255,.025)', done > .5 ? rgba(P.green, .8) : (lit > 0 ? rgba(P.amber, .6) : P.line), 2);
     txt(`agent ${n} · PART_${n}`, cx0 + 18, cy0 + 30, { size: 21, weight: 700, fam: MONO });
-    if (t >= ackT) txt('CP-021 ✓ ACK', cx0 + 18, cy0 + 60, { size: 17, color: P.blue, fam: MONO, alpha: ramp(t, ackT, .3) });
+    if (t >= ackT) txt(ackTxt, cx0 + 18, cy0 + 60, { size: 17, color: P.blue, fam: MONO, alpha: ramp(t, ackT, .3) });
     cylinder(cx0 + 270, cy0 + 252, 50, 26, P.dim);
     txt(`local DB ${n}`, cx0 + 18, cy0 + 256, { size: 17, color: P.muted, fam: MONO });
   });
@@ -719,26 +723,33 @@ function p2Panel(t) {
   pl([[x + 360, cy0 - 8], [x + 360, cy0 + ch + 8]], rgba(P.yellow, .55), 2, [7, 7]);
   { const comp0 = ramp(t, B.ask.subT[3], .5);
     txt('partition boundary', x + 360, cy0 + ch + 28, { size: 16, color: P.dim, fam: MONO, align: 'center', alpha: 1 - comp0 });
-    txt('partition boundary · case / corner matched', x + 360, cy0 + ch + 28, { size: 17, color: P.teal, fam: MONO, align: 'center', alpha: comp0 }); }
-  // A side: launch → A/OUT
+    txt('partition boundary · fix moves to B', x + 360, cy0 + ch + 28, { size: 17, color: P.teal, fam: MONO, align: 'center', alpha: comp0 }); }
+  // A side: launch → A/OUT, with A's own attempt that has no setup budget
   X.save(); X.globalAlpha *= .35 + .65 * aLit;
   flop(x + 70, wy, aLit > 0 ? P.amber : P.dim, 'launch');
-  const trialK = eout(ramp(t, B.trial.subT[0], .5));
   pl([[x + 92, wy], [bxL, wy]], aLit > 0 ? P.amber : P.dim, 3);
   txt('A/OUT', bxL - 10, wy - 22, { size: 16, color: P.yellow, fam: MONO, align: 'right' });
-  if (trialK > 0) {
-    X.save(); X.globalAlpha *= trialK; X.translate(0, -20 * (1 - trialK));
-    bufSym(x + 220, wy, .55, P.teal, 'rgba(14,19,27,1)', 3);
-    txt('trial_01 · +delay', x + 220, wy + 40, { size: 16, weight: 700, color: P.teal, fam: MONO, align: 'center' });
+  const tryK = eout(ramp(t, B.try.subT[0], .4)) * (1 - ramp(t, B.ask.subT[1], .6));
+  if (tryK > 0) {
+    X.save(); X.globalAlpha *= tryK;
+    bufSym(x + 220, wy, .55, P.red, 'rgba(14,19,27,1)', 3);
+    txt('✗ A budget +2 ps', x + 220, wy + 40, { size: 16, weight: 700, color: P.red, fam: MONO, align: 'center' });
     X.restore();
   }
   X.restore();
-  // B side: B/IN → capture (unknown until reply)
+  // B side: B/IN → capture (unknown until reply); B's trial_01 sits here
   X.save(); X.globalAlpha *= .35 + .65 * bLit;
   pl([[bxR, wy], [x + 640, wy]], bLit > 0 ? P.amber : P.dim, 3, bLit > 0 ? null : [8, 8]);
   flop(x + 662, wy, bLit > 0 ? P.amber : P.dim, 'capture');
   txt('B/IN', bxR + 10, wy - 22, { size: 16, color: P.yellow, fam: MONO });
   X.restore();
+  const trialK = eout(ramp(t, B.trial.subT[0], .5));
+  if (trialK > 0) {
+    X.save(); X.globalAlpha *= trialK; X.translate(0, -20 * (1 - trialK));
+    bufSym(x + 510, wy, .55, P.teal, 'rgba(14,19,27,1)', 3);
+    txt('trial_01 · +delay', x + 510, wy + 40, { size: 16, weight: 700, color: P.teal, fam: MONO, align: 'center' });
+    X.restore();
+  }
   // link across boundary
   const lk = ramp(t, B.conn.subT[0], .5);
   if (lk > 0) {
@@ -751,10 +762,8 @@ function p2Panel(t) {
     glow(rgba(P.amber, .9), 18 * comp, () => pl([[x + 92, wy], [x + 640, wy]], rgba(P.amber, .9 * comp), 3.5));
 
   }
-  if (done > 0) {
-    txt('✓ readback · hold +1.2 ps', x + 42, cy0 + 88, { size: 17, weight: 700, color: P.green, fam: MONO, alpha: done });
-    txt('✓ readback · setup +29 ps', x + 384, cy0 + 88, { size: 17, weight: 700, color: P.green, fam: MONO, alpha: ramp(t, B.rb.subT[1], .4) });
-  }
+  if (doneB > 0) txt('✓ readback · hold +1.2 ps', x + 384, cy0 + 88, { size: 17, weight: 700, color: P.green, fam: MONO, alpha: doneB });
+  if (doneA > 0) txt('✓ readback · A unchanged', x + 42, cy0 + 88, { size: 17, weight: 700, color: P.green, fam: MONO, alpha: doneA });
   // hub bar
   const hy = cy0 + ch + 56;
   rr(x + 24, hy, w - 48, 40, 10, rgba(P.violet, .08), rgba(P.violet, .6), 1.5);
@@ -774,8 +783,8 @@ function p2Panel(t) {
   rr(x + 24, py0, w - 48, 170, 12, 'rgba(255,255,255,.03)', pk > 0 ? rgba(P.orange, .7) : P.line, 2);
   txt('ECO platform · shared case', x + 44, py0 + 28, { size: 19, weight: 700, color: P.orange, fam: MONO });
   const rows = [
-    ['case CP-021 · A ↔ B', 'hold', P.muted, B.disp.ht],
-    ['agent A', 'trial_01 proposed', P.teal, B.trial.subT[1]],
+    ['case CP-021 · A → B', 'hold · owner A', P.muted, B.op.ht],
+    ['agent B (asked by A)', 'trial_01 proposed', P.teal, B.trial.subT[1]],
     ['readback A · B', '✓ ✓  KEEP', P.green, B.rb.subT[1]],
     ['human owner', t >= B.plat.subT[0] ? '✓ released' : 'review → release', t >= B.plat.subT[0] ? P.green : P.orange, B.plat.ht],
   ];
