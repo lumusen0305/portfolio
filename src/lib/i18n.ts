@@ -166,7 +166,7 @@ export const dict: Record<Lang, Dict> = {
       paragraph1:
         "我是吳建賢，NVIDIA 的 ASIC 實體設計工程師——做 GPU 時序收斂，也打造讓 AI 參與設計流程的內部工具。",
       paragraph2:
-        "研究底子在 GPU 平行運算與硬體安全（GrAPL '26 一作）；工作裡把 LLM agent 與 MCP 工具鏈接進 EDA 流程。我相信下一代晶片，是工程師和 AI 一起設計出來的。",
+        "研究底子在 GPU 平行運算與硬體安全（GrAPL '26 共同一作）；工作裡把 LLM agent 與 MCP 工具鏈接進 EDA 流程。我相信下一代晶片，是工程師和 AI 一起設計出來的。",
       paragraph3: "Dream big and dare to fail.",
       availableBadge: "NVIDIA · 新竹",
       awardsLabel: "獲獎與發表",
@@ -279,7 +279,7 @@ export const dict: Record<Lang, Dict> = {
       paragraph1:
         "I'm ChienHsien Wu, an ASIC physical-design engineer at NVIDIA — closing GPU timing, and building the internal tools that let AI join the design flow.",
       paragraph2:
-        "My research roots are GPU parallel computing and hardware security (first author, GrAPL '26); at work I wire LLM agents and MCP toolchains into the EDA flow. I believe the next generation of chips gets designed by engineers and AI together.",
+        "My research roots are GPU parallel computing and hardware security (co-first author, GrAPL '26); at work I wire LLM agents and MCP toolchains into the EDA flow. I believe the next generation of chips gets designed by engineers and AI together.",
       paragraph3: "Dream big and dare to fail.",
       availableBadge: "NVIDIA · Hsinchu",
       awardsLabel: "Awards & Papers",

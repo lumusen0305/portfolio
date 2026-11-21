@@ -897,3 +897,9 @@ body.tpl-wc { --cyan: #3cc8d8; }
 .tpl-wc .slide.is-active .fe .qa-sp-k3 { animation: wc-stpk3 9s linear infinite; }
 .tpl-wc .slide.is-active .fe .qa-sp-out { animation: wc-stpout 9s linear infinite; }
 /* ---------- /slide 08 · sphere principle ---------- */
+
+/* motion-graphic slides: a canvas stepped with . and , (assets/eco-motion.js) */
+.tpl-wc .slide.mgs .t2 { margin-bottom: 18px; }
+.tpl-wc canvas.mg { display: block; width: auto; max-width: 100%; height: 736px; margin: 0 auto; cursor: pointer; }
+.tpl-wc .caption.mgc { margin-top: 10px; font-style: normal; font-size: 16px; }
+.tpl-wc .caption.mgc b { color: var(--amber); font-family: var(--font-mono); }
