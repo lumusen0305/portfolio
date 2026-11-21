@@ -703,15 +703,17 @@
   var timerDisplay = document.getElementById('timer-display');
   var timerCount = document.getElementById('timer-count');
 
-  /* Lay the cards out before anything else. This used to be the LAST statement
-     of the init, so every line below it was a single point of failure for the
-     whole presenter's visibility (#14). Function declarations hoist, so this is
-     safe here. */
-  applyLayout(readLayout());
-
   /* ===== Default card layout ===== */
   var CARD_IDS = ['card-cur','card-nxt','card-notes','card-timer'];
   var MIN_W = 180, MIN_H = 100;
+
+  /* Lay the cards out before anything else. This used to be the LAST statement
+     of the init, so every line below it was a single point of failure for the
+     whole presenter's visibility (#14). Function declarations hoist, but var
+     assignments do not: sanitizeLayout() reads CARD_IDS / MIN_W / MIN_H, so
+     this call has to come after them, or a saved layout throws and kills the
+     whole presenter init (blank notes, frozen timer). */
+  applyLayout(readLayout());
 
   function defaultLayout() {
     /* A popup that opened minimised or in a background tab can report 0 here;
