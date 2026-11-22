@@ -84,11 +84,10 @@ h2 { margin: 0; font-size: 20px; line-height: 1.35; text-wrap: balance; }
     <p>前端到這裡。</p></div></section><section id="s12" class="card"><header><span class="num">12</span><div><div class="kick">Research · 台大碩士研究 · GrAPL @ IPDPS 2026</div><h2>CHROMA：高品質圖著色搬上多 GPU</h2></div></header><div class="script"><p>再來是碩士研究 <strong>CHROMA</strong>，多 GPU 的圖著色框架，發表在 <strong>IPDPS 2026 的 GrAPL workshop</strong>。</p>
     <p>背景是：品質好的平行圖著色跑得慢，快的方法上色品質又差。品質好的 smallest-last 排序是循序的，<strong>priority allocation 在 CPU 上可以比上色本身慢 100 倍</strong>。</p>
     <p>左邊是架構：每張 GPU 先做 priority allocation，我們的 cuSL 把它平行化，再加三個優化：ELS 提高掃描效率、EGC 用 θ 控制每輪的粒度、SDC 校正最小度數保住品質；上色沿用 ECL-GC 的 kernel。多 GPU 時用 RGP 切圖，邊界先上色、子圖帶 ghost vertex。</p>
-    <p>右邊用一張小圖講優先級怎麼來。<strong>smallest-last</strong>：每一輪把<strong>度數最小</strong>的點剝掉，剝掉之後鄰居的度數跟著減一；<strong>越晚剝掉的越優先</strong>。</p>
-    <p>照著圖走：F 度數 2，第一輪剝；D 第二輪；A 和 E 同一輪一起剝；最後剩 B、C、G 一起剝。圈圈上的數字是優先值，<strong>第幾輪剝掉就是幾</strong>：F 是 1，B、C、G 是 4。<strong>數字越大越優先、越先上色</strong>，所以 F 雖然是 1，卻是最後上色。同一輪的點可以一起處理，priority allocation 在 GPU 上平行化的就是這一步。</p>
-    <p>有了優先值，每條邊就從數字大的點指向數字小的點；B、C、G 數字一樣又互相相鄰，用隨機數決定先後。</p>
-    <p>再來是 JP 上色：一個點等所有比它優先的鄰居都上完色，就挑最小的可用顏色。G 第一輪拿顏色 1、B 拿顏色 2、C 和 A 同一輪一起拿顏色 3，一路到 F；<strong>同一輪可以很多點一起上色</strong>，所以適合 GPU。</p>
-    <p>為什麼這樣排品質好：度數小的點排在最後上色，它的鄰居少，一定還有小的顏色可選，所以總顏色數少。</p>
+    <p>右邊用一張小圖講優先級怎麼來。<strong>smallest-last</strong>：每一輪把<strong>度數最小</strong>的點剝掉，剝掉之後鄰居的度數跟著減一；<strong>第幾輪剝掉，優先就是幾，越接近 0 優先越大</strong>。</p>
+    <p>照著圖走：F 度數 2，第一輪剝；D 第二輪；A 和 E 同一輪一起剝；最後剩 B、C、G 一起剝。圈圈上的數字就是優先：F 是 1、<strong>最優先</strong>，B、C、G 是 4。同一輪的點可以一起處理，priority allocation 在 GPU 上平行化的就是這一步。</p>
+    <p>有了優先，每條邊就從優先大的點指向優先小的點；B、C、G 同一級又互相相鄰，用隨機數決定先後。</p>
+    <p>再來是 JP 上色：一個點等所有比它優先的鄰居都上完色，就挑最小的可用顏色。F 第一輪拿顏色 1、D 拿顏色 2、A 和 E 同一輪一起上色，一路到 C；<strong>同一輪可以很多點一起上色</strong>，所以適合 GPU。</p>
     <p>結果在單張 RTX 4090 上，<strong>顏色數不變、幾何平均快 7 倍</strong>；比 192 執行緒的 CPU 版快 17 倍。</p>
     <p>CHROMA 的程式基本上都是我寫的：<strong>GPU 上的 priority allocation、多 GPU 的 RGP 模組和 CPU baseline</strong>。這跟硬體設計的思路很像：找出循序的瓶頸、拆成能平行的結構、再處理同步。</p>
     <p>（動畫：點一下圖或句號下一步、逗號上一步：1–4 剝點排優先、5 定方向、6–11 每一輪上色）</p>

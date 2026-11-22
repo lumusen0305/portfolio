@@ -900,6 +900,7 @@ body.tpl-wc { --cyan: #3cc8d8; }
 .tpl-wc .fe .jpd.m { fill: var(--amber); }
 .tpl-wc .fe .jpb { fill: var(--surface-2); stroke: var(--amber); stroke-width: 1.4; }
 .tpl-wc .fe .jpbt { font: 800 12px var(--font-mono); fill: var(--amber); }
+.tpl-wc .fe .jpc.k4 { fill: var(--purple); filter: drop-shadow(0 0 8px rgba(167,123,255,.6)); }
 @keyframes wc-jr-0-1 { 0%, 8.083% { opacity: 1; } 8.333%, 100% { opacity: 0; } }
 .tpl-wc .slide.is-active .fe .w0-1 { animation: wc-jr-0-1 12s linear infinite; }
 @keyframes wc-jr-0-2 { 0%, 16.417% { opacity: 1; } 16.667%, 100% { opacity: 0; } }
