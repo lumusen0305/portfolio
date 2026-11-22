@@ -273,6 +273,9 @@ body.tpl-wc {
 .tpl-wc .tl2 .when { font: 600 17px/1 var(--font-mono); letter-spacing: .1em; color: var(--accent); font-variant-numeric: tabular-nums; }
 .tpl-wc .tl2 .n.now .when { color: var(--green); }
 .tpl-wc .tl2 .org { margin-top: 18px; font: 800 40px/1.1 var(--font-display); letter-spacing: -.01em; color: var(--text-1); }
+.tpl-wc .tl2 .orgrow { margin-top: 18px; display: flex; align-items: center; flex-wrap: wrap; gap: 6px 14px; }
+.tpl-wc .tl2 .orgrow .org { margin-top: 0; }
+.tpl-wc .tl2 .qs { font: 700 14px/1 var(--font-mono); letter-spacing: .06em; color: var(--accent); border: 1px solid var(--accent); border-radius: 6px; padding: 5px 8px; white-space: nowrap; }
 .tpl-wc .tl2 .what { margin-top: 10px; font: 500 21px/1.4 var(--font-sans); color: var(--text-2); }
 .tpl-wc .tl2 .facts { margin-top: 22px; padding-top: 18px; border-top: 1px dashed var(--border-2);
   display: flex; flex-direction: column; gap: 10px; font: 400 18px/1.45 var(--font-mono); color: var(--text-1); }
